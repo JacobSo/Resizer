@@ -1,0 +1,3 @@
+rootProject.name = 'Resizer'
+
+include ':app'
