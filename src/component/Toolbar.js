@@ -147,11 +147,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     title: {
-
         width:200,
         color: 'black',
         fontSize: 18,
-        marginLeft:16
     },
     subtitle: {
         width:200,
@@ -174,8 +172,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     actionText: {
-        color: 'white',
-        padding: 10
+        color: 'black',
+        padding: 10,
+        marginRight:16
     },
     actionIcon: {
         width: 25,

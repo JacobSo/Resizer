@@ -7,8 +7,17 @@
     "test": "jest"
   },
   "dependencies": {
+    "prop-types": "^15.6.0",
     "react": "16.0.0",
-    "react-native": "0.51.0"
+    "react-native": "0.51.0",
+    "react-native-drawer": "^2.5.0",
+    "react-native-gallery": "0.0.17",
+    "react-native-gesture-handler": "^1.0.0-alpha.35",
+    "react-native-image-picker": "^0.26.7",
+    "react-native-smart-amap": "^1.0.7",
+    "react-native-tab-view": "^0.0.73",
+    "react-native-textinput-effects": "^0.4.2",
+    "react-navigation": "^1.0.0-beta.21"
   },
   "devDependencies": {
     "babel-jest": "21.2.0",

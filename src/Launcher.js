@@ -10,7 +10,7 @@ import {
     Dimensions,
     TouchableOpacity
 } from 'react-native';
-import Toolbar from "./Component/Toolbar";
+import Toolbar from "./component/Toolbar";
 const {width, height} = Dimensions.get('window');
 
 
@@ -29,30 +29,46 @@ export default class Launcher extends Component<{}> {
                     functionArray={[
                         () => {
                         },
-                        ()=>{
-
+                        () => {
+                        this.props.nav.navigate('preferences')
                         }
                     ]}
                 />
-                <View  style={styles.iconRowContainer}>
-                    <TouchableOpacity  style={styles.iconContainer}>
+                <View style={styles.iconRowContainer}>
+                    <TouchableOpacity
+                        style={styles.iconContainer}
+                        onPress={
+                            () => {
+                                this.props.nav.navigate("measureList")
+                            }
+                        }>
                         <Image style={styles.icon} resizeMode="contain"
                                source={require('./drawable/main_measure_icon.png')}/>
                         <Text>测量任务</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity  style={styles.iconContainer}>
+                    <TouchableOpacity style={styles.iconContainer} onPress={
+                        () => {
+                            this.props.nav.navigate("installList")
+                        }
+                    }>
                         <Image style={styles.icon} resizeMode="contain"
                                source={require('./drawable/main_install_icon.png')}/>
                         <Text>安装任务</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.iconRowContainer}>
-                    <TouchableOpacity  style={styles.iconContainer}>
+                    <TouchableOpacity style={styles.iconContainer}  onPress={
+                        () => {
+                            this.props.nav.navigate("exceptionList")
+                        }}>
                         <Image style={styles.icon} resizeMode="contain"
                                source={require('./drawable/main_exception_icon.png')}/>
                         <Text>上报异常</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity  style={styles.iconContainer}>
+                    <TouchableOpacity style={styles.iconContainer}  onPress={
+                        () => {
+                            this.props.nav.navigate("fixList")
+                        }}>
                         <Image style={styles.icon} resizeMode="contain"
                                source={require('./drawable/main_repair_icon.png')}/>
                         <Text>维修任务</Text>
