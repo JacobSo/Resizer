@@ -12,7 +12,6 @@ import {
     ListView, FlatList, ScrollView, WebView
 } from 'react-native';
 import Toolbar from "../component/Toolbar";
-import AMap from 'react-native-smart-amap'
 import Drawer from 'react-native-drawer'
 const {width, height} = Dimensions.get('window');
 

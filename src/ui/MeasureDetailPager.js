@@ -12,7 +12,6 @@ import {
     ListView, FlatList, ScrollView
 } from 'react-native';
 import Toolbar from "../component/Toolbar";
-import AMap from 'react-native-smart-amap'
 const {width, height} = Dimensions.get('window');
 
 
@@ -44,43 +43,16 @@ export default class MeasureDetailPager extends Component<{}> {
                     ]}
                 />
                 <ScrollView>
-                    <View style={{marginBottom:55}}>
-                        <View style={{height: 250, backgroundColor: Color.colorBlue,elevation:5}}>
+                    <View style={{marginBottom: 55}}>
+                        <View style={{height: 250, backgroundColor: Color.colorBlue, elevation: 5}}>
 
-                            <AMap
+                            <View
                                 style={{backgroundColor: 'black', width: width, height: 150}}
-                                options={{
-                                    frame: {
-                                        width: width,
-                                        height: 150
-                                    },
-                                    showsUserLocation: false,
-                                    userTrackingMode: Platform.OS === 'ios' ? AMap.constants.userTrackingMode.none : null,
-                                    centerCoordinate: {
-                                        latitude: 40.027737,
-                                        longitude: 116.403694,
-                                    },
-                                    zoomLevel: 18.1,
-                                    centerMarker: Platform.OS === 'ios' ? 'icon_location' : 'poi_marker',
-                                }}
-                                onLayout={this._onLayout}
-
                             />
-                            <TouchableOpacity onPress={() => {
-                            }}
-                                              style={{
-                                                  alignItems:'center',
-                                                  justifyContent:'center',
-                                                  position: 'absolute',
-                                                  right: 0,
-                                                  bottom: 65,
-                                                  backgroundColor: 'white',
-                                                  borderRadius: 50,
-                                                  elevation: 5,
-                                                  margin: 16,
-                                                  width:55,
-                                                  height:55
-                                              }}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                }}
+                                style={styles.navigateIcon}>
                                 <Image style={styles.itemIconContainer}
                                        source={ require('../drawable/navigate_blue.png')}/>
                             </TouchableOpacity>
@@ -124,11 +96,11 @@ export default class MeasureDetailPager extends Component<{}> {
                                 <Text>上报异常</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={[styles.btnContainer,{backgroundColor:Color.colorBlue}]}
+                                style={[styles.btnContainer, {backgroundColor: Color.colorBlue}]}
                                 onPress={() => {
                                     this.props.nav.navigate("measureDetail")
                                 }}>
-                                <Text style={{color:'white'}}>完成安装</Text>
+                                <Text style={{color: 'white'}}>完成安装</Text>
 
                             </TouchableOpacity>
 
@@ -157,18 +129,31 @@ const styles = StyleSheet.create({
         borderBottomColor: Color.line
     },
     btnContainer: {
-       flex:1,
+        flex: 1,
         height: 55,
         borderRadius: 10,
         margin: 16,
         elevation: 2,
-        alignItems:'center',
-        justifyContent:'center'
+        alignItems: 'center',
+        justifyContent: 'center'
 
     },
-    itemIconContainer:{
+    itemIconContainer: {
         width: 25,
         height: 25,
+    },
+    navigateIcon: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        right: 0,
+        bottom: 65,
+        backgroundColor: 'white',
+        borderRadius: 50,
+        elevation: 5,
+        margin: 16,
+        width: 55,
+        height: 55
     }
 
 });

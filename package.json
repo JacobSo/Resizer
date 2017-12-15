@@ -14,7 +14,6 @@
     "react-native-gallery": "0.0.17",
     "react-native-gesture-handler": "^1.0.0-alpha.35",
     "react-native-image-picker": "^0.26.7",
-    "react-native-smart-amap": "^1.0.7",
     "react-native-tab-view": "^0.0.73",
     "react-native-textinput-effects": "^0.4.2",
     "react-navigation": "^1.0.0-beta.21"
