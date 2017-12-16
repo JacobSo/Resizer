@@ -58,12 +58,12 @@ export default class InstallListPager extends Component<{}> {
                                 this.props.nav.navigate("installDetail")
                             }}>
                             <Text style={{color:Color.colorBlue}}>工单A</Text>
+                            <View style={{
+                                borderBottomWidth:1,
+                                borderBottomColor:Color.line,}}>
                             <Text style={{
                                 color:Color.colorGreen,
-                                borderBottomStartRadius:20,
-                                borderBottomEndRadius:20,
-                                borderBottomWidth:1,
-                                borderBottomColor:Color.line,paddingBottom:16}}>订单号：xxxxxxxx</Text>
+                                paddingBottom:16}}>订单号：xxxxxxxx</Text></View>
 
                             <Text style={{marginTop:16}}>测量地址：佛山市顺德区。。。。</Text>
                             <Text>楼盘：龙江碧桂园</Text>

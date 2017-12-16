@@ -75,7 +75,9 @@ export default class InstallDetailPager extends Component<{}> {
                     <View style={styles.bottomContainer}>
                         <View
                             style={styles.detailContainer}>
-                            <Text style={styles.titleContainer}>组件详情</Text>
+                            <View style={styles.titleContainer}>
+                            <Text style={{color: 'black'}}>组件详情</Text>
+                            </View>
                             <Text style={{
                                 padding: 16,
                             }}>孔位/重量/尺寸/位置</Text>
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
         padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: Color.line,
-        color: 'black'
+
     },
     detailContainer: {
         backgroundColor: 'white',

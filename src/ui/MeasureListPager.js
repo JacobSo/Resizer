@@ -58,14 +58,14 @@ export default class MeasureListPager extends Component<{}> {
                                 this.props.nav.navigate("measureDetail")
                             }}>
                             <Text style={{color:Color.colorBlue}}>工单A</Text>
+                            <View style={{
+                                borderBottomWidth:1,
+                                borderBottomColor:Color.line,paddingBottom:16}}>
                             <Text style={{
                                 color:Color.colorGreen,
-                                borderBottomStartRadius:20,
-                                borderBottomEndRadius:20,
-                                borderBottomWidth:1,
-                                borderBottomColor:Color.line,paddingBottom:16}}>订单号：xxxxxxxx</Text>
-
-                            <Text style={{marginTop:16}}>测量地址：佛山市顺德区。。。。</Text>
+                                }}>订单号：xxxxxxxx</Text>
+                            </View>
+                            <Text style={{marginTop:16,}}>测量地址：佛山市顺德区。。。。</Text>
                             <Text>楼盘：龙江碧桂园</Text>
                             <Text>预约测量时间：YYYY-mm-dd hh-MM到-</Text>
                         </TouchableOpacity>}

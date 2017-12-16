@@ -127,11 +127,11 @@ export default class LoginPager extends Component {
                             />
                         </View>
 
-                        <View style={styles.bottomDesc}>
-                            <Image style={{width: 35, height: 35,}}
-                                   source={ require('../drawable/company_logo.png')}/>
-                            <Text style={{color: Color.line, margin: 16}}>林氏木业定制平台</Text>
-                        </View>
+                        {/*<View style={styles.bottomDesc}>*/}
+                            {/*<Image style={{width: 35, height: 35,}}*/}
+                                   {/*source={ require('../drawable/company_logo.png')}/>*/}
+                            {/*<Text style={{color: Color.line, margin: 16}}>林氏木业定制平台</Text>*/}
+                        {/*</View>*/}
 
                     </View>
                 </ScrollView>

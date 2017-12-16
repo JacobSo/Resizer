@@ -12,6 +12,8 @@ import {
     ListView, FlatList, ScrollView
 } from 'react-native';
 import Toolbar from "../component/Toolbar";
+import { MapView, MapTypes, MapModule, Geolocation } from 'react-native-baidu-map';
+
 const {width, height} = Dimensions.get('window');
 
 
@@ -19,7 +21,17 @@ export default class MeasureDetailPager extends Component<{}> {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            mayType: MapTypes.NORMAL,
+            zoom: 15,
+            center: {
+                longitude: 113.981718,
+                latitude: 22.542449
+            },
+            trafficEnabled: false,
+            baiduHeatMapEnabled: false,
+
+        };
     }
 
     componentDidMount() {
@@ -46,9 +58,20 @@ export default class MeasureDetailPager extends Component<{}> {
                     <View style={{marginBottom: 55}}>
                         <View style={{height: 250, backgroundColor: Color.colorBlue, elevation: 5}}>
 
-                            <View
-                                style={{backgroundColor: 'black', width: width, height: 150}}
+
+                            <MapView
+                                trafficEnabled={this.state.trafficEnabled}
+                                baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
+                                zoom={this.state.zoom}
+                                mapType={this.state.mapType}
+                                center={this.state.center}
+                                style={{height: 150,width:width, backgroundColor: Color.colorBlue, elevation: 5}}
                             />
+
+
+                            <Text style={{paddingTop: 16, marginLeft: 16, color: 'white', fontSize: 18}}>工单号</Text>
+                            <Text style={{marginLeft: 16, color: 'white'}}>订单号</Text>
+                            <Text style={{margin: 16, color: 'white'}}>广东省佛山市顺德区均安镇南沙别墅</Text>
                             <TouchableOpacity
                                 onPress={() => {
                                 }}
@@ -56,9 +79,6 @@ export default class MeasureDetailPager extends Component<{}> {
                                 <Image style={styles.itemIconContainer}
                                        source={ require('../drawable/navigate_blue.png')}/>
                             </TouchableOpacity>
-                            <Text style={{marginTop: 16, marginLeft: 16, color: 'white', fontSize: 18}}>工单号</Text>
-                            <Text style={{marginLeft: 16, color: 'white'}}>订单号</Text>
-                            <Text style={{margin: 16, color: 'white'}}>广东省佛山市顺德区均安镇南沙别墅</Text>
                         </View>
 
                         <View style={styles.item}>
@@ -89,7 +109,7 @@ export default class MeasureDetailPager extends Component<{}> {
                         </View>
                         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
                             <TouchableOpacity
-                                style={styles.btnContainer}
+                                style={[styles.btnContainer,{backgroundColor: 'white'}]}
                                 onPress={() => {
                                     this.props.nav.navigate("measureDetail")
                                 }}>
@@ -117,16 +137,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: 'white',
+
     },
     item: {
         flexDirection: 'row',
         alignItems: 'center',
         padding: 16,
         borderBottomWidth: 1,
-        borderBottomEndRadius: 20,
-        borderBottomStartRadius: 20,
-        borderBottomColor: Color.line
+        borderBottomColor: Color.line,
+        backgroundColor:'white'
     },
     btnContainer: {
         flex: 1,
