@@ -55,20 +55,19 @@ export default class ExceptionAddPager extends Component<{}> {
 
                 <View style={styles.cardContainer}>
 
-                    <Text style={{margin:16,color:'black'}}>业主信息</Text>
-                    <View>
-                        <Kaede
-                            style={{width:width-32,marginBottom:5}}
+                    <Text style={{margin:16,color:'black',}}>业主信息</Text>
+                    <View style={{width:width-64}}>
+
+                        <Madoka
                             label={'姓名'}
-                            labelStyle={{backgroundColor:'white'}}
+                            borderColor={Color.line}
+                            labelStyle={{ color: Color.content }}
                         />
-                        <Kaede
-                            style={{width:width-32,marginBottom:5}}
+                        <Madoka
                             label={'电话'}
-                            labelStyle={{backgroundColor:'white'}}
-
+                            borderColor={Color.line}
+                            labelStyle={{ color: Color.content }}
                         />
-
                     </View>
                 </View>
                 <View style={styles.cardContainer}>
@@ -120,9 +119,7 @@ export default class ExceptionAddPager extends Component<{}> {
                             blurOnSubmit={true}
                             onChangeText={(text) => this.setState({remark: text})}/>
                     </View>
-
-
-</View>
+                </View>
                 </ScrollView>
 
             </View>
