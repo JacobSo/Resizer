@@ -22,7 +22,7 @@ export default class MeasureDetailPager extends Component<{}> {
     constructor(props) {
         super(props);
         this.state = {
-            mayType: MapTypes.NORMAL,
+            mayType: MapTypes.NONE,
             zoom: 15,
             center: {
                 longitude: 113.981718,
@@ -67,8 +67,6 @@ export default class MeasureDetailPager extends Component<{}> {
                                 center={this.state.center}
                                 style={{height: 150,width:width, backgroundColor: Color.colorBlue, elevation: 5}}
                             />
-
-
                             <Text style={{paddingTop: 16, marginLeft: 16, color: 'white', fontSize: 18}}>工单号</Text>
                             <Text style={{marginLeft: 16, color: 'white'}}>订单号</Text>
                             <Text style={{margin: 16, color: 'white'}}>广东省佛山市顺德区均安镇南沙别墅</Text>
@@ -137,6 +135,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor: Color.background,
 
     },
     item: {
