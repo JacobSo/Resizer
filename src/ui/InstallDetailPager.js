@@ -33,8 +33,22 @@ export default class InstallDetailPager extends Component<{}> {
     openControlPanel = () => {
         this._drawer.open()
     };
+
     drawerLayout() {
-        return <View style={{backgroundColor:Color.content,height:height,width:width}}/>
+        return <View style={{backgroundColor:'white', height: height, width: width,elevation:2}}>
+            <View style={{backgroundColor: Color.colorBlue,elevation:2}}>
+
+            <Text style={{fontSize:18,margin:16,color:'white'}}>组件列表</Text>
+            <Text style={{color:'white',marginLeft:16,marginBottom:16}}>共3个组件</Text>
+            </View>
+
+            <TouchableOpacity>
+                <Text style={{margin:16}}>挡板A</Text></TouchableOpacity>
+            <TouchableOpacity>
+                <Text style={{margin:16}}>组件B</Text></TouchableOpacity>
+            <TouchableOpacity>
+                <Text style={{margin:16}}>组件X</Text></TouchableOpacity>
+        </View>
     }
 
     render() {
@@ -48,13 +62,17 @@ export default class InstallDetailPager extends Component<{}> {
                 openDrawerOffset={0.2}
                 panCloseMask={0.2}>
                 <View style={styles.container}>
-                    <WebView
-                        source={{uri: 'http://192.168.1.113:889'}}
-                        automaticallyAdjustContentInsets={true}
-                        scalesPageToFit={true}
-                        style={{width: width, height: height}}
-                        scrollEnabled={false}
-                    />
+                                        <WebView
+                 //    source={{uri: 'http://192.168.1.113:889'}}
+                                            source={require('../../webgl-collada-viewer-master/index.html')}
+                     automaticallyAdjustContentInsets={true}
+                     scalesPageToFit={true}
+                     style={{width: width, height: height}}
+                     scrollEnabled={false}
+                     />
+{/*
+                    <View style={{backgroundColor: 'black', width: width, height: height}}/>
+*/}
                     <View
                         style={styles.searchContainer}>
                         <TouchableOpacity onPress={() => {
@@ -65,7 +83,7 @@ export default class InstallDetailPager extends Component<{}> {
                         </TouchableOpacity>
                         <Text style={{marginLeft: 16}}>搜索组件清单</Text>
                         <TouchableOpacity style={{right: 16, position: 'absolute'}}
-                        onPress={()=>this.openControlPanel()}>
+                                          onPress={() => this.openControlPanel()}>
                             <Image style={{width: 20, height: 20, marginLeft: 16,}}
                                    source={ require('../drawable/menu_black.png')}/>
                         </TouchableOpacity>
@@ -76,7 +94,7 @@ export default class InstallDetailPager extends Component<{}> {
                         <View
                             style={styles.detailContainer}>
                             <View style={styles.titleContainer}>
-                            <Text style={{color: 'black'}}>组件详情</Text>
+                                <Text style={{color: 'black'}}>组件详情</Text>
                             </View>
                             <Text style={{
                                 padding: 16,

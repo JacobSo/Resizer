@@ -57,8 +57,6 @@ export default class MeasureDetailPager extends Component<{}> {
                 <ScrollView>
                     <View style={{marginBottom: 55}}>
                         <View style={{height: 250, backgroundColor: Color.colorBlue, elevation: 5}}>
-
-
                             <MapView
                                 trafficEnabled={this.state.trafficEnabled}
                                 baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
@@ -121,9 +119,7 @@ export default class MeasureDetailPager extends Component<{}> {
                                 <Text style={{color: 'white'}}>完成安装</Text>
 
                             </TouchableOpacity>
-
                         </View>
-
                     </View>
                 </ScrollView>
             </View>

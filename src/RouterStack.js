@@ -124,7 +124,7 @@ const RouterStack = StackNavigator({
 
     },
     {
-        initialRouteName: 'login',
+        initialRouteName: 'installDetail',
         headerMode: 'none',
     });
 
