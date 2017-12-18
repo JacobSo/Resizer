@@ -64,7 +64,7 @@ export default class InstallDetailPager extends Component<{}> {
                 <View style={styles.container}>
                                         <WebView
                  //    source={{uri: 'http://192.168.1.113:889'}}
-                                            source={require('../../webgl-collada-viewer-master/index.html')}
+                                            source={{html:'<!doctype html> <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" /> <html> <head><title>3D-Modell-Test</title> <script src="js/three.min.js" type="text/javascript"></script> <script src="js/Detector.js" type="text/javascript"></script> <script src="js/ColladaLoader.js" type="text/javascript"></script> <script src="js/3d.js" type="text/javascript"></script> <style type="text/css">html,body {margin: 0;padding: 0;} </style> </head> <body> <div id="3dmodell"></div> <!-- <img style="max-width:100%;"  src="demo_img.png"/>--> </body> </html>'}}
                      automaticallyAdjustContentInsets={true}
                      scalesPageToFit={true}
                      style={{width: width, height: height}}
