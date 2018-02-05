@@ -8,13 +8,27 @@ import {
     Text,
     View,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
+
 } from 'react-native';
+import App from './Application';
 import Toolbar from "./component/Toolbar";
 const {width, height} = Dimensions.get('window');
 
 
 export default class Launcher extends Component<{}> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            textTemp:'123',
+        };
+    }
+
+    componentDidMount() {
+        App.initAccount(()=>{
+            console.log(App.token)
+        })
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -39,7 +53,8 @@ export default class Launcher extends Component<{}> {
                         style={styles.iconContainer}
                         onPress={
                             () => {
-                                this.props.nav.navigate("measureList")
+                        //        this.props.nav.navigate("measureList")
+                                this.setState({textTemp:"3333333"})
                             }
                         }>
                         <Image style={styles.icon} resizeMode="contain"

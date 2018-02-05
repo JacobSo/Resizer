@@ -11,19 +11,21 @@ import {
     TouchableOpacity,
     ListView, FlatList, ScrollView, WebView
 } from 'react-native';
-import Toolbar from "../component/Toolbar";
 import Drawer from 'react-native-drawer'
 const {width, height} = Dimensions.get('window');
-const webPage = require('../../html/index.html');
+
 
 export default class InstallDetailPager extends Component<{}> {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            html:null
+        };
     }
 
     componentDidMount() {
+
     }
 
     closeControlPanel = () => {
@@ -53,6 +55,8 @@ export default class InstallDetailPager extends Component<{}> {
 
 
     render() {
+        let webPage = require('../../html/index.html');
+        console.log(webPage);
         return (
             <Drawer
                 ref={(ref) => this._drawer = ref}
@@ -64,8 +68,7 @@ export default class InstallDetailPager extends Component<{}> {
                 panCloseMask={0.2}>
                 <View ref="webview" style={styles.container}>
                     <WebView
-                       // source={{uri: 'http://192.168.1.113:889'}}
-                        source={ webPage}
+                        source={{uri: 'http://192.168.1.113:889'}}
                         automaticallyAdjustContentInsets={true}
                         scalesPageToFit={true}
                         javaScriptEnabled={true}
@@ -76,7 +79,7 @@ export default class InstallDetailPager extends Component<{}> {
                     {/*
                      <View style={{backgroundColor: 'black', width: width, height: height}}/>
                      */}
-                    <View
+                 {/*   <View
                         style={styles.searchContainer}>
                         <TouchableOpacity onPress={() => {
                             this.props.nav.goBack(null)
@@ -119,7 +122,7 @@ export default class InstallDetailPager extends Component<{}> {
                                    source={ require('../drawable/navigate_blue.png')}/>
                         </TouchableOpacity>
                     </View>
-
+*/}
                 </View>
             </Drawer>
         );

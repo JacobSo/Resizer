@@ -1,0 +1,148 @@
+/**
+ * Created by Administrator on 2017/3/13.
+ */
+'use strict';
+import App from '../Application';
+
+let BASE_URL = 'http://192.168.1.113:8088/';
+let newFetch = function (input, opts) {
+    return new Promise((resolve, reject) => {
+        setTimeout(reject, opts.timeout);
+        fetch(input, opts).then(resolve, reject);
+    });
+};
+export  default  class ApiService {
+
+
+    static postRequest(method, param) {
+        let temp = BASE_URL + method;
+        console.log('method:' + temp + '\nparam:' + param);
+
+        return newFetch(temp, {
+            method: 'POST',
+            headers: {
+                // 'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: param,
+            timeout: 30000
+        })
+            .then((response) => {
+                console.log(response);
+                return response;
+            })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                return responseJson;
+            })
+    }
+
+    static getRequest(method, param) {
+        let temp = BASE_URL + method;
+        console.log('method:' + temp + '\nparam:' + param);
+
+        return newFetch(temp, {
+            method: 'GET',
+            timeout: 30000,
+            //body: param
+        })
+            .then((response) => {
+                console.log(response);
+                return response;
+            })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                return responseJson;
+
+            })
+
+    }
+
+    static register(name, phone, serviceType, userType, provider, operation) {
+        let method = 'ServiceApp/register';
+        let param = 'UserName=' + name + '&' +
+            'PhoneNumber=' + phone + '&' +
+            'ServiceType=' + serviceType + '&' +
+            'UserType=' + userType + '&' +
+            'Provider=' + provider + '&' +
+            'Operation=' + operation;
+
+        return this.postRequest(method, param);
+    }
+
+    static login(phone) {
+        let method = 'ServiceApp/login';
+        let param = 'Phone=' + phone;
+        return this.postRequest(method, param);
+    }
+
+    static getData(type, name, phone) {
+        let method = 'ServiceApp/login';
+        let param = JSON.stringify({
+            OrderType: type,
+            User: name,
+            Phone: phone,
+        });
+        return this.getRequest(method, param);
+    }
+
+    static submitException(order, component, abnormalDesc, user, phone, imageList, solution) {
+        let method = 'ServiceApp/submitException';
+        let param = JSON.stringify({
+            WorkOrder: order,
+            ComponentCode: component,
+            AbnormalDesc: abnormalDesc,
+            User: user,
+            Phone: phone,
+            ImageList: imageList,
+            AbnormalSolution: solution,
+        });
+        return this.postRequest(method, param);
+    }
+
+    static deleteException(order, component) {
+        let method = 'ServiceApp/deleteException';
+        let param = JSON.stringify({
+            WorkOrder: order,
+            ComponentCode: component,
+        });
+        return this.postRequest(method, param);
+    }
+
+    static confirmTask(type, status, order) {
+        let method = 'ServiceApp/confirmTask';
+        let param = JSON.stringify({
+            OrderType: type,
+            OrderStatus: status,
+            WorkOrder: order,
+        });
+        return this.postRequest(method, param);
+    }
+
+    static roomDesc(order, sku, room) {
+        let method = 'ServiceApp/confirmTask';
+        let param = JSON.stringify({
+            WorkOrder: order,
+            SkuCode: sku,
+            RoomDesc: room,
+        });
+        return this.postRequest(method, param);
+    }
+
+    static uploadFile(order, sku, room) {
+        let method = 'ServiceProvider/uploadFile';
+        let param = JSON.stringify({
+            WorkOrder: order,
+            SkuCode: sku,
+            RoomDesc: room,
+        });
+        return this.postRequest(method, param);
+    }
+
+    static getProvider() {
+        let method = 'ServiceGenerate/getProviderList?Token=' + App.session;
+        return this.getRequest(method);
+    }
+}

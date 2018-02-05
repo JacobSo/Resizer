@@ -21,6 +21,7 @@ import ExceptionDetailPager from "./ui/ExceptionDetailPager";
 import ExceptionAddPager from "./ui/ExceptionAddPager";
 import PreferencesPager from "./ui/PreferencesPager";
 import LoginPager from "./ui/LoginPager";
+import ProviderListPager from "./ui/ProviderListPager";
 
 const {width, height} = Dimensions.get('window');
 
@@ -86,6 +87,10 @@ const  ExceptionAddScreen = ({navigation}) => _renderScreen(<View
 const  PreferencesScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<PreferencesPager {...navigation.state.params}
                                                                               nav={navigation}/></View>);
+const  ProviderListScreen = ({navigation}) => _renderScreen(<View
+    style={{height: height}}>{_statusBar(Color.background)}<ProviderListPager {...navigation.state.params}
+                                                                              nav={navigation}/></View>);
+
 
 const RouterStack = StackNavigator({
         launcher: {
@@ -121,10 +126,13 @@ const RouterStack = StackNavigator({
         login: {
             screen: LoginScreen,
         },
+        provider: {
+            screen: ProviderListScreen,
+        },
 
     },
     {
-        initialRouteName: 'installDetail',
+        initialRouteName: 'login',
         headerMode: 'none',
     });
 
