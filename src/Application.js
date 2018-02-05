@@ -19,7 +19,7 @@ export  default  class Application extends Component {
     static initAccount(callback) {
         console.log("123")
         AsyncStorage.getAllKeys((err, keys) => {
-            console.log("321")
+            console.log(keys)
             AsyncStorage.multiGet(keys, (err, stores) => {
                 stores.map((result, i, store) => {
                     let key = store[i][0];
@@ -50,17 +50,17 @@ export  default  class Application extends Component {
         this.serviceType = serviceType;
         this.createTime = createTime;
 
-         console.log("---" + token + "---" + phone + "---" + userName + "---" + active+'------'+serviceArea+'-----'+userType);
+         console.log("---" + token + "---" + phone + "---" + userName + "---" + active+'------'+serviceArea+'-----'+userType+"---"+serviceType+"-------"+createTime);
         AsyncStorage.multiSet(
             [
-                ['token', token],
-                ['phone', phone],
-                ['userName', userName],
-                ['active', active],
-                ['serviceArea', serviceArea],
-                ['userType',userType],
-                ['serviceType',serviceType],
-                ['createTime',createTime],
+                ['token', ""],
+                ['phone', ""],
+                ['userName', ""],
+                ['active', ""],
+                ['serviceArea', ""],
+                ['userType',""],
+                ['serviceType',""],
+                ['createTime',""],
             ])
             .then(() => {
                     console.log("save success!");

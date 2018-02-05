@@ -14,7 +14,7 @@ import {
     TextInput,
     TouchableOpacity,
     KeyboardAvoidingView,
-    ScrollView, Switch, Alert
+    ScrollView, Switch, Alert,AsyncStorage
 } from 'react-native';
 import {MenuProvider} from 'react-native-popup-menu';
 import Loading from 'react-native-loading-spinner-overlay';
@@ -149,6 +149,11 @@ export default class LoginPager extends Component<{}> {
                         responseJson.listData[0].userType,
                         responseJson.listData[0].serviceType,
                         responseJson.listData[0].registerTime,
+                    );
+                    AsyncStorage.setItem('age',"18").then(
+                        ()=>{   //成功的操作
+                            console.log("age保存成功!");
+                        },
                     );
                     this.props.nav.navigate('launcher');
                 } else {
