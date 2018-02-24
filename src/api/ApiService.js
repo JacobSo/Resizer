@@ -45,7 +45,7 @@ export  default  class ApiService {
         return newFetch(temp, {
             method: 'GET',
             timeout: 30000,
-            //body: param
+         //   body: param
         })
             .then((response) => {
                 console.log(response);
@@ -78,14 +78,10 @@ export  default  class ApiService {
         return this.postRequest(method, param);
     }
 
-    static getData(type, name, phone) {
-        let method = 'ServiceApp/login';
-        let param = JSON.stringify({
-            OrderType: type,
-            User: name,
-            Phone: phone,
-        });
-        return this.getRequest(method, param);
+    static getData(type) {
+        let method = 'ServiceApp/getData?OrderType='+type+'&User='+App.userName+'&Phone='+App.phone;
+
+        return this.getRequest(method, null);
     }
 
     static submitException(order, component, abnormalDesc, user, phone, imageList, solution) {
@@ -142,7 +138,7 @@ export  default  class ApiService {
     }
 
     static getProvider() {
-        let method = 'ServiceGenerate/getProviderList?Token=' + App.session;
+        let method = 'ServiceGenerate/getProviderList?Token=' + App.token;
         return this.getRequest(method);
     }
 }

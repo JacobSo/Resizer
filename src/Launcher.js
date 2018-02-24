@@ -20,21 +20,24 @@ export default class Launcher extends Component<{}> {
     constructor(props) {
         super(props);
         this.state = {
-            textTemp:'123',
+            textTemp: '123',
         };
     }
 
     componentDidMount() {
-        App.initAccount(()=>{
+    /*    App.initAccount(() => {
             console.log(App.token)
         })
+        console.log(App.getSingle("token"))*/
+
     }
+
     render() {
         return (
             <View style={styles.container}>
                 <Toolbar
                     elevation={2}
-                    title={["林氏定制服务商"]}
+                    title={[App.userName]}
                     color={"white"}
                     isHomeUp={false}
                     isAction={true}
@@ -44,7 +47,7 @@ export default class Launcher extends Component<{}> {
                         () => {
                         },
                         () => {
-                        this.props.nav.navigate('preferences')
+                            this.props.nav.navigate('preferences')
                         }
                     ]}
                 />
@@ -53,8 +56,7 @@ export default class Launcher extends Component<{}> {
                         style={styles.iconContainer}
                         onPress={
                             () => {
-                        //        this.props.nav.navigate("measureList")
-                                this.setState({textTemp:"3333333"})
+                                       this.props.nav.navigate("commonList",{listType:0})
                             }
                         }>
                         <Image style={styles.icon} resizeMode="contain"
@@ -63,7 +65,7 @@ export default class Launcher extends Component<{}> {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconContainer} onPress={
                         () => {
-                            this.props.nav.navigate("installList")
+                            this.props.nav.navigate("commonList",{listType:1})
                         }
                     }>
                         <Image style={styles.icon} resizeMode="contain"
@@ -72,17 +74,17 @@ export default class Launcher extends Component<{}> {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.iconRowContainer}>
-                    <TouchableOpacity style={styles.iconContainer}  onPress={
+                    <TouchableOpacity style={styles.iconContainer} onPress={
                         () => {
-                            this.props.nav.navigate("exceptionList")
+                            this.props.nav.navigate("commonList",{listType:2})
                         }}>
                         <Image style={styles.icon} resizeMode="contain"
                                source={require('./drawable/main_exception_icon.png')}/>
                         <Text>上报异常</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.iconContainer}  onPress={
+                    <TouchableOpacity style={styles.iconContainer} onPress={
                         () => {
-                            this.props.nav.navigate("fixList")
+                            this.props.nav.navigate("commonList",{listType:3})
                         }}>
                         <Image style={styles.icon} resizeMode="contain"
                                source={require('./drawable/main_repair_icon.png')}/>

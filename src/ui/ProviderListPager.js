@@ -31,7 +31,6 @@ export default class ProviderListPager extends Component {
             console.log(this.props.providerData)
             this.setState({
                 items: this.props.providerData,
-           //     itemsBackup: this.initItems(responseJson.listData),
             });
         } else
             this._onRefresh();

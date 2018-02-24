@@ -6,15 +6,27 @@ import React, {Component} from 'react';
 import {AsyncStorage} from 'react-native';
 
 export  default  class Application extends Component {
-    static token='';//
+    static token = '';//
     static phone = '';//
     static userName = '';//
     static active = '';//
-    static serviceArea="";//
+    static serviceArea = "";//
     static userType;
     static serviceType = "";//
     static createTime = '';
 
+    static saveSingle(key, value) {
+        console.log("save:")
+        return AsyncStorage.setItem(key, JSON.stringify(value));
+    }
+
+    static getSingle(key) {
+        return AsyncStorage.getItem(key).then((value) => {
+            const jsonValue = JSON.parse(value);
+            console.log("value:"+jsonValue);
+            return jsonValue;
+        });
+    }
 
     static initAccount(callback) {
         console.log("123")
@@ -50,23 +62,23 @@ export  default  class Application extends Component {
         this.serviceType = serviceType;
         this.createTime = createTime;
 
-         console.log("---" + token + "---" + phone + "---" + userName + "---" + active+'------'+serviceArea+'-----'+userType+"---"+serviceType+"-------"+createTime);
+        console.log("---" + token + "---" + phone + "---" + userName + "---" + active + '------' + serviceArea + '-----' + userType + "---" + serviceType + "-------" + createTime);
         AsyncStorage.multiSet(
             [
-                ['token', ""],
-                ['phone', ""],
-                ['userName', ""],
+                ['token', token],
+                ['phone', phone],
+                ['userName', userName],
                 ['active', ""],
-                ['serviceArea', ""],
-                ['userType',""],
-                ['serviceType',""],
-                ['createTime',""],
+                ['serviceArea', serviceArea],
+                ['userType', ""],
+                ['serviceType', ""],
+                ['createTime', ""],
             ])
             .then(() => {
                     console.log("save success!");
                 },
             ).catch(() => {
-                 console.log("save failed!");
+            console.log("save failed!");
         });
     }
 }

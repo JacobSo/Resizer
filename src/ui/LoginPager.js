@@ -150,11 +150,8 @@ export default class LoginPager extends Component<{}> {
                         responseJson.listData[0].serviceType,
                         responseJson.listData[0].registerTime,
                     );
-                    AsyncStorage.setItem('age',"18").then(
-                        ()=>{   //成功的操作
-                            console.log("age保存成功!");
-                        },
-                    );
+
+//App.saveSingle("token",responseJson.listData[0].token);
                     this.props.nav.navigate('launcher');
                 } else {
                     Toast.show(responseJson.errMsg);

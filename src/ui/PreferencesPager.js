@@ -17,6 +17,9 @@ import Color from '../const/Color';
 import Toolbar from '../component/Toolbar'
 import PreferencesTextItem from '../component/PreferencesTextItem'
 import {NavigationActions} from "react-navigation";
+import App from '../Application';
+import Utils from '../Utils';
+
 const {width, height} = Dimensions.get('window');
 
 export default class PreferencesPager extends Component {
@@ -62,9 +65,11 @@ export default class PreferencesPager extends Component {
                         <PreferencesTextItem
                             group="常规"
                             items={[
-                                ['test', '注销登录'],
-                                ['dpt', this.state.department],
-                                ['修改密码', '点击修改密码'],
+                                [App.userName, '注销登录'],
+                                ['服务类型', Utils.serviceType[App.serviceType]],
+                                ['服务区域', App.serviceArea],
+                                ['用户类型', Utils.userType[App.userType]],
+                                ['账号状态', Utils.activeStatus[App.active]],
                             ]}
                             functions={[
                                 () => {
@@ -94,12 +99,8 @@ export default class PreferencesPager extends Component {
                                 ['清理图片缓存', '所有图片将重新下载'],
                                 ['检查更新', '当前版本：' + '0.1'],
                                 ['此版本更新记录', 'v5'],
-                                ['手动更新', 'http://pgyer.com/lsout']
                             ]}
                             functions={[
-                                () => {
-
-                                },
                                 () => {},
                                 () => {},
                                 () => {}]}/>
