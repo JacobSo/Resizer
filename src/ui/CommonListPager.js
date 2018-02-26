@@ -113,7 +113,16 @@ export default class CommonListPager extends Component<{}> {
                                     <TouchableOpacity
                                         style={styles.iconContainer}
                                         onPress={() => {
-                                            this.props.nav.navigate("measureDetail")
+                                            if(this.props.listType===0){
+                                                this.props.nav.navigate("measureDetail",{
+                                                    data:item,
+                                                })
+
+                                            }else if(this.props.listType===1){
+                                                this.props.nav.navigate("installDetail",{
+                                                    data:item,
+                                                })
+                                            }
                                         }}>
                                         <View style={{
                                             justifyContent: 'space-between',
@@ -195,6 +204,6 @@ const styles = StyleSheet.create({
         height: 55,
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
 
 });
