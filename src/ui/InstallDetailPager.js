@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import Drawer from 'react-native-drawer'
 const {width, height} = Dimensions.get('window');
-
+//http://kh.linshimuye.cn:8022/materializes/
 
 export default class InstallDetailPager extends Component<{}> {
 
