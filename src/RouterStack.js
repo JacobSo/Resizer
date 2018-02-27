@@ -13,12 +13,13 @@ import Launcher from "./Launcher";
 import Color from './const/Color';
 import CommonListPager from "./ui/CommonListPager";
 import MeasureDetailPager from "./ui/MeasureDetailPager";
-import InstallDetailPager from "./ui/InstallDetailPager";
 import ExceptionDetailPager from "./ui/ExceptionDetailPager";
 import ExceptionAddPager from "./ui/ExceptionAddPager";
 import PreferencesPager from "./ui/PreferencesPager";
 import LoginPager from "./ui/LoginPager";
 import ProviderListPager from "./ui/ProviderListPager";
+import InstallHelperPager from "./ui/InstallHelperPager";
+import ProductDetailPager from "./ui/ProductDetailPager";
 
 const {width, height} = Dimensions.get('window');
 
@@ -66,8 +67,8 @@ const MeasureDetailScreen = ({navigation}) => _renderScreen(<View
 const CommonListScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<CommonListPager {...navigation.state.params}
                                                  nav={navigation}/></View>);
-const InstallDetailScreen = ({navigation}) => _renderScreen(<View
-    style={{height: height}}>{_statusBar('black','light-content')}<InstallDetailPager {...navigation.state.params}
+const InstallHelperScreen = ({navigation}) => _renderScreen(<View
+    style={{height: height}}>{_statusBar('black','light-content')}<InstallHelperPager {...navigation.state.params}
                                                nav={navigation}/></View>);
 const  ExceptionDetailScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<ExceptionDetailPager {...navigation.state.params}
@@ -80,6 +81,9 @@ const  PreferencesScreen = ({navigation}) => _renderScreen(<View
                                                                               nav={navigation}/></View>);
 const  ProviderListScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<ProviderListPager {...navigation.state.params}
+                                                                              nav={navigation}/></View>);
+const  ProductDetailScreen = ({navigation}) => _renderScreen(<View
+    style={{height: height}}>{_statusBar(Color.background)}<ProductDetailPager {...navigation.state.params}
                                                                               nav={navigation}/></View>);
 
 
@@ -96,10 +100,6 @@ const RouterStack = StackNavigator({
         commonList: {
             screen: CommonListScreen,
         },
-        installDetail: {
-            screen: InstallDetailScreen,
-        },
-
         exceptionDetail: {
             screen: ExceptionDetailScreen,
         },
@@ -114,6 +114,12 @@ const RouterStack = StackNavigator({
         },
         provider: {
             screen: ProviderListScreen,
+        },
+        installHelper: {
+            screen: InstallHelperScreen,
+        },
+        productDetail: {
+            screen: ProductDetailScreen,
         },
 
     },

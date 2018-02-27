@@ -15,7 +15,7 @@ import Drawer from 'react-native-drawer'
 const {width, height} = Dimensions.get('window');
 //http://kh.linshimuye.cn:8022/materializes/
 
-export default class InstallDetailPager extends Component<{}> {
+export default class InstallHelperPager extends Component<{}> {
 
     constructor(props) {
         super(props);
@@ -32,7 +32,7 @@ export default class InstallDetailPager extends Component<{}> {
         return (
                 <View ref="webview" style={styles.container}>
                     <WebView
-                        source={{uri: 'http://192.168.1.113:889'}}
+                        source={{uri: 'http://kh.linshimuye.cn:8022/materializes/'}}
                         automaticallyAdjustContentInsets={true}
                         scalesPageToFit={true}
                         javaScriptEnabled={true}

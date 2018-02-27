@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import Color from '../const/Color';
 import {
     Image,
-    Platform,
+    Alert,
     StyleSheet,
     Text,
     View,
@@ -12,8 +12,11 @@ import {
     ListView, FlatList, ScrollView
 } from 'react-native';
 import Toolbar from "../component/Toolbar";
-import { MapView, MapTypes, MapModule, Geolocation } from 'react-native-baidu-map';
+import {MapView, MapTypes, MapModule, Geolocation} from 'react-native-baidu-map';
 import Utils from "../Utils";
+import ApiService from '../api/ApiService';
+import Toast from 'react-native-root-toast';
+import Loading from 'react-native-loading-spinner-overlay';
 
 const {width, height} = Dimensions.get('window');
 
@@ -37,20 +40,86 @@ export default class MeasureDetailPager extends Component<{}> {
     }
 
     componentDidMount() {
-        console.log(this.props.data.listData)
+        //console.log(this.props.data.listData)
     }
+
+    confirmTask(flag) {
+        Alert.alert(
+            flag === 0 ? '拒绝任务' : '接受任务',
+            flag === 0 ? '确认拒绝任务？' : '确认接受任务？',
+            [
+                {
+                    text: '取消', onPress: () => {
+                }
+                },
+                {
+                    text: '确定', onPress: () => {
+                    this.setState({isLoading: true});
+
+                    ApiService.confirmTask(
+                        this.props.listType,
+                        flag,
+                        this.props.data.workOrder)
+                        .then((responseJson) => {
+                            this.setState({isLoading: false,});
+                            Toast.show(responseJson.errMsg);
+
+                            if (!responseJson.err) {
+                                this.props.confirmFunc(flag)
+                                this.props.nav.goBack(null);
+                            }
+                        })
+                        .catch((error) => {
+                            this.setState({isLoading: false,});
+                            Toast.show("出错了，请稍后再试");
+                        }).done();
+                }
+                },
+            ]
+        );
+    }
+
+    readme(title,content){
+        Alert.alert(
+            title,content,
+            [
+                {
+                    text: '取消', onPress: () => {
+                }
+                }
+            ]
+        );
+    }
+
+    phoneCall(title,content){
+        Alert.alert(
+            title,content,
+            [
+                {
+                    text: '取消', onPress: () => {
+                }
+                },
+                {
+                    text:'拨打',onPress:()=>{
+
+                }
+                }
+            ]
+        );
+    }
+
 
     render() {
         return (
             <View style={styles.container}>
                 <Toolbar
                     elevation={2}
-                    title={["测量任务详细"]}
+                    title={[Utils.taskTitle[this.props.listType] + "详细"]}
                     color={"white"}
                     isHomeUp={true}
                     isAction={true}
                     isActionByText={true}
-                    actionArray={['完成']}
+                    actionArray={[]}
                     functionArray={[
                         () => {
                             this.props.nav.goBack(null)
@@ -59,20 +128,24 @@ export default class MeasureDetailPager extends Component<{}> {
                 />
                 <ScrollView>
                     <View style={{marginBottom: 55}}>
-                        <View style={{ backgroundColor: Color.colorBlue, elevation: 5}}>
+                        <View style={{backgroundColor: Color.colorBlue, elevation: 5}}>
                             <MapView
                                 trafficEnabled={this.state.trafficEnabled}
                                 baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
                                 zoom={this.state.zoom}
                                 mapType={this.state.mapType}
                                 center={this.state.center}
-                                style={{height: 150,width:width, backgroundColor: Color.colorBlue, elevation: 5}}
+                                style={{height: 150, width: width, backgroundColor: Color.colorBlue, elevation: 5}}
                             />
                             <Text style={{paddingTop: 16, marginLeft: 16, color: 'white'}}>测量工单号</Text>
-                            <Text style={{marginLeft: 16, color: 'white', fontSize: 18}}>{this.props.data.workOrder}</Text>
+                            <Text style={{
+                                marginLeft: 16,
+                                color: 'white',
+                                fontSize: 18
+                            }}>{this.props.data.workOrder}</Text>
                             <Text style={{margin: 16, color: 'white'}}>
-                                {this.props.data.province+this.props.data.customerCity+this.props.data.area+this.props.data.address}
-                                </Text>
+                                {this.props.data.province + this.props.data.customerCity + this.props.data.area + this.props.data.address}
+                            </Text>
                             <TouchableOpacity
                                 onPress={() => {
                                 }}
@@ -82,27 +155,27 @@ export default class MeasureDetailPager extends Component<{}> {
                             </TouchableOpacity>
                         </View>
 
-                        <View style={styles.item}>
+                        <TouchableOpacity style={styles.item} onPress={()=>this.readme('预约上门时间',Utils.formatDate(this.props.data.bookTime))}>
                             <Image style={styles.itemIconContainer}
                                    source={ require('../drawable/detail_clock.png')}/>
                             <Text style={{marginLeft: 16}}>{Utils.formatDate(this.props.data.bookTime)}</Text>
-                        </View>
-                        <View style={styles.item}>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.item} onPress={()=>this.readme('客户ID',this.props.data.consumerName)}>
                             <Image style={styles.itemIconContainer}
                                    source={ require('../drawable/detail_user.png')}/>
                             <Text style={{marginLeft: 16}}>{this.props.data.consumerName}</Text>
-                        </View>
-                        <View style={styles.item}>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.item} onPress={()=>this.readme('客户联系方式',this.props.data.bookTime)}>
                             <Image style={styles.itemIconContainer}
                                    source={ require('../drawable/detail_call.png')}/>
                             <Text style={{marginLeft: 16}}>{this.props.data.consumerPhone}</Text>
-                        </View>
+                        </TouchableOpacity>
 
-                        <View style={styles.item}>
+                        <TouchableOpacity style={styles.item} onPress={()=>this.readme('客户备注',this.props.data.remark)}>
                             <Image style={styles.itemIconContainer}
                                    source={ require('../drawable/detail_remark.png')}/>
                             <Text style={{marginLeft: 16}}>{this.props.data.remark}</Text>
-                        </View>
+                        </TouchableOpacity>
 
                         <FlatList
                             data={this.props.data.list}
@@ -110,27 +183,95 @@ export default class MeasureDetailPager extends Component<{}> {
                             renderItem={({item}) => <TouchableOpacity
                                 style={styles.iconContainer}
                                 onPress={() => {
-
+                                    if (this.props.listType === 0) {
+                                        this.props.nav.navigate("productDetail", {
+                                            data: item,
+                                            listType: this.props.listType
+                                        })
+                                    } else {
+                                        this.props.nav.navigate("productDetail", {
+                                            data: item,
+                                            listType: this.props.listType
+                                        })
+                                    }
                                 }}>
-                                <Image style={{  width: width-32,
-                                    height: 65}} resizeMode="contain"
-                                       source={require('../drawable/company_logo.png')}/>
-                                <Text style={{color: Color.colorBlue}}>{'商品名称：'+(item.itemName?item.itemName:"-")}</Text>
+
+                                <Image style={{
+                                    width: width - 32,
+                                    height: 65,
+
+                                    backgroundColor: Color.colorGrey
+                                }} resizeMode="cover"
+                                       source={{uri: item.picPath ? item.picPath : ""}}/>
+                                <Text
+                                    style={{
+                                        color: Color.colorBlue,
+                                        marginLeft: 16,
+                                        marginTop: 16
+                                    }}>{'商品名称：' + (item.itemName ? item.itemName : "-")}</Text>
                                 <View style={{
                                     borderBottomWidth: 1,
                                     borderBottomColor: Color.line, paddingBottom: 16
                                 }}>
                                     <Text style={{
+                                        marginLeft: 16,
                                         color: Color.colorGreen,
                                     }}>{item.skuCode}</Text>
                                 </View>
-                                <Text style={{marginTop: 16,}}>{'sku描述：' + item.serviceHost}</Text>
-                                <Text>{'测量图片：' + (item.imageList?item.imageList.length+"张":"无")}</Text>
-                                <Text>{'备注：' + (item.remark?item.remark:"-")}</Text>
-                                <Text>{'房间：' + (item.roomDesc?item.roomDesc:"未填写")}</Text>
+                                <Text
+                                    style={{
+                                        marginTop: 16,
+                                        marginLeft: 16
+                                    }}>{'sku描述：' + (item.skuDescription ? tem.skuDescription : "-")}</Text>
+                                <Text
+                                    style={{marginLeft: 16}}>{'测量图片：' + (item.imageList ? item.imageList.length + "张" : "无")}</Text>
+                                <Text style={{marginLeft: 16}}>{'备注：' + (item.remark ? item.remark : "-")}</Text>
+                                {
+                                    (() => {
+                                        if (this.props.listType === 0) {
+                                            return <Text style={{
+                                                marginLeft: 16,
+                                                marginBottom: 16
+                                            }}>{'房间：' + (item.roomDesc ? item.roomDesc : "未填写")}</Text>
+
+                                        } else {
+                                            return <Text style={{
+                                                marginLeft: 16,
+                                                marginBottom: 16
+                                            }}>{'包件数：' + (item.packageCount ? item.packageCount : "-")}</Text>
+                                        }
+                                    })()
+                                }
+
                             </TouchableOpacity>
                             }
                         />
+                        {
+                            (() => {
+                                if (this.props.data.measureStatus === 0) {
+                                    return <View>
+                                        <TouchableOpacity
+                                            style={[styles.btnContainer, {backgroundColor: Color.colorBlue}]}
+                                            onPress={() => {
+this.confirmTask(1)
+                                            }}>
+                                            <Text style={{color: 'white'}}>接受任务</Text>
+
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity
+                                            style={[styles.btnContainer, {backgroundColor: 'white'}]}
+                                            onPress={() => {
+                                                this.confirmTask(0)
+                                            }}>
+                                            <Text>拒绝任务</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                }
+                            })()
+                        }
+
+                        <Loading visible={this.state.isLoading}/>
                     </View>
                 </ScrollView>
             </View>
@@ -151,7 +292,7 @@ const styles = StyleSheet.create({
         padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: Color.line,
-        backgroundColor:'white'
+        backgroundColor: 'white'
     },
     btnContainer: {
         flex: 1,
@@ -172,7 +313,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         position: 'absolute',
         right: 0,
-        bottom: 65,
+        bottom: 75,
         backgroundColor: 'white',
         borderRadius: 50,
         elevation: 5,
@@ -184,7 +325,6 @@ const styles = StyleSheet.create({
         width: width - 32,
         borderRadius: 10,
         backgroundColor: 'white',
-        padding: 16,
         margin: 16,
         elevation: 2,
     }

@@ -109,19 +109,31 @@ export default class CommonListPager extends Component<{}> {
                                         colors={[Color.colorBlue]}
                                         progressBackgroundColor="white"
                                     />}
-                                renderItem={({item}) =>
+                                renderItem={({item,index}) =>
                                     <TouchableOpacity
                                         style={styles.iconContainer}
                                         onPress={() => {
-                                            if(this.props.listType===0){
+                                            if(this.props.listType===0||this.props.listType===1){
+
                                                 this.props.nav.navigate("measureDetail",{
                                                     data:item,
+                                                    listType:this.props.listType,
+                                                    confirmFunc:(value)=>{
+                                                        item.measureStatus = value;
+                                                        item.installStatus = value;
+                                                        if(value===0){
+                                                            this.state.items.splice(index,1)
+                                                        }
+                                                        this.setState({})
+                                                    }
                                                 })
-
-                                            }else if(this.props.listType===1){
-                                                this.props.nav.navigate("installDetail",{
+                                            }else if(this.props.listType===2){
+                                                this.props.nav.navigate("exceptionDetail",{
                                                     data:item,
+                                                    listType:this.props.listType
                                                 })
+                                            }else{
+
                                             }
                                         }}>
                                         <View style={{
@@ -130,13 +142,17 @@ export default class CommonListPager extends Component<{}> {
                                             width: width - 64
                                         }}>
                                             <Text style={{color: 'black',}}>{'工单号：\n' + item.workOrder}</Text>
-                                            <Text style={{
+                                            <View style={{
                                                 backgroundColor: this.getStatus(item) === 0 ? Color.colorOrange : Color.colorCyanDark,
                                                 padding: 5,
-                                                color: 'white',
                                                 borderRadius: 10,
-                                                height: 31
+                                                height: 31,
+                                                justifyContent:'center'
+                                            }}>
+                                            <Text style={{
+                                                color: 'white',
                                             }}>{this.getStatus(item) === 0 ? '待接收' : Utils.taskStatus[this.props.listType]}</Text>
+                                            </View>
                                         </View>
                                         <View style={{
                                             borderBottomWidth: 1,
