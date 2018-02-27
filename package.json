@@ -17,6 +17,7 @@
     "react-native-gesture-handler": "^1.0.0-alpha.35",
     "react-native-image-picker": "^0.26.7",
     "react-native-loading-spinner-overlay": "^0.5.2",
+    "react-native-popup-dialog": "^0.10.46",
     "react-native-popup-menu": "^0.12.2",
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-tab-view": "^0.0.73",

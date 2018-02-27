@@ -14,6 +14,10 @@ import {
 import Toolbar from "../component/Toolbar";
 import {MapView, MapTypes, MapModule, Geolocation} from 'react-native-baidu-map';
 import Utils from "../Utils";
+import InputDialog from "../component/InputDialog";
+import * as ImageOptions from "../const/ImagePickerOptions"
+
+const ImagePicker = require('react-native-image-picker');
 
 const {width, height} = Dimensions.get('window');
 
@@ -22,7 +26,9 @@ export default class ProductDetailPager extends Component<{}> {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            editContent:''
+        };
     }
 
     componentDidMount() {
@@ -111,12 +117,22 @@ export default class ProductDetailPager extends Component<{}> {
                         <View style={[styles.itemText, {paddingBottom: 10}]}>
                             <Text>{'测量文件'}</Text>
                             <Text
-                                style={{color: Color.black_semi_transparent}}>{this.props.data.modelLink ? '完成' : '未完成'}</Text>
+                                style={{color: Color.black_semi_transparent}}>{this.props.data.modelLink ? '完成' : '未上传'}</Text>
+                        </View>
+                        <View style={[styles.itemText, {paddingBottom: 10}]}>
+                            <Text>{'所属房间'}</Text>
+                            <Text
+                                style={{color: Color.black_semi_transparent}}>{this.props.data.roomDesc ? this.props.data.roomDesc : '-'}</Text>
                         </View>
                         <TouchableOpacity
                             style={[styles.btnContainer, {backgroundColor: Color.colorBlue}]}
                             onPress={() => {
-                                this.props.nav.navigate("measureDetail")
+                                ImagePicker.showImagePicker(ImageOptions.options, (response) => {
+                                    if (!response.didCancel) {
+                                     //   this.state.pics.push(response);
+                                     //   this.setState({dataSourcePic: this.state.dataSourcePic.cloneWithRows(this.state.pics),});
+                                    }
+                                });
                             }}>
                             <Text style={{color: 'white'}}>上传图片</Text>
 
@@ -127,7 +143,7 @@ export default class ProductDetailPager extends Component<{}> {
                                     return <TouchableOpacity
                                         style={[styles.btnContainer, {backgroundColor: 'white'}]}
                                         onPress={() => {
-                                            this.props.nav.navigate("measureDetail")
+                                            this.popupDialog.show()
                                         }}>
                                         <Text>设置房间</Text>
 
@@ -148,6 +164,24 @@ export default class ProductDetailPager extends Component<{}> {
 
                     </View>
                 </ScrollView>
+                <InputDialog
+                    isMulti={false}
+                    action={[
+                        (popupDialog) => {
+                            this.popupDialog = popupDialog;
+                        },
+                        (text) => {
+                            this.setState({editContent: text})
+                        },
+                        () => {
+                            this.setState({editContent: ''});
+                            this.popupDialog.dismiss();
+                        },
+                        () => {
+
+                            this.popupDialog.dismiss();
+                        }
+                    ]} str={['设置房间', '家具放置的房间']}/>
             </View>
         );
     }

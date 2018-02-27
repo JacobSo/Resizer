@@ -32,7 +32,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-   [RCTBaiduMapViewManager initSDK:@"uDRdqQMGQeoPGn5CwMmIYicdUIVv1YST"];
+   [RCTBaiduMapViewManager initSDK:@"TyDRSG24552pclAAS5TSY1IDwXQslpDe	"];
   return YES;
 }
 

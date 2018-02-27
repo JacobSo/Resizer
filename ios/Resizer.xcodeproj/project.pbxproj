@@ -34,6 +34,7 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* ResizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ResizerTests.m */; };
+		3A015806FC53412386667E81 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8FACEE4BB541E598A1F444 /* libz.tbd */; };
 		46FA5018887044018F0CD84F /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A0C36916324688A0EF90D2 /* libRNImagePicker.a */; };
 		49A4F4211FE3A95800C442BE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A4F4201FE3A95800C442BE /* CoreLocation.framework */; };
 		49A4F4231FE3A96800C442BE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A4F4221FE3A96800C442BE /* QuartzCore.framework */; };
@@ -53,6 +54,7 @@
 		49A4F4511FE3B19900C442BE /* BaiduMapAPI_Search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A4F44A1FE3B19900C442BE /* BaiduMapAPI_Search.framework */; };
 		49A4F4531FE3C73600C442BE /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		49A4F4541FE3CA4100C442BE /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 49A4F4521FE3B41900C442BE /* mapapi.bundle */; };
+		5BA4E1C7150D4BB69C31680B /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F99DA0489FFD4899ABC02358 /* libCodePush.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		E5021ED1519A49459BECD052 /* libRCTBaiduMap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C9DBC8DD134890A762DBB3 /* libRCTBaiduMap.a */; };
@@ -221,6 +223,13 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
+		499F33592045932000C18371 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A3D55D1F98AE410C908489DB /* CodePush.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = CodePush;
+		};
 		49A4F3AF1FE3626500C442BE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
@@ -352,6 +361,7 @@
 		00E356EE1AD99517003FC87E /* ResizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResizerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ResizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResizerTests.m; sourceTree = "<group>"; };
+		0F8FACEE4BB541E598A1F444 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Resizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Resizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -390,7 +400,9 @@
 		82C9DBC8DD134890A762DBB3 /* libRCTBaiduMap.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBaiduMap.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		9699FC62E5F34EC7AB45A08B /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
+		A3D55D1F98AE410C908489DB /* CodePush.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		F99DA0489FFD4899ABC02358 /* libCodePush.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libCodePush.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,6 +449,8 @@
 				F54757AF55744D68952F8D59 /* libRNGestureHandler.a in Frameworks */,
 				46FA5018887044018F0CD84F /* libRNImagePicker.a in Frameworks */,
 				E5021ED1519A49459BECD052 /* libRCTBaiduMap.a in Frameworks */,
+				5BA4E1C7150D4BB69C31680B /* libCodePush.a in Frameworks */,
+				3A015806FC53412386667E81 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,12 +593,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		499F33562045931F00C18371 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				499F335A2045932000C18371 /* libCodePush.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		49A4F3A91FE3626000C442BE /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
 				9699FC62E5F34EC7AB45A08B /* libRNGestureHandler.a */,
 				32A0C36916324688A0EF90D2 /* libRNImagePicker.a */,
 				82C9DBC8DD134890A762DBB3 /* libRCTBaiduMap.a */,
+				F99DA0489FFD4899ABC02358 /* libCodePush.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -632,6 +655,7 @@
 				49A4F4241FE3A97400C442BE /* OpenGLES.framework */,
 				49A4F4221FE3A96800C442BE /* QuartzCore.framework */,
 				49A4F4201FE3A95800C442BE /* CoreLocation.framework */,
+				0F8FACEE4BB541E598A1F444 /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -672,6 +696,7 @@
 				3752B204E57F4581B8C971EC /* RNGestureHandler.xcodeproj */,
 				57B5B7D51D0C42E88485B83A /* RNImagePicker.xcodeproj */,
 				4BCCD05A38824D35ACF4ED73 /* RCTBaiduMap.xcodeproj */,
+				A3D55D1F98AE410C908489DB /* CodePush.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -835,6 +860,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 499F33562045931F00C18371 /* Products */;
+					ProjectRef = A3D55D1F98AE410C908489DB /* CodePush.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -1052,6 +1081,13 @@
 			fileType = archive.ar;
 			path = libjschelpers.a;
 			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		499F335A2045932000C18371 /* libCodePush.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCodePush.a;
+			remoteRef = 499F33592045932000C18371 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		49A4F3B01FE3626500C442BE /* libRCTBlob-tvOS.a */ = {
@@ -1318,12 +1354,14 @@
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-pickerios",
 					"$(SRCROOT)/../node_modules/react-native-baidu-map/ios/RCTBaiduMap/**",
+					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 				);
 				INFOPLIST_FILE = ResizerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1349,12 +1387,14 @@
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-pickerios",
 					"$(SRCROOT)/../node_modules/react-native-baidu-map/ios/RCTBaiduMap/**",
+					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 				);
 				INFOPLIST_FILE = ResizerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1392,6 +1432,7 @@
 					ode_modules,
 					"eact-native-image-pickerios",
 					"$(SRCROOT)/../node_modules/react-native-baidu-map/ios/RCTBaiduMap/**",
+					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 				);
 				INFOPLIST_FILE = Resizer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1427,6 +1468,7 @@
 					ode_modules,
 					"eact-native-image-pickerios",
 					"$(SRCROOT)/../node_modules/react-native-baidu-map/ios/RCTBaiduMap/**",
+					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 				);
 				INFOPLIST_FILE = Resizer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1458,11 +1500,13 @@
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-pickerios",
 					"$(SRCROOT)/../node_modules/react-native-baidu-map/ios/RCTBaiduMap/**",
+					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 				);
 				INFOPLIST_FILE = "Resizer-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1498,11 +1542,13 @@
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-pickerios",
 					"$(SRCROOT)/../node_modules/react-native-baidu-map/ios/RCTBaiduMap/**",
+					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 				);
 				INFOPLIST_FILE = "Resizer-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1539,6 +1585,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Resizer-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1563,6 +1610,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

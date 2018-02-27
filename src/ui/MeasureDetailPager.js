@@ -9,7 +9,7 @@ import {
     View,
     Dimensions,
     TouchableOpacity,
-    ListView, FlatList, ScrollView
+    Linking, FlatList, ScrollView
 } from 'react-native';
 import Toolbar from "../component/Toolbar";
 import {MapView, MapTypes, MapModule, Geolocation} from 'react-native-baidu-map';
@@ -41,6 +41,17 @@ export default class MeasureDetailPager extends Component<{}> {
 
     componentDidMount() {
         //console.log(this.props.data.listData)
+        Geolocation.geocode(this.props.data.province, this.props.data.customerCity + this.props.data.area + this.props.data.address)
+            .then((data) => {
+                console.log(data.longitude + "," + data.latitude)
+                this.setState({
+                    center: {
+                        longitude: data.longitude,
+                        latitude: data.latitude
+                    }
+                })
+
+            })
     }
 
     confirmTask(flag) {
@@ -79,9 +90,9 @@ export default class MeasureDetailPager extends Component<{}> {
         );
     }
 
-    readme(title,content){
+    readme(title, content) {
         Alert.alert(
-            title,content,
+            title, content,
             [
                 {
                     text: '取消', onPress: () => {
@@ -91,16 +102,25 @@ export default class MeasureDetailPager extends Component<{}> {
         );
     }
 
-    phoneCall(title,content){
+    phoneCall(title, content) {
         Alert.alert(
-            title,content,
+            title, content,
             [
                 {
                     text: '取消', onPress: () => {
                 }
                 },
                 {
-                    text:'拨打',onPress:()=>{
+                    text: '拨打', onPress: () => {
+                    let url = 'tel:'+content
+
+                    Linking.canOpenURL(url).then(supported => {
+                        if (!supported) {
+                           Toast.show("无法拨打")
+                        } else {
+                            return Linking.openURL(url);
+                        }
+                    }).catch(err => Toast.show("无法拨打"));
 
                 }
                 }
@@ -155,23 +175,27 @@ export default class MeasureDetailPager extends Component<{}> {
                             </TouchableOpacity>
                         </View>
 
-                        <TouchableOpacity style={styles.item} onPress={()=>this.readme('预约上门时间',Utils.formatDate(this.props.data.bookTime))}>
+                        <TouchableOpacity style={styles.item}
+                                          onPress={() => this.readme('预约上门时间', Utils.formatDate(this.props.data.bookTime))}>
                             <Image style={styles.itemIconContainer}
                                    source={ require('../drawable/detail_clock.png')}/>
                             <Text style={{marginLeft: 16}}>{Utils.formatDate(this.props.data.bookTime)}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.item} onPress={()=>this.readme('客户ID',this.props.data.consumerName)}>
+                        <TouchableOpacity style={styles.item}
+                                          onPress={() => this.readme('客户ID', this.props.data.consumerName)}>
                             <Image style={styles.itemIconContainer}
                                    source={ require('../drawable/detail_user.png')}/>
                             <Text style={{marginLeft: 16}}>{this.props.data.consumerName}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.item} onPress={()=>this.readme('客户联系方式',this.props.data.bookTime)}>
+                        <TouchableOpacity style={styles.item}
+                                          onPress={() => this.phoneCall('客户联系方式', this.props.data.consumerPhone)}>
                             <Image style={styles.itemIconContainer}
                                    source={ require('../drawable/detail_call.png')}/>
                             <Text style={{marginLeft: 16}}>{this.props.data.consumerPhone}</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.item} onPress={()=>this.readme('客户备注',this.props.data.remark)}>
+                        <TouchableOpacity style={styles.item}
+                                          onPress={() => this.readme('客户备注', this.props.data.remark)}>
                             <Image style={styles.itemIconContainer}
                                    source={ require('../drawable/detail_remark.png')}/>
                             <Text style={{marginLeft: 16}}>{this.props.data.remark}</Text>
@@ -253,7 +277,7 @@ export default class MeasureDetailPager extends Component<{}> {
                                         <TouchableOpacity
                                             style={[styles.btnContainer, {backgroundColor: Color.colorBlue}]}
                                             onPress={() => {
-this.confirmTask(1)
+                                                this.confirmTask(1)
                                             }}>
                                             <Text style={{color: 'white'}}>接受任务</Text>
 
