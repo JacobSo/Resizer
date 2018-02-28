@@ -16,6 +16,7 @@ import {MapView, MapTypes, MapModule, Geolocation} from 'react-native-baidu-map'
 import Utils from "../Utils";
 import InputDialog from "../component/InputDialog";
 import * as ImageOptions from "../const/ImagePickerOptions"
+import ImageList from "../component/ImageList";
 
 const ImagePicker = require('react-native-image-picker');
 
@@ -27,7 +28,11 @@ export default class ProductDetailPager extends Component<{}> {
     constructor(props) {
         super(props);
         this.state = {
-            editContent:''
+            editContent:'',
+            pics: [],
+            dataSourcePic: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => true,
+            }),
         };
     }
 
@@ -124,13 +129,22 @@ export default class ProductDetailPager extends Component<{}> {
                             <Text
                                 style={{color: Color.black_semi_transparent}}>{this.props.data.roomDesc ? this.props.data.roomDesc : '-'}</Text>
                         </View>
+
+                        <ImageList dataSourcePic={this.state.dataSourcePic} action={(sectionID) => {
+                            this.state.pics.splice(sectionID, 1);
+                            this.setState({
+                                dataSourcePic: this.state.dataSourcePic.cloneWithRows(JSON.parse(JSON.stringify(this.state.pics))),
+                            });
+                        }}/>
+
+
                         <TouchableOpacity
                             style={[styles.btnContainer, {backgroundColor: Color.colorBlue}]}
                             onPress={() => {
                                 ImagePicker.showImagePicker(ImageOptions.options, (response) => {
                                     if (!response.didCancel) {
-                                     //   this.state.pics.push(response);
-                                     //   this.setState({dataSourcePic: this.state.dataSourcePic.cloneWithRows(this.state.pics),});
+                                       this.state.pics.push(response);
+                                        this.setState({dataSourcePic: this.state.dataSourcePic.cloneWithRows(this.state.pics),});
                                     }
                                 });
                             }}>

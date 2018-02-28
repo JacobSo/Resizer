@@ -44,13 +44,14 @@ export default class MeasureDetailPager extends Component<{}> {
         Geolocation.geocode(this.props.data.province, this.props.data.customerCity + this.props.data.area + this.props.data.address)
             .then((data) => {
                 console.log(data.longitude + "," + data.latitude)
-                this.setState({
-                    center: {
-                        longitude: data.longitude,
-                        latitude: data.latitude
-                    }
-                })
-
+                if(data.longitude){
+                    this.setState({
+                        center: {
+                            longitude: data.longitude,
+                            latitude: data.latitude
+                        }
+                    })
+                }
             })
     }
 
