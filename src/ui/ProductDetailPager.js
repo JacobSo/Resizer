@@ -14,9 +14,13 @@ import {
 import Toolbar from "../component/Toolbar";
 import {MapView, MapTypes, MapModule, Geolocation} from 'react-native-baidu-map';
 import Utils from "../Utils";
+import AndroidModule from '../module/AndoridCommontModule'
+import IosModule from '../module/IosCommontModule'
 import InputDialog from "../component/InputDialog";
 import * as ImageOptions from "../const/ImagePickerOptions"
 import ImageList from "../component/ImageList";
+import ApiService from "../api/ApiService";
+import Loading from 'react-native-loading-spinner-overlay';
 
 const ImagePicker = require('react-native-image-picker');
 
@@ -28,7 +32,8 @@ export default class ProductDetailPager extends Component<{}> {
     constructor(props) {
         super(props);
         this.state = {
-            editContent:'',
+            isLoading: false,
+            editContent: '',
             pics: [],
             dataSourcePic: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => true,
@@ -37,6 +42,52 @@ export default class ProductDetailPager extends Component<{}> {
     }
 
     componentDidMount() {
+    }
+
+    postImage() {
+        if (Platform.OS === 'android') {
+            this.state.pics.map((data, index) => {
+                AndroidModule.getImageBase64(data.path, (callBackData) => {
+                    console.log(callBackData);
+                    this.postImgReq(callBackData);
+                });
+            })
+        } else {
+            this.state.pics.map((data, index) => {
+                //  SnackBar.show(JSON.stringify(data));
+                //  SnackBar.show(mainId);
+                IosModule.getImageBase64(data.uri.replace('file://', ''), (callBackData) => {
+                    // console.log(data)
+                    //   console.log(callBackData)
+                    this.postImgReq(callBackData);
+
+                })
+            });
+        }
+    }
+
+    postImgReq(data) {
+        this.setState({isLoading: true})
+        ApiService.uploadImage(data)
+            .then((responseJson) => {
+                //console.log(responseJson);
+                this.setState({isLoading: false})
+                if (!responseJson.err) {
+
+                } else {
+                    setTimeout(() => {
+                        this.setState({isLoading: false})
+                    }, 100);
+                    SnackBar.show(responseJson.ErrDesc);
+                }
+            })
+            .catch((error) => {
+                setTimeout(() => {
+                    this.setState({isLoading: false})
+                }, 100);
+                console.log(error);
+                SnackBar.show("出错了，请稍后再试");
+            }).done();
     }
 
     render() {
@@ -49,10 +100,13 @@ export default class ProductDetailPager extends Component<{}> {
                     isHomeUp={true}
                     isAction={true}
                     isActionByText={true}
-                    actionArray={[]}
+                    actionArray={["上传"]}
                     functionArray={[
                         () => {
                             this.props.nav.goBack(null)
+                        },
+                        () => {
+                            this.postImage();
                         },
                     ]}
                 />
@@ -143,12 +197,12 @@ export default class ProductDetailPager extends Component<{}> {
                             onPress={() => {
                                 ImagePicker.showImagePicker(ImageOptions.options, (response) => {
                                     if (!response.didCancel) {
-                                       this.state.pics.push(response);
+                                        this.state.pics.push(response);
                                         this.setState({dataSourcePic: this.state.dataSourcePic.cloneWithRows(this.state.pics),});
                                     }
                                 });
                             }}>
-                            <Text style={{color: 'white'}}>上传图片</Text>
+                            <Text style={{color: 'white'}}>添加图片</Text>
 
                         </TouchableOpacity>
                         {
@@ -175,7 +229,7 @@ export default class ProductDetailPager extends Component<{}> {
                             })()
                         }
 
-
+                        <Loading visible={this.state.isLoading}/>
                     </View>
                 </ScrollView>
                 <InputDialog
@@ -196,6 +250,7 @@ export default class ProductDetailPager extends Component<{}> {
                             this.popupDialog.dismiss();
                         }
                     ]} str={['设置房间', '家具放置的房间']}/>
+
             </View>
         );
     }

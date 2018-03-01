@@ -142,4 +142,28 @@ export  default  class ApiService {
         let method = 'ServiceGenerate/getProviderList?Token=' + App.token;
         return this.getRequest(method);
     }
+
+    static uploadImage(str, name) {
+        let method = 'http://192.168.1.113:8089/uploadStr';
+        let param = 'file=' + str + '&' +
+            'name=' + name;
+        return newFetch(method, {
+            method: 'POST',
+            headers: {
+                // 'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: param,
+            timeout: 30000
+        })
+            .then((response) => {
+                console.log(response);
+                return response;
+            })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                return responseJson;
+            })
+    }
 }
