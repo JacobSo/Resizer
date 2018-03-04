@@ -11,7 +11,7 @@ import {
     Text,
     View,
     Platform,
-    TextInput,
+    DeviceEventEmitter,
     TouchableOpacity,
     KeyboardAvoidingView,
     ScrollView, Switch, Alert, AsyncStorage
@@ -63,7 +63,36 @@ export default class LoginPager extends Component<{}> {
     }
 
     componentDidMount() {
+        if (Platform.OS === 'ios') {
+
+        } else {
+            console.log("DeviceEventEmitter:add")
+            DeviceEventEmitter.addListener('codeResult', this.codeResult);
+        }
     }
+
+    componentWillUnmount() {
+        if (Platform.OS === 'ios') {
+
+        } else {
+            console.log("DeviceEventEmitter:remove")
+            DeviceEventEmitter.removeListener('codeResult', this.codeResult);
+        }
+    }
+
+    codeResult = (e) => {
+        console.log(e);
+        if (e.type === 0)
+            Toast.show(e.result === -1 ? "发送成功" : ("发送验证码失败：" + e.result))
+        else{
+            if (e.result === -1) {
+                this.login()
+            } else {
+                this.setState({isLoading: false});
+                Toast.show("验证失败：" + e.result)
+            }
+        }
+    };
 
     getProviderCount() {
         let i = 0;
@@ -142,6 +171,7 @@ export default class LoginPager extends Component<{}> {
 
     }
 
+
     smsSend() {
         if (!this.state.phone) {
             Toast.show("请填写手机号码");
@@ -149,10 +179,7 @@ export default class LoginPager extends Component<{}> {
         }
         this.countDown();
         if (Platform.OS === 'android') {
-            AndroidModule.sendCode("86", this.state.phone, (result) => {
-                console.log(result);
-                Toast.show(result === -1 ? "发送成功" : ("发送验证码失败：" + result))
-            })
+            AndroidModule.sendCode("86", this.state.phone)
         } else {
 
         }
@@ -164,22 +191,14 @@ export default class LoginPager extends Component<{}> {
             return
         }
         this.setState({isLoading: true});
-
         if (Platform.OS === 'android') {
-            AndroidModule.submitCode("86", this.state.phone, this.state.codeCheck, (result) => {
-                console.log(result);
-                if (result === -1) {
-                    this.login()
-                } else {
-                    this.setState({isLoading: false});
-                    Toast.show("验证失败：" + result)
-                }
-            })
+            AndroidModule.submitCode("86", this.state.phone, this.state.codeCheck)
         } else {
 
         }
 
     }
+
 // java.lang.RuntimeException: Illegal callback invocation from native module. This callback type only permits a single invocation from native code.
     login() {
         ApiService.login(this.state.phone)
