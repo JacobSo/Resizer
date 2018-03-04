@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-
+apply plugin: 'com.mob.sdk'
 import com.android.build.OutputFile
 
 /**
@@ -133,6 +133,14 @@ android {
                 output.versionCodeOverride =
                         versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
             }
+        }
+    }
+    MobSDK {
+        appKey "24707f572647c"
+        appSecret "d867da5dc67f1e0ddf132fa22d5b5c8f"
+
+        SMSSDK {
+            gui false
         }
     }
 }
