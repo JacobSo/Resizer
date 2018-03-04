@@ -4,8 +4,8 @@
 'use strict';
 import App from '../Application';
 
-//let BASE_URL = 'http://192.168.1.113:8088/';
-let BASE_URL = 'http://kh.linshimuye.cn:8022/ServiceCenter/';
+let BASE_URL = 'http://192.168.1.113:8088/';
+//let BASE_URL = 'http://kh.linshimuye.cn:8022/ServiceCenter/';
 let newFetch = function (input, opts) {
     return new Promise((resolve, reject) => {
         setTimeout(reject, opts.timeout);
@@ -46,7 +46,7 @@ export  default  class ApiService {
         return newFetch(temp, {
             method: 'GET',
             timeout: 30000,
-         //   body: param
+            //   body: param
         })
             .then((response) => {
                 console.log(response);
@@ -80,7 +80,7 @@ export  default  class ApiService {
     }
 
     static getData(type) {
-        let method = 'ServiceApp/getData?OrderType='+type+'&User='+App.userName+'&Phone='+App.phone;
+        let method = 'ServiceApp/getData?OrderType=' + type + '&User=' + App.userName + '&Phone=' + App.phone;
 
         return this.getRequest(method, null);
     }
@@ -110,31 +110,19 @@ export  default  class ApiService {
 
     static confirmTask(type, status, order) {
         let method = 'ServiceApp/confirmTask';
-        let param = JSON.stringify({
-            OrderType: type,
-            OrderStatus: status,
-            WorkOrder: order,
-        });
+        let param = 'User=' + App.userName + '&' + 'WorkOrder=' + order + '&' + 'OrderType=' + type + '&' + "OrderStatus=" + status;
         return this.postRequest(method, param);
     }
 
     static roomDesc(order, sku, room) {
-        let method = 'ServiceApp/confirmTask';
-        let param = JSON.stringify({
-            WorkOrder: order,
-            SkuCode: sku,
-            RoomDesc: room,
-        });
+        let method = 'ServiceApp/roomDesc';
+        let param = 'User=' + App.userName + '&' + 'WorkOrder=' + order + '&' + 'SkuCode=' + sku + '&' + "RoomDesc=" + room;
         return this.postRequest(method, param);
     }
 
-    static uploadFile(order, sku, room) {
-        let method = 'ServiceProvider/uploadFile';
-        let param = JSON.stringify({
-            WorkOrder: order,
-            SkuCode: sku,
-            RoomDesc: room,
-        });
+    static uploadFile(order, sku, images) {
+        let method = 'ServiceApp/uploadImageList';
+        let param = 'User=' + App.userName + '&' + 'WorkOrder=' + order + '&' + 'SkuCode=' + sku + '&' + "ImageList=" + images;
         return this.postRequest(method, param);
     }
 
@@ -145,13 +133,16 @@ export  default  class ApiService {
 
     static uploadImage(str, name) {
         let method = 'http://192.168.1.113:8089/uploadStr';
-        let param = 'file=' + str + '&' +
-            'name=' + name;
+        let param = JSON.stringify({
+            file: str,
+            name: name
+        });
+        //  'file=' + str + '&' + 'name=' + name;
         return newFetch(method, {
             method: 'POST',
             headers: {
-                // 'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded',
+                // 'Accept': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
             },
             body: param,
             timeout: 30000

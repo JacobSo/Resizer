@@ -31,14 +31,12 @@ import Color from '../const/Color';
 import Hoshi from "react-native-textinput-effects/lib/Hoshi";
 import {SceneMap, TabBar, TabViewAnimated} from "react-native-tab-view";
 import ApiService from '../api/ApiService';
-
+import Utils from '../Utils';
 import ScrollableTabView, {DefaultTabBar,} from 'react-native-scrollable-tab-view';
 
 const Dimensions = require('Dimensions');
 const {width, height} = Dimensions.get('window');
-const serviceType = ['测量工作', '安装工作', '测量与安装'];
 export default class LoginPager extends Component<{}> {
-    //构造方法
     constructor(props) {
         super(props);
         this.state = {
@@ -51,7 +49,7 @@ export default class LoginPager extends Component<{}> {
             //register params
             registerPhone: "",
             registerUser: "",
-            registerServiceType: serviceType[0],
+            registerServiceType: Utils.serviceType[0],
             registerServiceValue: 0,
             registerUserType: true,
             registerProvider: [],
@@ -239,7 +237,7 @@ export default class LoginPager extends Component<{}> {
                     thumbTintColor={"white"}
                     value={this.state.registerUserType}/>
             </View>
-            <Menu onSelect={value => this.setState({registerServiceType: serviceType[value]})}>
+            <Menu onSelect={value => this.setState({registerServiceType: Utils.serviceType[value]})}>
                 <MenuTrigger>
                     <View style={styles.textStyle}>
                         <Text style={styles.textSubStyle}>{"服务类型"}</Text>
@@ -250,17 +248,17 @@ export default class LoginPager extends Component<{}> {
                 <MenuOptions>
                     <MenuOption value={0}>
                         <View style={styles.textStyle}>
-                            <Text style={styles.textSubStyle}>{serviceType[0]}</Text>
+                            <Text style={styles.textSubStyle}>{Utils.serviceType[0]}</Text>
                         </View>
                     </MenuOption>
                     <MenuOption value={1}>
                         <View style={styles.textStyle}>
-                            <Text style={styles.textSubStyle}>{serviceType[1]}</Text>
+                            <Text style={styles.textSubStyle}>{Utils.serviceType[1]}</Text>
                         </View>
                     </MenuOption>
                     <MenuOption value={2}>
                         <View style={styles.textStyle}>
-                            <Text style={styles.textSubStyle}>{serviceType[2]}</Text>
+                            <Text style={styles.textSubStyle}>{Utils.serviceType[2]}</Text>
                         </View>
                     </MenuOption>
                 </MenuOptions>

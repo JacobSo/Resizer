@@ -9,7 +9,7 @@ import {
     View,
     Dimensions,
     TouchableOpacity,
-    ListView, FlatList, ScrollView
+    ListView, Alert, ScrollView
 } from 'react-native';
 import Toolbar from "../component/Toolbar";
 import {MapView, MapTypes, MapModule, Geolocation} from 'react-native-baidu-map';
@@ -21,6 +21,7 @@ import * as ImageOptions from "../const/ImagePickerOptions"
 import ImageList from "../component/ImageList";
 import ApiService from "../api/ApiService";
 import Loading from 'react-native-loading-spinner-overlay';
+import Toast from 'react-native-root-toast';
 
 const ImagePicker = require('react-native-image-picker');
 
@@ -33,52 +34,88 @@ export default class ProductDetailPager extends Component<{}> {
         super(props);
         this.state = {
             isLoading: false,
+            postProcess: 0,
             editContent: '',
             pics: [],
             dataSourcePic: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => true,
+            }),
+            finishPicUrl: this.props.data.imageList ? this.props.data.imageList : "",
+            picFromServer: [],
+            dataSourcePicServer: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => true,
             }),
         };
     }
 
     componentDidMount() {
+        this.picSwitch();
     }
 
+    picSwitch() {
+        if (this.props.data.imageList)
+            this.props.data.imageList.split(',').map((data) => {
+                this.state.picFromServer.push({uri: data})
+            });
+        this.setState({dataSourcePicServer: this.state.dataSourcePicServer.cloneWithRows(this.state.picFromServer),});
+
+    }
+
+
     postImage() {
+        if (this.state.pics.length === 0) {
+            Toast.show('没有添加图片');
+            return
+        }
+        Alert.alert(
+            "确认上传", "图片共" + this.state.pics.length + "张",
+            [
+                {
+                    text: '取消', onPress: () => {
+                }
+                },
+                {
+                    text: '上传', onPress: () => {
+                    this.postImageFunc();
+                }
+                }
+            ]
+        );
+
+    }
+
+    postImageFunc() {
         if (Platform.OS === 'android') {
-            this.state.pics.map((data, index) => {
-                AndroidModule.getImageBase64(data.path, (callBackData) => {
-                    console.log(callBackData);
-                    this.postImgReq(callBackData);
-                });
-            })
+            AndroidModule.getImageBase64(this.state.pics[this.state.postProcess].path, (callBackData) => {
+                console.log(callBackData);
+                this.postImgReq(callBackData);
+            });
         } else {
             this.state.pics.map((data, index) => {
-                //  SnackBar.show(JSON.stringify(data));
-                //  SnackBar.show(mainId);
-                IosModule.getImageBase64(data.uri.replace('file://', ''), (callBackData) => {
-                    // console.log(data)
-                    //   console.log(callBackData)
-                    this.postImgReq(callBackData);
-
+                IosModule.getImageBase64(this.state.pics[this.state.postProcess].uri.replace('file://', ''), (callBackData) => {
+                    this.postImgReq(callBackData, index);
                 })
             });
         }
     }
 
     postImgReq(data) {
-        this.setState({isLoading: true})
+        this.setState({isLoading: true});
         ApiService.uploadImage(data)
             .then((responseJson) => {
-                //console.log(responseJson);
-                this.setState({isLoading: false})
                 if (!responseJson.err) {
-
+                    this.state.finishPicUrl = this.state.finishPicUrl + "," + responseJson.message;
+                    if (this.state.postProcess === this.state.pics.length - 1)
+                        this.submitPicAddress();
+                    else {
+                        this.state.postProcess++;
+                        this.postImageFunc()
+                    }
                 } else {
                     setTimeout(() => {
                         this.setState({isLoading: false})
                     }, 100);
-                    SnackBar.show(responseJson.ErrDesc);
+                    Toast.show(responseJson.errMsg);
                 }
             })
             .catch((error) => {
@@ -86,7 +123,47 @@ export default class ProductDetailPager extends Component<{}> {
                     this.setState({isLoading: false})
                 }, 100);
                 console.log(error);
-                SnackBar.show("出错了，请稍后再试");
+                Toast.show("出错了，请稍后再试");
+            }).done();
+    }
+
+    submitPicAddress() {
+        ApiService.uploadFile(this.props.data.workOrder, this.props.data.skuCode, this.state.finishPicUrl)
+            .then((responseJson) => {
+                this.setState({isLoading: false});
+                Toast.show(responseJson.errMsg);
+                if (!responseJson.err) {
+                    this.props.data.imageList = this.state.finishPicUrl;
+                    this.props.nav.goBack(null);
+                }
+            })
+            .catch((error) => {
+                this.setState({isLoading: false});
+                console.log(error);
+                Toast.show("出错了，请稍后再试");
+            }).done();
+    }
+
+    setRoom() {
+        if (!this.state.editContent) {
+            Toast.show('请填写房间');
+            return
+        }
+        this.setState({isLoading: true});
+
+        ApiService.roomDesc(this.props.data.workOrder, this.props.data.skuCode, this.state.editContent)
+            .then((responseJson) => {
+                this.setState({isLoading: false});
+                Toast.show(responseJson.errMsg);
+                if (!responseJson.err) {
+                    this.props.data.roomDesc = this.state.editContent
+                    this.props.nav.goBack(null);
+                }
+            })
+            .catch((error) => {
+                this.setState({isLoading: false});
+                console.log(error);
+                Toast.show("出错了，请稍后再试");
             }).done();
     }
 
@@ -106,20 +183,27 @@ export default class ProductDetailPager extends Component<{}> {
                             this.props.nav.goBack(null)
                         },
                         () => {
-                            this.postImage();
+                            if (this.props.enable)
+                                this.postImage();
+                            else
+                                Toast.show("接受任务后才可操作")
                         },
                     ]}
                 />
                 <ScrollView>
                     <View style={{marginBottom: 55}}>
+                        <TouchableOpacity
+                        onPress={()=>this.props.nav.navigate('gallery',{
+                            pics:this.props.data.picPath.split(',')
+                        })}>
                         <Image style={{
                             width: width,
                             height: 200,
                             backgroundColor: Color.colorGrey
                         }} resizeMode="cover"
-                               source={{uri: this.props.data.picPath ? this.props.data.picPath : ''}}/>
+                               source={{uri: this.props.data.picPath ? this.props.data.picPath : Utils.blankUri}}/>
+                        </TouchableOpacity>
                         <Text style={{color: Color.colorBlue, margin: 16}}>基本信息</Text>
-
                         <View style={[styles.itemText, {paddingBottom: 10}]}>
                             <Text>{'产品名称'}</Text>
                             <Text style={{
@@ -152,19 +236,6 @@ export default class ProductDetailPager extends Component<{}> {
                                 textAlign: 'right'
                             }}>{this.props.data.remark ? this.props.data.remark : '-'}</Text>
                         </View>
-                        {
-                            (() => {
-                                if (this.props.data.imageList) {
-                                    return <Image style={{
-                                        width: width,
-                                        height: 200,
-                                        backgroundColor: Color.colorGrey
-                                    }}
-                                                  resizeMode="cover"
-                                                  source={{uri: this.props.data.picPath ? this.props.data.picPath : ''}}/>
-                                }
-                            })()
-                        }
 
                         <Text style={{color: Color.colorBlue, margin: 16}}>安装测量信息</Text>
                         <View style={[styles.itemText, {paddingBottom: 10}]}>
@@ -183,24 +254,49 @@ export default class ProductDetailPager extends Component<{}> {
                             <Text
                                 style={{color: Color.black_semi_transparent}}>{this.props.data.roomDesc ? this.props.data.roomDesc : '-'}</Text>
                         </View>
-
-                        <ImageList dataSourcePic={this.state.dataSourcePic} action={(sectionID) => {
-                            this.state.pics.splice(sectionID, 1);
-                            this.setState({
-                                dataSourcePic: this.state.dataSourcePic.cloneWithRows(JSON.parse(JSON.stringify(this.state.pics))),
-                            });
-                        }}/>
+                        {
+                            (() => {
+                                if (this.props.data.imageList)
+                                    return <View>
+                                        <Text style={{color: Color.colorBlue, margin: 16}}>已上传图片</Text>
+                                        <ImageList isCloseDisable={true} dataSourcePic={this.state.dataSourcePicServer}
+                                                   mainActoin={() => this.props.nav.navigate('gallery',
+                                                       {
+                                                           pics: this.props.data.imageList.split(',')
+                                                       })}
+                                        />
+                                    </View>
+                            })()
+                        }
+                        {
+                            (() => {
+                                if (this.state.pics.length !== 0) {
+                                    return <View>
+                                        <Text style={{color: Color.colorBlue, margin: 16}}>待上传图片</Text>
+                                        <ImageList dataSourcePic={this.state.dataSourcePic} action={(sectionID) => {
+                                            this.state.pics.splice(sectionID, 1);
+                                            this.setState({
+                                                dataSourcePic: this.state.dataSourcePic.cloneWithRows(JSON.parse(JSON.stringify(this.state.pics))),
+                                            });
+                                        }}/>
+                                    </View>
+                                }
+                            })()
+                        }
 
 
                         <TouchableOpacity
                             style={[styles.btnContainer, {backgroundColor: Color.colorBlue}]}
                             onPress={() => {
-                                ImagePicker.showImagePicker(ImageOptions.options, (response) => {
-                                    if (!response.didCancel) {
-                                        this.state.pics.push(response);
-                                        this.setState({dataSourcePic: this.state.dataSourcePic.cloneWithRows(this.state.pics),});
-                                    }
-                                });
+                                if (this.props.enable)
+                                    ImagePicker.showImagePicker(ImageOptions.options, (response) => {
+                                        if (!response.didCancel) {
+                                            this.state.pics.push(response);
+                                            this.setState({dataSourcePic: this.state.dataSourcePic.cloneWithRows(this.state.pics),});
+                                        }
+                                    });
+                                else
+                                    Toast.show("接受任务后才可操作")
                             }}>
                             <Text style={{color: 'white'}}>添加图片</Text>
 
@@ -211,7 +307,10 @@ export default class ProductDetailPager extends Component<{}> {
                                     return <TouchableOpacity
                                         style={[styles.btnContainer, {backgroundColor: 'white'}]}
                                         onPress={() => {
-                                            this.popupDialog.show()
+                                            if (this.props.enable)
+                                                this.popupDialog.show();
+                                            else
+                                                Toast.show("接受任务后才可操作")
                                         }}>
                                         <Text>设置房间</Text>
 
@@ -220,7 +319,10 @@ export default class ProductDetailPager extends Component<{}> {
                                     return <TouchableOpacity
                                         style={[styles.btnContainer, {backgroundColor: 'white'}]}
                                         onPress={() => {
-                                            this.props.nav.navigate("measureDetail")
+                                            if (this.props.enable)
+                                                this.props.nav.navigate("measureDetail")
+                                            else
+                                                Toast.show("接受任务后才可操作")
                                         }}>
                                         <Text>安装辅助</Text>
 
@@ -246,7 +348,7 @@ export default class ProductDetailPager extends Component<{}> {
                             this.popupDialog.dismiss();
                         },
                         () => {
-
+                            this.setRoom();
                             this.popupDialog.dismiss();
                         }
                     ]} str={['设置房间', '家具放置的房间']}/>

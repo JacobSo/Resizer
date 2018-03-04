@@ -44,7 +44,7 @@ export default class MeasureDetailPager extends Component<{}> {
         Geolocation.geocode(this.props.data.province, this.props.data.customerCity + this.props.data.area + this.props.data.address)
             .then((data) => {
                 console.log(data.longitude + "," + data.latitude)
-                if(data.longitude){
+                if (data.longitude) {
                     this.setState({
                         center: {
                             longitude: data.longitude,
@@ -75,13 +75,13 @@ export default class MeasureDetailPager extends Component<{}> {
                         .then((responseJson) => {
                             this.setState({isLoading: false,});
                             Toast.show(responseJson.errMsg);
-
                             if (!responseJson.err) {
-                                this.props.confirmFunc(flag)
+                                this.props.confirmFunc(flag);
                                 this.props.nav.goBack(null);
                             }
                         })
                         .catch((error) => {
+                            console.log(error);
                             this.setState({isLoading: false,});
                             Toast.show("出错了，请稍后再试");
                         }).done();
@@ -113,11 +113,11 @@ export default class MeasureDetailPager extends Component<{}> {
                 },
                 {
                     text: '拨打', onPress: () => {
-                    let url = 'tel:'+content
+                    let url = 'tel:' + content
 
                     Linking.canOpenURL(url).then(supported => {
                         if (!supported) {
-                           Toast.show("无法拨打")
+                            Toast.show("无法拨打")
                         } else {
                             return Linking.openURL(url);
                         }
@@ -211,23 +211,23 @@ export default class MeasureDetailPager extends Component<{}> {
                                     if (this.props.listType === 0) {
                                         this.props.nav.navigate("productDetail", {
                                             data: item,
-                                            listType: this.props.listType
+                                            listType: this.props.listType,
+                                            enable:this.props.data.measureStatus===1
                                         })
                                     } else {
                                         this.props.nav.navigate("productDetail", {
                                             data: item,
-                                            listType: this.props.listType
+                                            listType: this.props.listType,
+                                            enable:this.props.data.installStatus===1
                                         })
                                     }
                                 }}>
-
                                 <Image style={{
                                     width: width - 32,
                                     height: 65,
-
                                     backgroundColor: Color.colorGrey
                                 }} resizeMode="cover"
-                                       source={{uri: item.picPath ? item.picPath : ""}}/>
+                                       source={{uri: item.picPath ? item.picPath : Utils.blankUri}}/>
                                 <Text
                                     style={{
                                         color: Color.colorBlue,
@@ -249,7 +249,7 @@ export default class MeasureDetailPager extends Component<{}> {
                                         marginLeft: 16
                                     }}>{'sku描述：' + (item.skuDescription ? tem.skuDescription : "-")}</Text>
                                 <Text
-                                    style={{marginLeft: 16}}>{'测量图片：' + (item.imageList ? item.imageList.length + "张" : "无")}</Text>
+                                    style={{marginLeft: 16}}>{'测量图片：' + (item.imageList ? item.imageList.split(',').length + "张" : "无")}</Text>
                                 <Text style={{marginLeft: 16}}>{'备注：' + (item.remark ? item.remark : "-")}</Text>
                                 {
                                     (() => {
@@ -273,7 +273,7 @@ export default class MeasureDetailPager extends Component<{}> {
                         />
                         {
                             (() => {
-                                if (this.props.data.measureStatus === 0) {
+                                if ((this.props.listType === 0&&this.props.data.measureStatus === 0)||(this.props.listType === 1&&this.props.data.installStatus === 0)) {
                                     return <View>
                                         <TouchableOpacity
                                             style={[styles.btnContainer, {backgroundColor: Color.colorBlue}]}

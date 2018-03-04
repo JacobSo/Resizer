@@ -20,6 +20,8 @@ import LoginPager from "./ui/LoginPager";
 import ProviderListPager from "./ui/ProviderListPager";
 import InstallHelperPager from "./ui/InstallHelperPager";
 import ProductDetailPager from "./ui/ProductDetailPager";
+import GalleryPager from "./component/GalleryPager";
+import ParamListPager from "./ui/ParamListPager";
 
 const {width, height} = Dimensions.get('window');
 
@@ -37,7 +39,7 @@ _renderScreen = (pager) => {
     )
 };
 
-_statusBar = (color,barSet) => {
+_statusBar = (color, barSet) => {
     return (
         <View>
             { (() => {
@@ -46,7 +48,7 @@ _statusBar = (color,barSet) => {
             })()}
             <StatusBar
                 backgroundColor={color}
-                barStyle={barSet?barSet:"dark-content"}
+                barStyle={barSet ? barSet : "dark-content"}
                 networkActivityIndicatorVisible={true}
                 hidden={false}/></View>)
 };
@@ -54,37 +56,43 @@ _statusBar = (color,barSet) => {
 
 const LauncherScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<Launcher {...navigation.state.params}
-                                       nav={navigation}/></View>);
+                                                                     nav={navigation}/></View>);
 const LoginScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<LoginPager {...navigation.state.params}
-                                                                     nav={navigation}/></View>);
+                                                                       nav={navigation}/></View>);
 const MeasureListScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<MeasureListPager {...navigation.state.params}
-                                       nav={navigation}/></View>);
+                                                                             nav={navigation}/></View>);
 const MeasureDetailScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<MeasureDetailPager {...navigation.state.params}
-                                               nav={navigation}/></View>);
+                                                                               nav={navigation}/></View>);
 const CommonListScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<CommonListPager {...navigation.state.params}
-                                                 nav={navigation}/></View>);
+                                                                            nav={navigation}/></View>);
 const InstallHelperScreen = ({navigation}) => _renderScreen(<View
-    style={{height: height}}>{_statusBar('black','light-content')}<InstallHelperPager {...navigation.state.params}
-                                               nav={navigation}/></View>);
-const  ExceptionDetailScreen = ({navigation}) => _renderScreen(<View
+    style={{height: height}}>{_statusBar('black', 'light-content')}<InstallHelperPager {...navigation.state.params}
+                                                                                       nav={navigation}/></View>);
+const ExceptionDetailScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<ExceptionDetailPager {...navigation.state.params}
-                                                                               nav={navigation}/></View>);
-const  ExceptionAddScreen = ({navigation}) => _renderScreen(<View
+                                                                                 nav={navigation}/></View>);
+const ExceptionAddScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<ExceptionAddPager {...navigation.state.params}
-                                                                               nav={navigation}/></View>);
-const  PreferencesScreen = ({navigation}) => _renderScreen(<View
-    style={{height: height}}>{_statusBar(Color.background)}<PreferencesPager {...navigation.state.params}
                                                                               nav={navigation}/></View>);
-const  ProviderListScreen = ({navigation}) => _renderScreen(<View
+const PreferencesScreen = ({navigation}) => _renderScreen(<View
+    style={{height: height}}>{_statusBar(Color.background)}<PreferencesPager {...navigation.state.params}
+                                                                             nav={navigation}/></View>);
+const ProviderListScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<ProviderListPager {...navigation.state.params}
                                                                               nav={navigation}/></View>);
-const  ProductDetailScreen = ({navigation}) => _renderScreen(<View
+const ProductDetailScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<ProductDetailPager {...navigation.state.params}
-                                                                              nav={navigation}/></View>);
+                                                                               nav={navigation}/></View>);
+const GalleryScreen = ({navigation}) => _renderScreen(<View
+    style={{height: height}}>{_statusBar(Color.background)}<GalleryPager {...navigation.state.params}
+                                                                         nav={navigation}/></View>);
+const ParamScreen = ({navigation}) => _renderScreen(<View
+    style={{height: height}}>{_statusBar(Color.background)}<ParamListPager {...navigation.state.params}
+                                                                           nav={navigation}/></View>);
 
 
 const RouterStack = StackNavigator({
@@ -121,6 +129,12 @@ const RouterStack = StackNavigator({
         productDetail: {
             screen: ProductDetailScreen,
         },
+        gallery: {
+            screen: GalleryScreen
+        },
+        param: {
+            screen: ParamScreen
+        }
 
     },
     {

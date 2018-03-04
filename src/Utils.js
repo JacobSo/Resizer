@@ -12,6 +12,7 @@ export  default  class Utils extends Component {
     static userType = ["非三包","三包"];
     static activeStatus = ["注销","活跃"];
     static taskStatus = ["待测量","待安装","-","待维修"];
+    static blankUri = "http://127.0.0.1";
 
     static formatDate(timeStr) {
         let now = new Date(timeStr);

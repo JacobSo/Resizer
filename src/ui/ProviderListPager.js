@@ -27,7 +27,7 @@ export default class ProviderListPager extends Component {
     }
 
     componentDidMount() {
-        if (this.props.providerData.length !== 0) {
+        if (this.props.providerData&&this.props.providerData.length !== 0) {
             console.log(this.props.providerData)
             this.setState({
                 items: this.props.providerData,
