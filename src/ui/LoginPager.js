@@ -84,7 +84,7 @@ export default class LoginPager extends Component<{}> {
         console.log(e);
         if (e.type === 0)
             Toast.show(e.result === -1 ? "发送成功" : ("发送验证码失败：" + e.result))
-        else{
+        else {
             if (e.result === -1) {
                 this.login()
             } else {
@@ -181,7 +181,9 @@ export default class LoginPager extends Component<{}> {
         if (Platform.OS === 'android') {
             AndroidModule.sendCode("86", this.state.phone)
         } else {
-
+            IosModule.sendCode(this.state.phone, (result) => {
+                Toast.show(result)
+            });
         }
     }
 
@@ -194,7 +196,14 @@ export default class LoginPager extends Component<{}> {
         if (Platform.OS === 'android') {
             AndroidModule.submitCode("86", this.state.phone, this.state.codeCheck)
         } else {
-
+            IosModule.submitCode(this.state.phone, this.state.codeCheck, (result) => {
+                if(result==="-1"){
+                    this.login()
+                }else{
+                    this.setState({isLoading: false});
+                    Toast.show("验证失败：" + result)
+                }
+            })
         }
 
     }
