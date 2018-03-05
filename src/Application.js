@@ -29,7 +29,6 @@ export  default  class Application extends Component {
     }
 
     static initAccount(callback) {
-        console.log("123")
         AsyncStorage.getAllKeys((err, keys) => {
             console.log(keys)
             AsyncStorage.multiGet(keys, (err, stores) => {
@@ -68,11 +67,11 @@ export  default  class Application extends Component {
                 ['token', token],
                 ['phone', phone],
                 ['userName', userName],
-                ['active', ""],
+                ['active', active+""],
                 ['serviceArea', serviceArea],
-                ['userType', ""],
-                ['serviceType', ""],
-                ['createTime', ""],
+                ['userType', userType+""],
+                ['serviceType', serviceType+""],
+                ['createTime', createTime+""],
             ])
             .then(() => {
                     console.log("save success!");

@@ -13,23 +13,60 @@ import {
 } from 'react-native';
 import App from './Application';
 import Toolbar from "./component/Toolbar";
+import ApiService from "./api/ApiService";
+import Toast from 'react-native-root-toast';
+import {NavigationActions,} from 'react-navigation';
+
 const {width, height} = Dimensions.get('window');
 
 
 export default class Launcher extends Component<{}> {
     constructor(props) {
         super(props);
-        this.state = {
-            textTemp: '123',
-        };
+        this.state = {};
     }
 
     componentDidMount() {
-    /*    App.initAccount(() => {
-            console.log(App.token)
+        App.initAccount(() => {
+            if (App.phone) {
+                ApiService.login(App.phone)
+                    .then((responseJson) => {
+                        if (!responseJson.err) {
+                            App.saveAccount(
+                                responseJson.listData[0].token,
+                                responseJson.listData[0].phone,
+                                responseJson.listData[0].userName,
+                                responseJson.listData[0].activeStatus,
+                                responseJson.listData[0].serviceArea,
+                                responseJson.listData[0].userType,
+                                responseJson.listData[0].serviceType,
+                                responseJson.listData[0].registerTime,
+                            );
+                            this.setState({})
+                        } else {
+                            Toast.show(responseJson.errMsg + "，请重新登陆");
+                            this.resetLogin();
+                        }
+                    }).catch((error) => {
+                    Toast.show("请重新登陆");
+                    this.resetLogin();
+                }).done();
+            }else{
+                this.resetLogin();
+            }
         })
-        console.log(App.getSingle("token"))*/
 
+    }
+
+    resetLogin() {
+        //   this.props.nav.navigate('launcher');
+        const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({routeName: 'login'})
+            ]
+        });
+        this.props.nav.dispatch(resetAction)
     }
 
     render() {
@@ -56,7 +93,7 @@ export default class Launcher extends Component<{}> {
                         style={styles.iconContainer}
                         onPress={
                             () => {
-                                       this.props.nav.navigate("commonList",{listType:0})
+                                this.props.nav.navigate("commonList", {listType: 0})
                             }
                         }>
                         <Image style={styles.icon} resizeMode="contain"
@@ -65,7 +102,7 @@ export default class Launcher extends Component<{}> {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconContainer} onPress={
                         () => {
-                            this.props.nav.navigate("commonList",{listType:1})
+                            this.props.nav.navigate("commonList", {listType: 1})
                         }
                     }>
                         <Image style={styles.icon} resizeMode="contain"
@@ -76,7 +113,7 @@ export default class Launcher extends Component<{}> {
                 <View style={styles.iconRowContainer}>
                     <TouchableOpacity style={styles.iconContainer} onPress={
                         () => {
-                            this.props.nav.navigate("commonList",{listType:2})
+                            this.props.nav.navigate("commonList", {listType: 2})
                         }}>
                         <Image style={styles.icon} resizeMode="contain"
                                source={require('./drawable/main_exception_icon.png')}/>
@@ -84,7 +121,7 @@ export default class Launcher extends Component<{}> {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconContainer} onPress={
                         () => {
-                            this.props.nav.navigate("commonList",{listType:3})
+                            this.props.nav.navigate("commonList", {listType: 3})
                         }}>
                         <Image style={styles.icon} resizeMode="contain"
                                source={require('./drawable/main_repair_icon.png')}/>

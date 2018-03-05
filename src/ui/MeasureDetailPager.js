@@ -176,15 +176,25 @@ export default class MeasureDetailPager extends Component<{}> {
                                 center={this.state.center}
                                 style={{height: 150, width: width, backgroundColor: Color.colorBlue, elevation: 5}}
                             />
-                            <Text style={{paddingTop: 16, marginLeft: 16, color: 'white'}}>测量工单号</Text>
+                            <Text style={{paddingTop: 16, marginLeft: 16, color: 'white'}}>工单号</Text>
+                            <TouchableOpacity onPress={() => {
+                                Clipboard.setString(this.props.data.workOrder);
+                                Toast.show("工单号已复制")
+                            }}>
                             <Text style={{
                                 marginLeft: 16,
                                 color: 'white',
                                 fontSize: 18
                             }}>{this.props.data.workOrder}</Text>
-                            <Text style={{margin: 16, color: 'white'}}>
-                                {this.props.data.province + this.props.data.customerCity + this.props.data.area + this.props.data.address}
-                            </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                Clipboard.setString(this.props.data.province + this.props.data.customerCity + this.props.data.area + this.props.data.address)
+                                Toast.show("地址已复制")
+                            }}>
+                                <Text style={{margin: 16, color: 'white'}}>
+                                    {this.props.data.province + this.props.data.customerCity + this.props.data.area + this.props.data.address}
+                                </Text>
+                            </TouchableOpacity>
                             {
                                 (() => {
                                     if (!this.state.locationEnable)

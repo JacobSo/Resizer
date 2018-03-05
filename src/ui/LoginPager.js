@@ -19,6 +19,7 @@ import {
 import {MenuProvider} from 'react-native-popup-menu';
 import Loading from 'react-native-loading-spinner-overlay';
 import App from '../Application';
+import {NavigationActions,} from 'react-navigation';
 
 import {
     Menu,
@@ -197,9 +198,9 @@ export default class LoginPager extends Component<{}> {
             AndroidModule.submitCode("86", this.state.phone, this.state.codeCheck)
         } else {
             IosModule.submitCode(this.state.phone, this.state.codeCheck, (result) => {
-                if(result==="-1"){
+                if (result === "-1") {
                     this.login()
-                }else{
+                } else {
                     this.setState({isLoading: false});
                     Toast.show("验证失败：" + result)
                 }
@@ -224,9 +225,14 @@ export default class LoginPager extends Component<{}> {
                         responseJson.listData[0].serviceType,
                         responseJson.listData[0].registerTime,
                     );
-
-//App.saveSingle("token",responseJson.listData[0].token);
-                    this.props.nav.navigate('launcher');
+                 //   this.props.nav.navigate('launcher');
+                    const resetAction = NavigationActions.reset({
+                        index: 0,
+                        actions: [
+                            NavigationActions.navigate({routeName: 'launcher'})
+                        ]
+                    });
+                    this.props.nav.dispatch(resetAction)
                 } else {
                     Toast.show(responseJson.errMsg);
                 }

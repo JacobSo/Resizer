@@ -127,6 +127,14 @@ export default class PreferencesPager extends Component {
                                             },
                                             {
                                                 text: '确定', onPress: () => {
+                                                App.saveAccount('', '', '', '', '','','','');
+                                                const resetAction = NavigationActions.reset({
+                                                    index: 0,
+                                                    actions: [
+                                                        NavigationActions.navigate({routeName: 'login'})
+                                                    ]
+                                                });
+                                                this.props.nav.dispatch(resetAction)
 
                                             }
                                             },

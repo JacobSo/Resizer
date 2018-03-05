@@ -138,7 +138,7 @@ const RouterStack = StackNavigator({
 
     },
     {
-        initialRouteName: 'login',
+        initialRouteName: 'launcher',
         headerMode: 'none',
     });
 
