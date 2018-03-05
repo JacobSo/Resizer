@@ -126,10 +126,14 @@ RCT_EXPORT_METHOD(doNavigationWithEndLocation:(NSString *)lat:(NSString *)lng)
     [alert addAction:action];
     
   }
+  [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+
   UIViewController *root = RCTPresentedViewController();
   alert.popoverPresentationController.sourceView = root.view;
   alert.popoverPresentationController.sourceRect = CGRectMake(root.view.bounds.size.width / 2.0, root.view.bounds.size.height, 1.0, 1.0);
  //[(UIWebView*)self presentViewController:alert animated:YES completion:nil];
+  
+
  [root presentViewController:alert animated:YES completion:nil];
   
 }
