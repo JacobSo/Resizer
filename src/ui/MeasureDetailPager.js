@@ -218,7 +218,7 @@ export default class MeasureDetailPager extends Component<{}> {
                             <TouchableOpacity
                                 onPress={() => {
                                     if (Platform.OS === 'ios') {
-
+IosModule.doNavigationWithEndLocation(this.state.mLocation.latitude+"",this.state.mLocation.longitude+"")
                                     } else {
                                         console.log(this.state.mLocation.latitude + "," +
                                             this.state.mLocation.longitude + "," +

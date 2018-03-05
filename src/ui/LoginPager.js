@@ -238,6 +238,7 @@ export default class LoginPager extends Component<{}> {
                 }
             })
             .catch((error) => {
+            console.log(error)
                 this.setState({isLoading: false,});
                 Toast.show("出错了，请稍后再试");
             }).done();

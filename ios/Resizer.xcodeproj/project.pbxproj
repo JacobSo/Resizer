@@ -36,6 +36,13 @@
 		2DCD954D1E0B4F2C00145EB5 /* ResizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ResizerTests.m */; };
 		3A015806FC53412386667E81 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8FACEE4BB541E598A1F444 /* libz.tbd */; };
 		46FA5018887044018F0CD84F /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A0C36916324688A0EF90D2 /* libRNImagePicker.a */; };
+		499DEF00204C372900518E86 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499DEED6204C372900518E86 /* MOBFoundation.framework */; };
+		499DEF01204C372900518E86 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499DEED8204C372900518E86 /* SMS_SDK.framework */; };
+		499DEF03204C37BD00518E86 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 499DEF02204C37BD00518E86 /* libicucore.tbd */; };
+		499DEF05204C37CB00518E86 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499DEF04204C37CB00518E86 /* MessageUI.framework */; };
+		499DEF07204C37D500518E86 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499DEF06204C37D400518E86 /* JavaScriptCore.framework */; };
+		499DEF09204C37E000518E86 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 499DEF08204C37E000518E86 /* libstdc++.tbd */; };
+		499DEF63204CD7E100518E86 /* ReactCommonModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 499DEF62204CD7E100518E86 /* ReactCommonModule.m */; };
 		49A4F4211FE3A95800C442BE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A4F4201FE3A95800C442BE /* CoreLocation.framework */; };
 		49A4F4231FE3A96800C442BE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A4F4221FE3A96800C442BE /* QuartzCore.framework */; };
 		49A4F4251FE3A97400C442BE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A4F4241FE3A97400C442BE /* OpenGLES.framework */; };
@@ -376,6 +383,14 @@
 		2D02E4901E0B4A5D006451C7 /* Resizer-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Resizer-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32A0C36916324688A0EF90D2 /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
 		3752B204E57F4581B8C971EC /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
+		499DEED6204C372900518E86 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
+		499DEED8204C372900518E86 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
+		499DEF02204C37BD00518E86 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		499DEF04204C37CB00518E86 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		499DEF06204C37D400518E86 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		499DEF08204C37E000518E86 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		499DEF5E204CD78A00518E86 /* ReactCommonModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactCommonModule.h; sourceTree = "<group>"; };
+		499DEF62204CD7E100518E86 /* ReactCommonModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactCommonModule.m; sourceTree = "<group>"; };
 		49A4F4201FE3A95800C442BE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		49A4F4221FE3A96800C442BE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		49A4F4241FE3A97400C442BE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -418,6 +433,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				499DEF09204C37E000518E86 /* libstdc++.tbd in Frameworks */,
+				499DEF07204C37D500518E86 /* JavaScriptCore.framework in Frameworks */,
+				499DEF05204C37CB00518E86 /* MessageUI.framework in Frameworks */,
+				499DEF03204C37BD00518E86 /* libicucore.tbd in Frameworks */,
+				3A015806FC53412386667E81 /* libz.tbd in Frameworks */,
 				49A4F4531FE3C73600C442BE /* libRCTAnimation.a in Frameworks */,
 				49A4F4311FE3A9AB00C442BE /* libstdc++.6.0.9.tbd in Frameworks */,
 				49A4F42F1FE3A9A100C442BE /* CoreTelephony.framework in Frameworks */,
@@ -450,7 +470,8 @@
 				46FA5018887044018F0CD84F /* libRNImagePicker.a in Frameworks */,
 				E5021ED1519A49459BECD052 /* libRCTBaiduMap.a in Frameworks */,
 				5BA4E1C7150D4BB69C31680B /* libCodePush.a in Frameworks */,
-				3A015806FC53412386667E81 /* libz.tbd in Frameworks */,
+				499DEF01204C372900518E86 /* SMS_SDK.framework in Frameworks */,
+				499DEF00204C372900518E86 /* MOBFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,6 +589,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				499DEF5E204CD78A00518E86 /* ReactCommonModule.h */,
+				499DEF62204CD7E100518E86 /* ReactCommonModule.m */,
 			);
 			name = Resizer;
 			sourceTree = "<group>";
@@ -591,6 +614,31 @@
 				49A4F4171FE3A88400C442BE /* libprivatedata-tvOS.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		499DEED4204C372900518E86 /* SDK */ = {
+			isa = PBXGroup;
+			children = (
+				499DEED5204C372900518E86 /* Required */,
+				499DEED7204C372900518E86 /* SMSSDK */,
+			);
+			path = SDK;
+			sourceTree = "<group>";
+		};
+		499DEED5204C372900518E86 /* Required */ = {
+			isa = PBXGroup;
+			children = (
+				499DEED6204C372900518E86 /* MOBFoundation.framework */,
+			);
+			path = Required;
+			sourceTree = "<group>";
+		};
+		499DEED7204C372900518E86 /* SMSSDK */ = {
+			isa = PBXGroup;
+			children = (
+				499DEED8204C372900518E86 /* SMS_SDK.framework */,
+			);
+			path = SMSSDK;
 			sourceTree = "<group>";
 		};
 		499F33562045931F00C18371 /* Products */ = {
@@ -639,6 +687,10 @@
 		49A4F41F1FE3A95700C442BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				499DEF08204C37E000518E86 /* libstdc++.tbd */,
+				499DEF06204C37D400518E86 /* JavaScriptCore.framework */,
+				499DEF04204C37CB00518E86 /* MessageUI.framework */,
+				499DEF02204C37BD00518E86 /* libicucore.tbd */,
 				49A4F4461FE3B19700C442BE /* BaiduMapAPI_Base.framework */,
 				49A4F4491FE3B19800C442BE /* BaiduMapAPI_Cloud.framework */,
 				49A4F4481FE3B19800C442BE /* BaiduMapAPI_Location.framework */,
@@ -713,6 +765,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				499DEED4204C372900518E86 /* SDK */,
 				49A4F4521FE3B41900C442BE /* mapapi.bundle */,
 				13B07FAE1A68108700A75B9A /* Resizer */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -1291,6 +1344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				499DEF63204CD7E100518E86 /* ReactCommonModule.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1419,6 +1473,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"/Users/ls/WebstormProjects/Resizer/node_modules/react-native-baidu-map/ios/**",
 					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)/SDK/Required",
+					"$(PROJECT_DIR)/SDK/SMSSDK",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1455,6 +1511,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"/Users/ls/WebstormProjects/Resizer/node_modules/react-native-baidu-map/ios/**",
 					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)/SDK/Required",
+					"$(PROJECT_DIR)/SDK/SMSSDK",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
