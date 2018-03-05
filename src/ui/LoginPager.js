@@ -282,7 +282,7 @@ export default class LoginPager extends Component<{}> {
             </View>
             <TouchableOpacity
                 style={[styles.button, {backgroundColor: Color.colorBlue,}]}
-                onPress={() => this.smsLogin()}>
+                onPress={() => this.login()}>
                 <Text style={{color: 'white'}}>登录</Text>
             </TouchableOpacity>
         </View>

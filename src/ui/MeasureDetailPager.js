@@ -9,7 +9,7 @@ import {
     View,
     Dimensions,
     TouchableOpacity,
-    Linking, FlatList, ScrollView
+    Linking, FlatList, ScrollView, Platform, Clipboard
 } from 'react-native';
 import Toolbar from "../component/Toolbar";
 import {MapView, MapTypes, MapModule, Geolocation} from 'react-native-baidu-map';
@@ -17,6 +17,8 @@ import Utils from "../Utils";
 import ApiService from '../api/ApiService';
 import Toast from 'react-native-root-toast';
 import Loading from 'react-native-loading-spinner-overlay';
+import AndroidModule from '../module/AndoridCommontModule'
+import IosModule from '../module/IosCommontModule'
 
 const {width, height} = Dimensions.get('window');
 
@@ -26,6 +28,7 @@ export default class MeasureDetailPager extends Component<{}> {
     constructor(props) {
         super(props);
         this.state = {
+            locationEnable: false,
             mayType: MapTypes.NONE,
             zoom: 15,
             center: {
@@ -34,18 +37,33 @@ export default class MeasureDetailPager extends Component<{}> {
             },
             trafficEnabled: false,
             baiduHeatMapEnabled: false,
-
+            mLocation: {
+                longitude: 0.0,
+                latitude: 0.0
+            }
 
         };
     }
 
     componentDidMount() {
         //console.log(this.props.data.listData)
+        Geolocation.getCurrentPosition().then((result) => {
+            console.log(result);
+            this.setState({
+                mLocation: {
+                    longitude: result.longitude,
+                    latitude: result.latitude
+                }
+            })
+        });
         Geolocation.geocode(this.props.data.province, this.props.data.customerCity + this.props.data.area + this.props.data.address)
             .then((data) => {
-                console.log(data.longitude + "," + data.latitude)
+                console.log(data.longitude + "," + data.latitude);
+
                 if (data.longitude) {
+
                     this.setState({
+                        locationEnable: true,
                         center: {
                             longitude: data.longitude,
                             latitude: data.latitude
@@ -113,7 +131,7 @@ export default class MeasureDetailPager extends Component<{}> {
                 },
                 {
                     text: '拨打', onPress: () => {
-                    let url = 'tel:' + content
+                    let url = 'tel:' + content;
 
                     Linking.canOpenURL(url).then(supported => {
                         if (!supported) {
@@ -167,8 +185,41 @@ export default class MeasureDetailPager extends Component<{}> {
                             <Text style={{margin: 16, color: 'white'}}>
                                 {this.props.data.province + this.props.data.customerCity + this.props.data.area + this.props.data.address}
                             </Text>
+                            {
+                                (() => {
+                                    if (!this.state.locationEnable)
+                                        return <View style={{
+                                            flexDirection: "row",
+                                            marginLeft: 16,
+                                            marginBottom: 16,
+                                            alignItems: 'center'
+                                        }}>
+                                            <Image style={{
+                                                width: 20, height: 20,
+                                            }}
+                                                   source={ require('../drawable/warning_ico.png')}/>
+                                            <Text style={{color: 'white', fontSize: 12}}>警告:地址无法转换准确位置!</Text>
+                                        </View>
+
+                                })()
+                            }
+
+
                             <TouchableOpacity
                                 onPress={() => {
+                                    if (Platform.OS === 'ios') {
+
+                                    } else {
+                                        console.log(this.state.mLocation.latitude + "," +
+                                            this.state.mLocation.longitude + "," +
+                                            this.state.center.latitude + "," +
+                                            this.state.center.longitude)
+                                        AndroidModule.startNav(
+                                            this.state.mLocation.latitude,
+                                            this.state.mLocation.longitude,
+                                            this.state.center.latitude,
+                                            this.state.center.longitude)
+                                    }
                                 }}
                                 style={styles.navigateIcon}>
                                 <Image style={styles.itemIconContainer}
@@ -212,13 +263,13 @@ export default class MeasureDetailPager extends Component<{}> {
                                         this.props.nav.navigate("productDetail", {
                                             data: item,
                                             listType: this.props.listType,
-                                            enable:this.props.data.measureStatus===1
+                                            enable: this.props.data.measureStatus === 1
                                         })
                                     } else {
                                         this.props.nav.navigate("productDetail", {
                                             data: item,
                                             listType: this.props.listType,
-                                            enable:this.props.data.installStatus===1
+                                            enable: this.props.data.installStatus === 1
                                         })
                                     }
                                 }}>
@@ -273,7 +324,7 @@ export default class MeasureDetailPager extends Component<{}> {
                         />
                         {
                             (() => {
-                                if ((this.props.listType === 0&&this.props.data.measureStatus === 0)||(this.props.listType === 1&&this.props.data.installStatus === 0)) {
+                                if ((this.props.listType === 0 && this.props.data.measureStatus === 0) || (this.props.listType === 1 && this.props.data.installStatus === 0)) {
                                     return <View>
                                         <TouchableOpacity
                                             style={[styles.btnContainer, {backgroundColor: Color.colorBlue}]}
@@ -300,6 +351,7 @@ export default class MeasureDetailPager extends Component<{}> {
                     </View>
                 </ScrollView>
             </View>
+
         );
     }
 }
@@ -338,7 +390,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         position: 'absolute',
         right: 0,
-        bottom: 75,
+        top: 100,
         backgroundColor: 'white',
         borderRadius: 50,
         elevation: 5,
@@ -352,6 +404,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         margin: 16,
         elevation: 2,
-    }
+    },
+
 
 });
