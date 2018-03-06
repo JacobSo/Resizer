@@ -130,7 +130,10 @@ export  default  class ApiService {
         let method = 'ServiceGenerate/getProviderList?Token=' + App.token;
         return this.getRequest(method);
     }
-
+    static getModelNodes(model) {
+        let method = 'ServiceApp/getModelNodes?ModelLink=' + model;
+        return this.getRequest(method);
+    }
     static uploadImage(str, name) {
         let method = 'http://192.168.1.113:8089/uploadStr';
         let param = JSON.stringify({

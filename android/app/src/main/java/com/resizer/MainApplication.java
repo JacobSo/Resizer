@@ -3,6 +3,7 @@ package com.resizer;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.microsoft.codepush.react.CodePush;
 
 import org.lovebing.reactnative.baidumap.BaiduMapPackage;
@@ -35,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new RCTCameraPackage(),
                     new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
                     new BaiduMapPackage(getApplicationContext()),
                     new ImagePickerPackage(),

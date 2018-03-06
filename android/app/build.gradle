@@ -154,6 +154,7 @@ dependencies {
     compile 'com.facebook.react:react-native:+'
     // From node_module
     compile project(':react-native-code-push')
+    compile project(':react-native-camera')
 }
 
 // Run this once to be able to run the application with BUCK

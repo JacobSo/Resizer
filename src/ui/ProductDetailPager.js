@@ -320,7 +320,7 @@ export default class ProductDetailPager extends Component<{}> {
                                         style={[styles.btnContainer, {backgroundColor: 'white'}]}
                                         onPress={() => {
                                             if (this.props.enable)
-                                                this.props.nav.navigate("measureDetail")
+                                                this.props.nav.navigate("installHelper")
                                             else
                                                 Toast.show("接受任务后才可操作")
                                         }}>

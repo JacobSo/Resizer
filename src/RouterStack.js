@@ -22,6 +22,7 @@ import InstallHelperPager from "./ui/InstallHelperPager";
 import ProductDetailPager from "./ui/ProductDetailPager";
 import GalleryPager from "./component/GalleryPager";
 import ParamListPager from "./ui/ParamListPager";
+import QrCodePager from "./ui/QrCodePager";
 
 const {width, height} = Dimensions.get('window');
 
@@ -93,7 +94,9 @@ const GalleryScreen = ({navigation}) => _renderScreen(<View
 const ParamScreen = ({navigation}) => _renderScreen(<View
     style={{height: height}}>{_statusBar(Color.background)}<ParamListPager {...navigation.state.params}
                                                                            nav={navigation}/></View>);
-
+const QrCodeScreen = ({navigation}) => _renderScreen(<View
+    style={{height: height}}>{_statusBar(Color.background)}<QrCodePager {...navigation.state.params}
+                                                                           nav={navigation}/></View>);
 
 const RouterStack = StackNavigator({
         launcher: {
@@ -134,11 +137,14 @@ const RouterStack = StackNavigator({
         },
         param: {
             screen: ParamScreen
-        }
+        },
+        qr: {
+            screen: QrCodeScreen
+        },
 
     },
     {
-        initialRouteName: 'launcher',
+        initialRouteName: 'installHelper',
         headerMode: 'none',
     });
 
