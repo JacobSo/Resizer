@@ -128,6 +128,7 @@ export default class Launcher extends Component<{}> {
                         <Text>维修任务</Text>
                     </TouchableOpacity>
                 </View>
+
             </View>
         );
     }

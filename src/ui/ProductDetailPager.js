@@ -58,9 +58,7 @@ export default class ProductDetailPager extends Component<{}> {
                 this.state.picFromServer.push({uri: data})
             });
         this.setState({dataSourcePicServer: this.state.dataSourcePicServer.cloneWithRows(this.state.picFromServer),});
-
     }
-
 
     postImage() {
         if (this.state.pics.length === 0) {
@@ -81,7 +79,6 @@ export default class ProductDetailPager extends Component<{}> {
                 }
             ]
         );
-
     }
 
     postImageFunc() {

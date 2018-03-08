@@ -10,7 +10,8 @@ import {
     Platform,
     Text,
     StyleSheet,
-    Linking, TouchableOpacity
+    Linking,
+    TouchableOpacity
 
 } from 'react-native';
 import Color from '../const/Color';

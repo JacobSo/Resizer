@@ -58,8 +58,6 @@ export default class ParamListPager extends Component {
                         () => {
                             this.props.nav.goBack(null)
                         },
-
-
                     ]}/>
                 <FlatList
                     data={this.state.items}

@@ -15,9 +15,10 @@ import Drawer from 'react-native-drawer'
 import ApiService from "../api/ApiService";
 import Toast from 'react-native-root-toast';
 import Loading from 'react-native-loading-spinner-overlay';
-
+import Utils from '../Utils';
 const {width, height} = Dimensions.get('window');
 //http://kh.linshimuye.cn:8022/materializes/
+
 
 export default class InstallHelperPager extends Component<{}> {
 
@@ -26,7 +27,10 @@ export default class InstallHelperPager extends Component<{}> {
         this.state = {
             isLoading: false,
             html: null,
-            nodes: []
+            nodes: [],
+            searchResult: [],
+            editText: "",
+            selectItem:"",
         };
     }
 
@@ -69,6 +73,8 @@ export default class InstallHelperPager extends Component<{}> {
     drawerLayout() {
         return (
             <View style={{flex: 1, backgroundColor: 'white',}}>
+                <Text style={{color: Color.colorBlue, margin: 16}}>组件列表</Text>
+
                 <FlatList
                     data={this.state.nodes}
                     extraData={this.state}
@@ -76,14 +82,40 @@ export default class InstallHelperPager extends Component<{}> {
                     renderItem={({item, index}) => <TouchableOpacity
                         style={{padding: 16}}
                         onPress={() => {
-
+                            this.setState({selectItem:item.name});
+                            this.componentSelectAction(item.name);
+                            this._drawer.close()
                         }}>
                         <Text>{item.name}</Text>
                     </TouchableOpacity>
                     }
                 />
-
             </View>)
+    }
+
+    componentSelectAction(itemName) {
+        let msg = {
+            component: itemName,
+            command: [
+                Utils.modelCommand.select,
+                Utils.modelCommand.highlight,
+                Utils.modelCommand.transform,
+            ]
+        };
+        this.refs.webView.postMessage(JSON.stringify(msg));
+    }
+
+    //from web
+    onMessage = (data) => {
+        //console.log(data);
+    }
+
+    async  search(text) {
+        //console.log("key:" + text)
+        return this.state.nodes.filter((item) => {
+            //console.log("result:" + item);
+            return item ? (item.name.toLowerCase().indexOf(text.toLowerCase()) > -1) : ("无");
+        });
     }
 
     render() {
@@ -91,12 +123,64 @@ export default class InstallHelperPager extends Component<{}> {
             <Drawer
                 ref={(ref) => this._drawer = ref}
                 content={this.drawerLayout()}
-                type="overlay"
+                type="static"
                 tapToClose={true}
                 side="right"
                 openDrawerOffset={0.2}
                 panCloseMask={0.2}>
+
                 <View style={{flex: 1, backgroundColor: Color.colorBlueGrey}}>
+                    <WebView
+                        ref='webView'
+                        onMessage={this.onMessage.bind(this)}
+                        source={{uri: 'http://192.168.1.113:888/#http://kh.linshimuye.cn:8022/materializes/collada/getriebe.dae'}}
+                        automaticallyAdjustContentInsets={true}
+                        scalesPageToFit={true}
+                        javaScriptEnabled={true}
+                        domStorageEnabled={true}
+                        style={{width: width, height: height}}
+                        scrollEnabled={false}
+                    />
+                    {
+                        (() => {
+                            if (this.state.searchResult.length !== 0) {
+                                return <View style={{
+                                    backgroundColor: 'white',
+                                    width: width - 32,
+                                    top: 70,
+                                    position: 'absolute',
+                                    borderRadius: 10,
+                                    elevation: 5,
+                                    flexDirection: 'row',
+                                    margin: 16
+                                }}>
+                                    <FlatList
+                                        data={this.state.searchResult}
+                                        extraData={this.state}
+                                        renderItem={({item, index}) => <TouchableOpacity
+                                            style={{
+                                                padding: 16,
+                                                borderBottomWidth: 1,
+                                                borderRadius: 10,
+                                                borderBottomColor: Color.line
+                                            }}
+                                            onPress={() => {
+                                                this.setState({
+                                                    selectItem:item.name,
+                                                    editText: item.name,
+                                                    searchResult: []
+                                                });
+                                                this.componentSelectAction(item.name);
+                                            }}>
+                                            <Text>{item.name}</Text>
+                                        </TouchableOpacity>
+                                        }
+                                    />
+                                </View>
+                            }
+                        })()
+                    }
+
                     <View style={styles.searchContainer}>
                         <TouchableOpacity>
                             <Image style={styles.home}
@@ -105,11 +189,32 @@ export default class InstallHelperPager extends Component<{}> {
                         <TextInput style={styles.textInput}
                                    placeholder="搜索组件"
                                    returnKeyType={'done'}
+                                   maxLength={15}
+                                   value={this.state.editText}
                                    blurOnSubmit={true}
-                                   selectionColor={'white'}
+                                   selectionColor={Color.colorBlue}
                                    underlineColorAndroid="transparent"
                                    onChangeText={(text) => {
+                                       this.setState({editText: text});
+                                       this.search(text).then((array) => {
+                                           this.setState({searchResult: array.slice(0, 4)})
+                                       })
                                    }}/>
+                        {
+                            (() => {
+                                if (this.state.editText) {
+                                    return <TouchableOpacity
+                                        style={{position: 'absolute', right: 55}}
+                                        onPress={() => {
+                                            this.setState({editText: ""});
+                                        }}>
+                                        <Image style={styles.menu}
+                                               source={ require('../drawable/close_gray.png')}/>
+                                    </TouchableOpacity>
+                                }
+                            })()
+                        }
+
                         <TouchableOpacity onPress={() => {
                             this._drawer.open()
                         }}>
@@ -117,27 +222,59 @@ export default class InstallHelperPager extends Component<{}> {
                                    source={ require('../drawable/menu_black.png')}/>
                         </TouchableOpacity>
                     </View>
-                    {/*  <WebView
-                     source={{uri: 'http://192.168.1.113:888/'}}
-                     automaticallyAdjustContentInsets={true}
-                     scalesPageToFit={true}
-                     javaScriptEnabled={true}
-                     domStorageEnabled={true}
-                     style={{width: width, height: height}}
-                     scrollEnabled={false}
-                     />*/}
+
+
                     <View style={styles.bottomContainer}>
-                        <Text style={{color: 'black', fontSize: 18}}>组件名称</Text>
-                        <Text>组件详情</Text>
+                        <Text style={{color: 'black', fontSize: 18}}>{this.state.selectItem?this.state.selectItem:'组件名称'}</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <TouchableOpacity onPress={()=>{
+                                let msg = {
+                                    component: this.state.selectItem,
+                                    command: [
+                                        Utils.modelCommand.highlight,
+                                    ]
+                                };
+                                this.refs.webView.postMessage(JSON.stringify(msg));
+                            }}><Text style={{color: Color.colorBlue, marginRight: 16,marginBottom:16,marginTop:16}}>高亮</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={()=>{
+                                let msg = {
+                                    component: this.state.selectItem,
+                                    command: [
+                                        Utils.modelCommand.transform,
+                                    ]
+                                };
+                                this.refs.webView.postMessage(JSON.stringify(msg));
+                            }}><Text style={{color: Color.colorBlue, margin: 16}}>移动</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={()=>{
+                                let msg = {
+                                    component: this.state.selectItem,
+                                    command: [
+                                        Utils.modelCommand.hide,
+                                    ]
+                                };
+                                this.refs.webView.postMessage(JSON.stringify(msg));
+
+                            }}><Text style={{color: Color.colorBlue, margin: 16}}>隐藏</Text></TouchableOpacity>
+                        </View>
                     </View>
-                    <TouchableOpacity style={styles.btnTopContainer}
-                    onPress={()=>{
-                        this.props.nav.navigate("qr")
-                    }}>
+                    <TouchableOpacity
+                        style={styles.btnTopContainer}
+                        onPress={() => {
+                            this.props.nav.navigate("qr", {
+                                    finishFunc: (result) => {
+                                        this.componentSelectAction(result)
+                                        this.setState({selectItem:result})
+                                    }
+                                }
+                            )
+                        }}>
                         <Image style={styles.floatBtn}
                                source={ require('../drawable/scan_white.png')}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnContainer}>
+                    <TouchableOpacity style={styles.btnContainer}
+                                      onPress={() => {
+                                          this.props.nav.navigate("exceptionAdd")
+                                      }}>
                         <Image style={styles.floatBtn}
                                source={ require('../drawable/repair_icon.png')}/>
                     </TouchableOpacity>

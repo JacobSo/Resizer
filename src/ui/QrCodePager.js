@@ -23,19 +23,28 @@ export default class QrCodePager extends Component {
 
             <QRScannerView
                 onScanResultReceived={this.barcodeReceived.bind(this)}
-
                 renderTopBarView={() => this._renderTitleBar()}
-
                 renderBottomMenuView={() => this._renderMenu()}
+                hintText={"扫描家具组件以获取家具信息，辅助安装和上报异常"}
             />
         )
     }
 
     _renderTitleBar(){
         return(
-            <Text
-                style={{color:'white',textAlignVertical:'center', textAlign:'center',font:20,padding:12}}
-            >Here is title bar</Text>
+            <Toolbar
+                elevation={2}
+                title={["扫描组件"]}
+                color={'white'}
+                isHomeUp={true}
+                isAction={true}
+                isActionByText={true}
+                actionArray={[]}
+                functionArray={[
+                    () => {
+                        this.props.nav.goBack(null)
+                    },
+                ]}/>
         );
     }
 
@@ -43,12 +52,16 @@ export default class QrCodePager extends Component {
         return (
             <Text
                 style={{color:'white',textAlignVertical:'center', textAlign:'center',font:20,padding:12}}
-            >Here is bottom menu</Text>
+            >-</Text>
         )
     }
 
     barcodeReceived(e) {
-        Toast.show('Type: ' + e.type + '\nData: ' + e.data);
+        if(e.data){
+            Toast.show('Type: ' + e.type + '\nData: ' + e.data);
+            this.props.finishFunc(e.data)
+            this.props.nav.goBack();
+        }
         //console.log(e)
     }
 }

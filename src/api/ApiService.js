@@ -135,7 +135,7 @@ export  default  class ApiService {
         return this.getRequest(method);
     }
     static uploadImage(str, name) {
-        let method = 'http://192.168.1.113:8089/uploadStr';
+        let method = 'http://192.168.1.113:8089/uploadImageString';
         let param = JSON.stringify({
             file: str,
             name: name
@@ -148,7 +148,7 @@ export  default  class ApiService {
                 'Content-Type': 'application/json',
             },
             body: param,
-            timeout: 30000
+            timeout: 60000
         })
             .then((response) => {
                 console.log(response);

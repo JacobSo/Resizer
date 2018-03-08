@@ -13,7 +13,14 @@ export  default  class Utils extends Component {
     static activeStatus = ["注销","活跃"];
     static taskStatus = ["待测量","待安装","-","待维修"];
     static blankUri = "http://127.0.0.1";
-
+    static modelCommand={
+        select:"select",
+        transform:"transform",
+        hide:"hide",
+        highlight:"highlight",
+        recovery:"recovery",
+        reload:"reload",
+    };
     static formatDate(timeStr) {
         let now = new Date(timeStr);
         let year = (now.getYear() + 1900);
