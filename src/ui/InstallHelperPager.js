@@ -19,7 +19,7 @@ import Utils from '../Utils';
 const {width, height} = Dimensions.get('window');
 //http://kh.linshimuye.cn:8022/materializes/
 
-
+let testLink= "http://kh.linshimuye.cn:8022/materialize/collada/getriebe.dae";
 export default class InstallHelperPager extends Component<{}> {
 
     constructor(props) {
@@ -36,6 +36,7 @@ export default class InstallHelperPager extends Component<{}> {
 
     componentDidMount() {
         console.log(this.props.param);
+        Toast.show("参数："+this.props.param)
         this.getModelNodes();
     }
 
@@ -51,9 +52,10 @@ export default class InstallHelperPager extends Component<{}> {
         return list
     }
 //@getriebe.dae
+
     getModelNodes() {
         this.setState({isLoading: true});
-        ApiService.getModelNodes(this.props.param)
+        ApiService.getModelNodes(testLink)
             .then((responseJson) => {
                 this.setState({isLoading: false});
                 if (!responseJson.err) {
@@ -134,7 +136,7 @@ export default class InstallHelperPager extends Component<{}> {
                     <WebView
                         ref='webView'
                         onMessage={this.onMessage.bind(this)}
-                        source={{uri: 'http://192.168.1.113:888/#http://kh.linshimuye.cn:8022/materializes/collada/getriebe.dae'}}
+                        source={{uri: 'http://kh.linshimuye.cn:8022/materialize/#'+testLink}}
                         automaticallyAdjustContentInsets={true}
                         scalesPageToFit={true}
                         javaScriptEnabled={true}

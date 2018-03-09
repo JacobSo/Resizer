@@ -162,5 +162,5 @@ const RouterStack = StackNavigator({
         headerMode: 'none',
     });
 const prefix = Platform.OS === 'android' ? 'resizer://linsy/' : 'resizer://';
-const MainApp = () => <RouterStack uriPrefix={prefix} />
+const MainApp = () => <RouterStack uriPrefix={prefix} />;
 export default RouterStack;

@@ -52,12 +52,27 @@ export default class Launcher extends Component<{}> {
                     Toast.show("请重新登陆");
                     this.resetLogin();
                 }).done();
-            }else{
+            } else {
                 this.resetLogin();
             }
-        })
+        });
+        //deep linking
         Linking.getInitialURL().then(url => {
-            console.log("login:"+url)
+            console.log("login:" + url);
+            if (url) {
+                const resetAction =
+                    NavigationActions.reset({
+                        index: 0,
+                        actions: [
+                            NavigationActions.navigate({
+                                routeName: 'installHelper',
+                                params: {param: url.substring(url.lastIndexOf("/") + 1, url.length)}
+                            },),
+                        ]
+                    });
+                this.props.nav.dispatch(resetAction)
+
+            }
         });
     }
 

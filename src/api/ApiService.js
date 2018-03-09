@@ -4,8 +4,8 @@
 'use strict';
 import App from '../Application';
 
-let BASE_URL = 'http://192.168.1.113:8088/';
-//let BASE_URL = 'http://kh.linshimuye.cn:8022/ServiceCenter/';
+//let BASE_URL = 'http://192.168.1.113:8088/';
+let BASE_URL = 'http://kh.linshimuye.cn:8022/ServiceCenter/';
 let newFetch = function (input, opts) {
     return new Promise((resolve, reject) => {
         setTimeout(reject, opts.timeout);
@@ -13,8 +13,6 @@ let newFetch = function (input, opts) {
     });
 };
 export  default  class ApiService {
-
-
     static postRequest(method, param) {
         let temp = BASE_URL + method;
         console.log('method:' + temp + '\nparam:' + param);

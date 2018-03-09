@@ -64,18 +64,14 @@ export default class LoginPager extends Component<{}> {
     }
 
     componentDidMount() {
-    if (Platform.OS === 'ios') {
-
-        } else {
+        if (Platform.OS === 'android'){
             console.log("DeviceEventEmitter:add")
             DeviceEventEmitter.addListener('codeResult', this.codeResult);
         }
     }
 
     componentWillUnmount() {
-        if (Platform.OS === 'ios') {
-
-        } else {
+        if (Platform.OS === 'android') {
             console.log("DeviceEventEmitter:remove")
             DeviceEventEmitter.removeListener('codeResult', this.codeResult);
         }
@@ -225,7 +221,7 @@ export default class LoginPager extends Component<{}> {
                         responseJson.listData[0].serviceType,
                         responseJson.listData[0].registerTime,
                     );
-                 //   this.props.nav.navigate('launcher');
+                    //   this.props.nav.navigate('launcher');
                     const resetAction = NavigationActions.reset({
                         index: 0,
                         actions: [
@@ -238,7 +234,7 @@ export default class LoginPager extends Component<{}> {
                 }
             })
             .catch((error) => {
-            console.log(error)
+                console.log(error)
                 this.setState({isLoading: false,});
                 Toast.show("出错了，请稍后再试");
             }).done();
