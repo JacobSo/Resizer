@@ -52,7 +52,7 @@ export default class InstallHelperPager extends Component<{}> {
 
     getModelNodes() {
         this.setState({isLoading: true});
-        ApiService.getModelNodes()
+        ApiService.getModelNodes("http://kh.linshimuye.cn:8022/materializes/collada/getriebe.dae")
             .then((responseJson) => {
                 this.setState({isLoading: false});
                 if (!responseJson.err) {
