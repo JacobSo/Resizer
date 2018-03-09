@@ -101,59 +101,59 @@ const QrCodeScreen = ({navigation}) => _renderScreen(<View
 const RouterStack = StackNavigator({
         launcher: {
             screen: LauncherScreen,
-            path:'app/launcher'
+            path:'launcher'
         },
         measureList: {
             screen: MeasureListScreen,
-            path:'app/measureList'
+            path:'measureList'
         },
         measureDetail: {
             screen: MeasureDetailScreen,
-            path:'app/measureDetail'
+            path:'measureDetail'
         },
         commonList: {
             screen: CommonListScreen,
-            path:'app/commonList'
+            path:'commonList'
         },
         exceptionDetail: {
             screen: ExceptionDetailScreen,
-            path:'app/exceptionDetail'
+            path:'exceptionDetail'
         },
         exceptionAdd: {
             screen: ExceptionAddScreen,
-            path:'app/exceptionAdd'
+            path:'exceptionAdd'
         },
         preferences: {
             screen: PreferencesScreen,
-            path:'app/preferences'
+            path:'preferences'
         },
         login: {
             screen: LoginScreen,
-            path:'app/login'
+            path:'login'
         },
         provider: {
             screen: ProviderListScreen,
-            path:'app/provider'
+            path:'provider'
         },
         installHelper: {
             screen: InstallHelperScreen,
-            path:'app/installHelper'
+            path:'installHelper'
         },
         productDetail: {
             screen: ProductDetailScreen,
-            path:'app/productDetail'
+            path:'productDetail'
         },
         gallery: {
             screen: GalleryScreen,
-            path:'app/gallery'
+            path:'gallery'
         },
         param: {
             screen: ParamScreen,
-            path:'app/param'
+            path:'param'
         },
         qr: {
             screen: QrCodeScreen,
-            path:'app/qr'
+            path:'qr'
         },
 
     },
@@ -161,6 +161,6 @@ const RouterStack = StackNavigator({
         initialRouteName: 'launcher',
         headerMode: 'none',
     });
-const prefix = 'linsy://resizer/';
+const prefix = Platform.OS === 'android' ? 'resizer://linsy/' : 'resizer://';
 const MainApp = () => <RouterStack uriPrefix={prefix} />
 export default RouterStack;
