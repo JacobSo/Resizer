@@ -14,7 +14,7 @@ import {
     DeviceEventEmitter,
     TouchableOpacity,
     KeyboardAvoidingView,
-    ScrollView, Switch, Alert, AsyncStorage
+    ScrollView, Switch, Alert, Linking
 } from 'react-native';
 import {MenuProvider} from 'react-native-popup-menu';
 import Loading from 'react-native-loading-spinner-overlay';
@@ -64,7 +64,7 @@ export default class LoginPager extends Component<{}> {
     }
 
     componentDidMount() {
-        if (Platform.OS === 'ios') {
+    if (Platform.OS === 'ios') {
 
         } else {
             console.log("DeviceEventEmitter:add")

@@ -9,6 +9,7 @@ import {
     View,
     Dimensions,
     TouchableOpacity,
+    Linking
 
 } from 'react-native';
 import App from './Application';
@@ -55,7 +56,9 @@ export default class Launcher extends Component<{}> {
                 this.resetLogin();
             }
         })
-
+        Linking.getInitialURL().then(url => {
+            console.log("login:"+url)
+        });
     }
 
     resetLogin() {

@@ -7,7 +7,7 @@
 
 import React from 'react';
 import {StackNavigator,} from 'react-navigation';
-import {Platform, Dimensions, View, StatusBar} from 'react-native';
+import {Platform, Dimensions, View, StatusBar,Linking} from 'react-native';
 import App from "react-native/local-cli/templates/HelloWorld/App";
 import Launcher from "./Launcher";
 import Color from './const/Color';
@@ -101,51 +101,66 @@ const QrCodeScreen = ({navigation}) => _renderScreen(<View
 const RouterStack = StackNavigator({
         launcher: {
             screen: LauncherScreen,
+            path:'app/launcher'
         },
         measureList: {
             screen: MeasureListScreen,
+            path:'app/measureList'
         },
         measureDetail: {
             screen: MeasureDetailScreen,
+            path:'app/measureDetail'
         },
         commonList: {
             screen: CommonListScreen,
+            path:'app/commonList'
         },
         exceptionDetail: {
             screen: ExceptionDetailScreen,
+            path:'app/exceptionDetail'
         },
         exceptionAdd: {
             screen: ExceptionAddScreen,
+            path:'app/exceptionAdd'
         },
         preferences: {
             screen: PreferencesScreen,
+            path:'app/preferences'
         },
         login: {
             screen: LoginScreen,
+            path:'app/login'
         },
         provider: {
             screen: ProviderListScreen,
+            path:'app/provider'
         },
         installHelper: {
             screen: InstallHelperScreen,
+            path:'app/installHelper'
         },
         productDetail: {
             screen: ProductDetailScreen,
+            path:'app/productDetail'
         },
         gallery: {
-            screen: GalleryScreen
+            screen: GalleryScreen,
+            path:'app/gallery'
         },
         param: {
-            screen: ParamScreen
+            screen: ParamScreen,
+            path:'app/param'
         },
         qr: {
-            screen: QrCodeScreen
+            screen: QrCodeScreen,
+            path:'app/qr'
         },
 
     },
     {
-        initialRouteName: 'installHelper',
+        initialRouteName: 'launcher',
         headerMode: 'none',
     });
-
+const prefix = 'linsy://resizer/';
+const MainApp = () => <RouterStack uriPrefix={prefix} />
 export default RouterStack;
