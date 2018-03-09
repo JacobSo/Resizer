@@ -35,6 +35,7 @@ export default class InstallHelperPager extends Component<{}> {
     }
 
     componentDidMount() {
+        console.log(this.props.param);
         this.getModelNodes();
     }
 
@@ -49,10 +50,10 @@ export default class InstallHelperPager extends Component<{}> {
         });
         return list
     }
-
+//@getriebe.dae
     getModelNodes() {
         this.setState({isLoading: true});
-        ApiService.getModelNodes("http://kh.linshimuye.cn:8022/materializes/collada/getriebe.dae")
+        ApiService.getModelNodes(this.props.param)
             .then((responseJson) => {
                 this.setState({isLoading: false});
                 if (!responseJson.err) {

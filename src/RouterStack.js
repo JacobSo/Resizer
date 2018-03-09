@@ -137,7 +137,7 @@ const RouterStack = StackNavigator({
         },
         installHelper: {
             screen: InstallHelperScreen,
-            path:'installHelper'
+            path:'installHelper/:param'
         },
         productDetail: {
             screen: ProductDetailScreen,
