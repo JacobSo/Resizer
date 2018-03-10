@@ -20,6 +20,7 @@ const {width, height} = Dimensions.get('window');
 //http://kh.linshimuye.cn:8022/materializes/
 
 let testLink= "http://kh.linshimuye.cn:8022/materialize/collada/getriebe.dae";
+
 export default class InstallHelperPager extends Component<{}> {
 
     constructor(props) {
@@ -36,7 +37,8 @@ export default class InstallHelperPager extends Component<{}> {
 
     componentDidMount() {
         console.log(this.props.param);
-        Toast.show("参数："+this.props.param)
+        Toast.show("参数："+this.props.param);
+        //getModel
         this.getModelNodes();
     }
 

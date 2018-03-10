@@ -24,39 +24,13 @@ const {width, height} = Dimensions.get('window');
 export default class Launcher extends Component<{}> {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            isLoading: false
+        };
     }
 
+
     componentDidMount() {
-        App.initAccount(() => {
-            if (App.phone) {
-                ApiService.login(App.phone)
-                    .then((responseJson) => {
-                        if (!responseJson.err) {
-                            App.saveAccount(
-                                responseJson.listData[0].token,
-                                responseJson.listData[0].phone,
-                                responseJson.listData[0].userName,
-                                responseJson.listData[0].activeStatus,
-                                responseJson.listData[0].serviceArea,
-                                responseJson.listData[0].userType,
-                                responseJson.listData[0].serviceType,
-                                responseJson.listData[0].registerTime,
-                            );
-                            this.setState({})
-                        } else {
-                            Toast.show(responseJson.errMsg + "，请重新登陆");
-                            this.resetLogin();
-                        }
-                    }).catch((error) => {
-                    Toast.show("请重新登陆");
-                    this.resetLogin();
-                }).done();
-            } else {
-                this.resetLogin();
-            }
-        });
-        //deep linking
         Linking.getInitialURL().then(url => {
             console.log("login:" + url);
             if (url) {
@@ -72,8 +46,43 @@ export default class Launcher extends Component<{}> {
                     });
                 this.props.nav.dispatch(resetAction)
 
+            }else{
+                App.initAccount(() => {
+                    if (App.phone) {
+                        this.setState({isLoading: true});
+                        ApiService.login(App.phone)
+                            .then((responseJson) => {
+                                this.setState({isLoading: false});
+                                if (!responseJson.err) {
+                                    App.saveAccount(
+                                        responseJson.listData[0].token,
+                                        responseJson.listData[0].phone,
+                                        responseJson.listData[0].userName,
+                                        responseJson.listData[0].activeStatus,
+                                        responseJson.listData[0].serviceArea,
+                                        responseJson.listData[0].userType,
+                                        responseJson.listData[0].serviceType,
+                                        responseJson.listData[0].registerTime,
+                                    );
+                                    this.setState({})
+                                } else {
+                                    Toast.show(responseJson.errMsg + "，请重新登陆");
+                                    this.resetLogin();
+                                }
+                            })
+                            .catch((error) => {
+                                this.setState({isLoading: false});
+                                Toast.show("请重新登陆");
+                                this.resetLogin();
+                            }).done();
+                    } else {
+                        this.resetLogin();
+                    }
+                });
+
             }
         });
+
     }
 
     resetLogin() {
