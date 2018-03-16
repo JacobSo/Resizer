@@ -174,7 +174,7 @@ export default class MeasureDetailPager extends Component<{}> {
                                 zoom={this.state.zoom}
                                 mapType={this.state.mapType}
                                 center={this.state.center}
-                                style={{height: 150, width: width, backgroundColor: Color.colorBlue, elevation: 5}}
+                                style={{height: 200, width: width, backgroundColor: Color.colorBlue, elevation: 5}}
                             />
                             <Text style={{paddingTop: 16, marginLeft: 16, color: 'white'}}>工单号</Text>
                             <TouchableOpacity onPress={() => {
@@ -285,7 +285,7 @@ IosModule.doNavigationWithEndLocation(this.state.mLocation.latitude+"",this.stat
                                 }}>
                                 <Image style={{
                                     width: width - 32,
-                                    height: 65,
+                                    height: 100,
                                     backgroundColor: Color.colorGrey
                                 }} resizeMode="cover"
                                        source={{uri: item.picPath ? item.picPath : Utils.blankUri}}/>
@@ -400,7 +400,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         position: 'absolute',
         right: 0,
-        top: 100,
+        top: 150,
         backgroundColor: 'white',
         borderRadius: 50,
         elevation: 5,

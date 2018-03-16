@@ -4,7 +4,7 @@
 'use strict';
 import App from '../Application';
 
-//let BASE_URL = 'http://192.168.1.113:8088/';
+//let BASE_URL = 'http://192.168.1.113:8888/';
 let BASE_URL = 'http://kh.linshimuye.cn:8022/ServiceCenter/';
 let newFetch = function (input, opts) {
     return new Promise((resolve, reject) => {
@@ -133,7 +133,8 @@ export  default  class ApiService {
         return this.getRequest(method);
     }
     static uploadImage(str, name) {
-        let method = 'http://192.168.1.113:8089/uploadImageString';
+        let method = 'http://kh.linshimuye.cn:8022/LinsyFileService/uploadImageString';
+        console.log(method);
         let param = JSON.stringify({
             file: str,
             name: name

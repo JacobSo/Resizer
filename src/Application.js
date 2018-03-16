@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {AsyncStorage} from 'react-native';
 
 export  default  class Application extends Component {
-    static token = '';//
+   // static token = '';//
     static phone = '';//
     static userName = '';//
     static active = '';//
@@ -23,7 +23,7 @@ export  default  class Application extends Component {
     static getSingle(key) {
         return AsyncStorage.getItem(key).then((value) => {
             const jsonValue = JSON.parse(value);
-            console.log("value:"+jsonValue);
+            console.log("value:" + jsonValue);
             return jsonValue;
         });
     }
@@ -37,7 +37,7 @@ export  default  class Application extends Component {
                     let value = store[i][1];
                     console.log("-**--" + key + "-**--" + value);
 
-                    if (key === "token") this.token = value;
+                  //  if (key === "token") this.token = value;
                     if (key === "phone") this.phone = value;
                     if (key === "userName") this.userName = value;
                     if (key === "active") this.active = value;
@@ -47,12 +47,14 @@ export  default  class Application extends Component {
                     if (key === "createTime") this.createTime = value;
 
                 });
-            }).then(callback).done();
+            }).then(callback).catch((err) => {
+                console.log(err);
+            }).done();
         });
     }
 
     static saveAccount(token, phone, userName, active, serviceArea, userType, serviceType, createTime) {
-        this.token = token;
+    //    this.token = token;
         this.phone = phone;
         this.userName = userName;
         this.active = active;
@@ -64,16 +66,17 @@ export  default  class Application extends Component {
         console.log("---" + token + "---" + phone + "---" + userName + "---" + active + '------' + serviceArea + '-----' + userType + "---" + serviceType + "-------" + createTime);
         AsyncStorage.multiSet(
             [
-                ['token', token],
+               // ['token', token],
                 ['phone', phone],
                 ['userName', userName],
-                ['active', active+""],
+                ['active', active + ""],
                 ['serviceArea', serviceArea],
-                ['userType', userType+""],
-                ['serviceType', serviceType+""],
-                ['createTime', createTime+""],
+                ['userType', userType + ""],
+                ['serviceType', serviceType + ""],
+                ['createTime', createTime + ""],
             ])
-            .then(() => {
+            .then((err) => {
+            console.log(err);
                     console.log("save success!");
                 },
             ).catch(() => {

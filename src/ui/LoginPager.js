@@ -43,7 +43,7 @@ export default class LoginPager extends Component<{}> {
         super(props);
         this.state = {
             isLoading: false,
-            phone: '',
+            phone: '18680006907',
             codeCheck: '',
             check: false,
             index: 0,
@@ -57,7 +57,6 @@ export default class LoginPager extends Component<{}> {
             registerProvider: [],
 
             //  providerCount:0
-            textTemp: '123',
 
             smsSpeed: 60
         };
@@ -285,7 +284,7 @@ export default class LoginPager extends Component<{}> {
             </View>
             <TouchableOpacity
                 style={[styles.button, {backgroundColor: Color.colorBlue,}]}
-                onPress={() => this.smsLogin()}>
+                onPress={() => this.login()}>
                 <Text style={{color: 'white'}}>登录</Text>
             </TouchableOpacity>
         </View>

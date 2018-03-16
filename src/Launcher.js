@@ -48,11 +48,13 @@ export default class Launcher extends Component<{}> {
 
             }else{
                 App.initAccount(() => {
+                    console.log(App.phone)
+
                     if (App.phone) {
                         this.setState({isLoading: true});
                         ApiService.login(App.phone)
                             .then((responseJson) => {
-                                this.setState({isLoading: false});
+                                this.setState({isLoading: false})
                                 if (!responseJson.err) {
                                     App.saveAccount(
                                         responseJson.listData[0].token,

@@ -37,7 +37,8 @@ export default class InstallHelperPager extends Component<{}> {
 
     componentDidMount() {
         console.log(this.props.param);
-        Toast.show("参数："+this.props.param);
+
+ //       Toast.show("参数："+this.props.param);
         //getModel
         this.getModelNodes();
     }
@@ -187,7 +188,7 @@ export default class InstallHelperPager extends Component<{}> {
                     }
 
                     <View style={styles.searchContainer}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.props.nav.goBack(null)}>
                             <Image style={styles.home}
                                    source={ require('../drawable/back_black.png')}/>
                         </TouchableOpacity>

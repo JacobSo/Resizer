@@ -174,7 +174,7 @@ export default class ProductDetailPager extends Component<{}> {
                     isHomeUp={true}
                     isAction={true}
                     isActionByText={true}
-                    actionArray={["上传"]}
+                    actionArray={this.props.listType===0?["上传"]:[]}
                     functionArray={[
                         () => {
                             this.props.nav.goBack(null)
@@ -190,15 +190,15 @@ export default class ProductDetailPager extends Component<{}> {
                 <ScrollView>
                     <View style={{marginBottom: 55}}>
                         <TouchableOpacity
-                        onPress={()=>this.props.nav.navigate('gallery',{
-                            pics:this.props.data.picPath.split(',')
-                        })}>
-                        <Image style={{
-                            width: width,
-                            height: 200,
-                            backgroundColor: Color.colorGrey
-                        }} resizeMode="cover"
-                               source={{uri: this.props.data.picPath ? this.props.data.picPath : Utils.blankUri}}/>
+                            onPress={() => this.props.nav.navigate('gallery', {
+                                pics: this.props.data.picPath.split(',')
+                            })}>
+                            <Image style={{
+                                width: width,
+                                height: 200,
+                                backgroundColor: Color.colorGrey
+                            }} resizeMode="cover"
+                                   source={{uri: this.props.data.picPath ? this.props.data.picPath : Utils.blankUri}}/>
                         </TouchableOpacity>
                         <Text style={{color: Color.colorBlue, margin: 16}}>基本信息</Text>
                         <View style={[styles.itemText, {paddingBottom: 10}]}>
@@ -281,49 +281,51 @@ export default class ProductDetailPager extends Component<{}> {
                             })()
                         }
 
-
-                        <TouchableOpacity
-                            style={[styles.btnContainer, {backgroundColor: Color.colorBlue}]}
-                            onPress={() => {
-                                if (this.props.enable)
-                                    ImagePicker.showImagePicker(ImageOptions.options, (response) => {
-                                        if (!response.didCancel) {
-                                            this.state.pics.push(response);
-                                            this.setState({dataSourcePic: this.state.dataSourcePic.cloneWithRows(this.state.pics),});
-                                        }
-                                    });
-                                else
-                                    Toast.show("接受任务后才可操作")
-                            }}>
-                            <Text style={{color: 'white'}}>添加图片</Text>
-
-                        </TouchableOpacity>
                         {
                             (() => {
                                 if (this.props.listType === 0) {
-                                    return <TouchableOpacity
-                                        style={[styles.btnContainer, {backgroundColor: 'white'}]}
-                                        onPress={() => {
-                                            if (this.props.enable)
-                                                this.popupDialog.show();
-                                            else
-                                                Toast.show("接受任务后才可操作")
-                                        }}>
-                                        <Text>设置房间</Text>
+                                    return <View>
+                                        <TouchableOpacity
+                                            style={[styles.btnContainer, {backgroundColor: Color.colorBlue}]}
+                                            onPress={() => {
+                                                if (this.props.enable)
+                                                    ImagePicker.showImagePicker(ImageOptions.options, (response) => {
+                                                        if (!response.didCancel) {
+                                                            this.state.pics.push(response);
+                                                            this.setState({dataSourcePic: this.state.dataSourcePic.cloneWithRows(this.state.pics),});
+                                                        }
+                                                    });
+                                                else
+                                                    Toast.show("接受任务后才可操作")
+                                            }}>
+                                            <Text style={{color: 'white'}}>添加图片</Text>
 
-                                    </TouchableOpacity>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            style={[styles.btnContainer, {backgroundColor: 'white'}]}
+                                            onPress={() => {
+                                                if (this.props.enable)
+                                                    this.popupDialog.show();
+                                                else
+                                                    Toast.show("接受任务后才可操作")
+                                            }}>
+                                            <Text>设置房间</Text>
+
+                                        </TouchableOpacity>
+                                    </View>
+
                                 } else if (this.props.listType === 1) {
                                     return <TouchableOpacity
-                                        style={[styles.btnContainer, {backgroundColor: 'white'}]}
+                                        style={[styles.btnContainer, {backgroundColor: Color.colorBlue}]}
                                         onPress={() => {
                                             if (this.props.enable)
-                                                this.props.nav.navigate("installHelper",{
-                                                    data:this.props.data
+                                                this.props.nav.navigate("installHelper", {
+                                                    data: this.props.data
                                                 });
                                             else
                                                 Toast.show("接受任务后才可操作")
                                         }}>
-                                        <Text>安装辅助</Text>
+                                        <Text style={{color: 'white'}}>安装辅助</Text>
 
                                     </TouchableOpacity>
                                 }
