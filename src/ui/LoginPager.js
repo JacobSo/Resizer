@@ -58,12 +58,14 @@ export default class LoginPager extends Component<{}> {
 
             //  providerCount:0
 
-            smsSpeed: 60
+            smsSpeed: 60,
+            ssoToken: "",
         };
     }
 
     componentDidMount() {
-        if (Platform.OS === 'android'){
+        this.ssoLogin();
+        if (Platform.OS === 'android') {
             console.log("DeviceEventEmitter:add")
             DeviceEventEmitter.addListener('codeResult', this.codeResult);
         }
@@ -204,14 +206,30 @@ export default class LoginPager extends Component<{}> {
 
     }
 
-// java.lang.RuntimeException: Illegal callback invocation from native module. This callback type only permits a single invocation from native code.
+    ssoLogin() {
+        this.setState({isLoading: true,});
+        ApiService.ssoRequest().then((responseJson) => {
+            this.setState({isLoading: false,});
+            if (!responseJson.IsErr) {
+                this.state.ssoToken = responseJson.key;
+                App.saveSingleToken(responseJson.key)
+            } else {
+                Toast.show(responseJson.ErrDesc);
+            }
+        }).catch((error) => {
+            console.log(error);
+            this.setState({isLoading: false,});
+            Toast.show("获取凭证失败");
+        }).done();
+    }
+
     login() {
-        ApiService.login(this.state.phone)
+        ApiService.login(this.state.phone, this.state.ssoToken)
             .then((responseJson) => {
                 this.setState({isLoading: false,});
                 if (!responseJson.err) {
                     App.saveAccount(
-                        responseJson.listData[0].token,
+                        this.state.ssoToken,
                         responseJson.listData[0].phone,
                         responseJson.listData[0].userName,
                         responseJson.listData[0].activeStatus,
@@ -233,11 +251,10 @@ export default class LoginPager extends Component<{}> {
                 }
             })
             .catch((error) => {
-                console.log(error)
+                console.log(error);
                 this.setState({isLoading: false,});
                 Toast.show("出错了，请稍后再试");
             }).done();
-
     }
 
 

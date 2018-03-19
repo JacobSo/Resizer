@@ -48,16 +48,16 @@ export default class Launcher extends Component<{}> {
 
             }else{
                 App.initAccount(() => {
-                    console.log(App.phone)
+                    console.log(App.phone);
 
-                    if (App.phone) {
+                    if (App.phone&&App.token) {
                         this.setState({isLoading: true});
-                        ApiService.login(App.phone)
+                        ApiService.login(App.phone,App.token)
                             .then((responseJson) => {
-                                this.setState({isLoading: false})
+                                this.setState({isLoading: false});
                                 if (!responseJson.err) {
                                     App.saveAccount(
-                                        responseJson.listData[0].token,
+                                        App.token,
                                         responseJson.listData[0].phone,
                                         responseJson.listData[0].userName,
                                         responseJson.listData[0].activeStatus,
@@ -73,18 +73,16 @@ export default class Launcher extends Component<{}> {
                                 }
                             })
                             .catch((error) => {
-                                this.setState({isLoading: false});
                                 Toast.show("请重新登陆");
+                                this.setState({isLoading: false});
                                 this.resetLogin();
                             }).done();
                     } else {
                         this.resetLogin();
                     }
                 });
-
             }
         });
-
     }
 
     resetLogin() {

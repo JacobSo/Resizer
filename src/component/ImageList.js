@@ -7,6 +7,7 @@
 'use strict';
 import React, {Component,} from 'react';
 import PropTypes from 'prop-types';
+import Utils from '../Utils.js';
 import {View, Image, TouchableOpacity, ListView, Dimensions} from 'react-native';
 const {width, height} = Dimensions.get('window');
 
@@ -27,7 +28,7 @@ export default class ImageList extends Component {
                 enableEmptySections={true}
                 renderRow={(rowData, rowID, sectionID) =>
                     <View>
-                        <TouchableOpacity onPress={ this.props.mainActoin}>
+                        <TouchableOpacity onPress={  rowData.uri?this.props.mainActoin:console.log("empty image")}>
                             <Image
                                 resizeMode="contain"
                                 style={{
@@ -36,7 +37,7 @@ export default class ImageList extends Component {
                                     marginBottom: 16,
                                     width: width - 32
                                 }}
-                                source={{uri: rowData.uri}}/>
+                                source={{uri: rowData.uri?rowData.uri:Utils.blankUri}}/>
                         </TouchableOpacity>
 
                         {

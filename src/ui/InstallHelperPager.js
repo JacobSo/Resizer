@@ -9,7 +9,7 @@ import {
     View,
     Dimensions,
     TouchableOpacity,
-    ListView, FlatList, ScrollView, WebView
+    ListView, FlatList, ScrollView, WebView, SectionList
 } from 'react-native';
 import Drawer from 'react-native-drawer'
 import ApiService from "../api/ApiService";
@@ -19,7 +19,8 @@ import Utils from '../Utils';
 const {width, height} = Dimensions.get('window');
 //http://kh.linshimuye.cn:8022/materializes/
 
-let testLink= "http://kh.linshimuye.cn:8022/materialize/collada/getriebe.dae";
+let testLink = "http://designanddsc.oss-cn-shenzhen.aliyuncs.com/ModelFiles/model_1520819795252.dae";
+let modelRenderUrl = 'http://kh.linshimuye.cn:8022/3/#';
 
 export default class InstallHelperPager extends Component<{}> {
 
@@ -31,71 +32,85 @@ export default class InstallHelperPager extends Component<{}> {
             nodes: [],
             searchResult: [],
             editText: "",
-            selectItem:"",
+            selectItem: "",
+            modelLink: ""
         };
     }
 
     componentDidMount() {
         console.log(this.props.param);
 
- //       Toast.show("参数："+this.props.param);
+        //       Toast.show("参数："+this.props.param);
         //getModel
         this.getModelNodes();
     }
 
-    initItems(items) {
-        let list = [];
-        items.map((item, index) => {
-            list.push({
-                name: item,
-                key: Math.random(),
-                value: index
-            })
-        });
-        return list
-    }
-//@getriebe.dae
-
     getModelNodes() {
         this.setState({isLoading: true});
-        ApiService.getModelNodes(testLink)
+        ApiService.getModel("LS02LSBS0308CP1M01-00000001")
             .then((responseJson) => {
                 this.setState({isLoading: false});
                 if (!responseJson.err) {
                     this.setState({
-                        nodes: this.initItems(responseJson.errMsg.split(',')),
+                        modelLink: responseJson.listData.daeUrl,
+                        nodes: responseJson.listData.node
                     });
                 } else {
                     Toast.show(responseJson.errMsg);
+                    this.props.nav.goBack(null);
                 }
             })
             .catch((error) => {
                 this.setState({isLoading: false});
-                console.log(error);
                 Toast.show("出错了，请稍后再试");
+                console.log(error);
+                this.props.nav.goBack(null)
             }).done();
     }
 
     drawerLayout() {
         return (
-            <View style={{flex: 1, backgroundColor: 'white',}}>
-                <Text style={{color: Color.colorBlue, margin: 16}}>组件列表</Text>
-
-                <FlatList
-                    data={this.state.nodes}
-                    extraData={this.state}
-                    ListFooterComponent={<View style={{height: 75}}/>}
-                    renderItem={({item, index}) => <TouchableOpacity
-                        style={{padding: 16}}
+            <View style={{flex: 1, backgroundColor: 'white', elevation: 5}}>
+                <SectionList
+                    ListHeaderComponent={() => <Text style={{
+                        color: 'black',
+                        padding: 16,
+                        height: 65,
+                        fontSize: 18,
+                        backgroundColor: Color.background,
+                        borderBottomColor: Color.line,
+                        borderBottomWidth: 1
+                    }}>组件列表</Text>}
+                    keyExtractor={(item) => item.id}
+                    renderSectionHeader={(parent) => <TouchableOpacity
                         onPress={() => {
-                            this.setState({selectItem:item.name});
-                            this.componentSelectAction(item.name);
+                            this.setState({selectItem: parent.section.id});
+                            this.componentSelectAction(parent.section.id);
                             this._drawer.close()
                         }}>
-                        <Text>{item.name}</Text>
-                    </TouchableOpacity>
-                    }
+                        <Text style={{
+                            color: Color.colorBlue,
+                            padding: 16,
+                            fontSize: 15,
+                            borderTopWidth: 1,
+                            borderTopColor: Color.line
+                        }}>{parent.section.name}</Text>
+                    </TouchableOpacity>}
+                    renderItem={(child) => <TouchableOpacity onPress={
+                        () => {
+                            this.setState({selectItem: child.item.id});
+                            this.componentSelectAction(child.item.id);
+                            this._drawer.close()
+                        }
+                    }>
+                        <Text style={{
+                            color: Color.content,
+                            padding: 16
+                        }}>{child.item.name}</Text>
+                    </TouchableOpacity>}
+                    sections={this.state.nodes}
                 />
+
             </View>)
     }
 
@@ -139,12 +154,12 @@ export default class InstallHelperPager extends Component<{}> {
                     <WebView
                         ref='webView'
                         onMessage={this.onMessage.bind(this)}
-                        source={{uri: 'http://kh.linshimuye.cn:8022/materialize/#'+testLink}}
+                        source={{uri: modelRenderUrl + testLink}}
                         automaticallyAdjustContentInsets={true}
                         scalesPageToFit={true}
                         javaScriptEnabled={true}
                         domStorageEnabled={true}
-                        style={{width: width, height: height}}
+                        style={{width: width, height: height, backgroundColor: Color.content}}
                         scrollEnabled={false}
                     />
                     {
@@ -172,7 +187,7 @@ export default class InstallHelperPager extends Component<{}> {
                                             }}
                                             onPress={() => {
                                                 this.setState({
-                                                    selectItem:item.name,
+                                                    selectItem: item.name,
                                                     editText: item.name,
                                                     searchResult: []
                                                 });
@@ -188,7 +203,7 @@ export default class InstallHelperPager extends Component<{}> {
                     }
 
                     <View style={styles.searchContainer}>
-                        <TouchableOpacity onPress={()=>this.props.nav.goBack(null)}>
+                        <TouchableOpacity onPress={() => this.props.nav.goBack(null)}>
                             <Image style={styles.home}
                                    source={ require('../drawable/back_black.png')}/>
                         </TouchableOpacity>
@@ -231,9 +246,12 @@ export default class InstallHelperPager extends Component<{}> {
 
 
                     <View style={styles.bottomContainer}>
-                        <Text style={{color: 'black', fontSize: 18}}>{this.state.selectItem?this.state.selectItem:'组件名称'}</Text>
-                        <View style={{flexDirection:'row'}}>
-                            <TouchableOpacity onPress={()=>{
+                        <Text style={{
+                            color: 'black',
+                            fontSize: 18
+                        }}>{this.state.selectItem ? this.state.selectItem : '组件名称'}</Text>
+                        <View style={{flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={() => {
                                 let msg = {
                                     component: this.state.selectItem,
                                     command: [
@@ -241,8 +259,8 @@ export default class InstallHelperPager extends Component<{}> {
                                     ]
                                 };
                                 this.refs.webView.postMessage(JSON.stringify(msg));
-                            }}><Text style={{color: Color.colorBlue, marginRight: 16,marginBottom:16,marginTop:16}}>高亮</Text></TouchableOpacity>
-                            <TouchableOpacity onPress={()=>{
+                            }}><Text style={{color: Color.colorBlue, marginRight: 16, marginBottom: 16, marginTop: 16}}>高亮</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
                                 let msg = {
                                     component: this.state.selectItem,
                                     command: [
@@ -251,7 +269,7 @@ export default class InstallHelperPager extends Component<{}> {
                                 };
                                 this.refs.webView.postMessage(JSON.stringify(msg));
                             }}><Text style={{color: Color.colorBlue, margin: 16}}>移动</Text></TouchableOpacity>
-                            <TouchableOpacity onPress={()=>{
+                            <TouchableOpacity onPress={() => {
                                 let msg = {
                                     component: this.state.selectItem,
                                     command: [
@@ -269,7 +287,7 @@ export default class InstallHelperPager extends Component<{}> {
                             this.props.nav.navigate("qr", {
                                     finishFunc: (result) => {
                                         this.componentSelectAction(result)
-                                        this.setState({selectItem:result})
+                                        this.setState({selectItem: result})
                                     }
                                 }
                             )
