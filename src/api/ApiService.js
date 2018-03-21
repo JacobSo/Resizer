@@ -4,12 +4,12 @@
 'use strict';
 import App from '../Application';
 
-//let BASE_URL = 'http://192.168.1.113:8881/';
- let BASE_URL = 'http://kh.linshimuye.cn:8022/ServiceCenter/';
+let BASE_URL = 'http://192.168.1.113:8881/';
+// let BASE_URL = 'http://113.105.237.98:8022/ServiceCenter/';
 //let BASE_URL = 'http://192.168.3.98:8022/ServiceCenter/';
 let DAE_URL = 'http://113.105.237.98:8888/DesignPlanCode/Get?skuCode=';
 let UPLOAD_URL = 'http://kh.linshimuye.cn:8022/LinsyFileService/uploadImageString';
-let SSO_URL = 'http://192.168.3.98:9001/Login/toLogin';
+let SSO_URL = 'http://113.105.237.98:9001/Login/toLogin';
 let SSO_USER = 'servicecenterapp';
 let SSO_PWD = '#@!qweQWE123';
 

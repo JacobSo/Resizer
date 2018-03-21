@@ -26,6 +26,7 @@ android {
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
+            abiFilters 'armeabi', 'x86'
         }
     }
     splits {
@@ -92,6 +93,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.facebook.react:react-native:+'
+    compile 'com.aliyun.ams:alicloud-android-push:3.1.1'
     // From node_module
     compile project(':react-native-code-push')
     compile project(':react-native-camera')

@@ -101,7 +101,7 @@ export default class ProductDetailPager extends Component<{}> {
         ApiService.uploadImage(data)
             .then((responseJson) => {
                 if (!responseJson.err) {
-                    this.state.finishPicUrl = this.state.finishPicUrl + "," + responseJson.message;
+                    this.state.finishPicUrl = this.state.finishPicUrl + (this.state.finishPicUrl ? "" : ",") + responseJson.message;
                     if (this.state.postProcess === this.state.pics.length - 1)
                         this.submitPicAddress();
                     else {
@@ -174,7 +174,7 @@ export default class ProductDetailPager extends Component<{}> {
                     isHomeUp={true}
                     isAction={true}
                     isActionByText={true}
-                    actionArray={this.props.listType===0?["上传"]:[]}
+                    actionArray={this.props.listType === 0 ? ["上传"] : []}
                     functionArray={[
                         () => {
                             this.props.nav.goBack(null)

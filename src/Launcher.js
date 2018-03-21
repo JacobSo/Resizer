@@ -46,41 +46,47 @@ export default class Launcher extends Component<{}> {
                     });
                 this.props.nav.dispatch(resetAction)
 
-            }else{
-                App.initAccount(() => {
-                    console.log(App.phone);
+            } else {
+                if(!this.props.isLogin){
+                    console.log("init:"+App.phone);
+                    App.initAccount(() => {
 
-                    if (App.phone&&App.token) {
-                        this.setState({isLoading: true});
-                        ApiService.login(App.phone,App.token)
-                            .then((responseJson) => {
-                                this.setState({isLoading: false});
-                                if (!responseJson.err) {
-                                    App.saveAccount(
-                                        App.token,
-                                        responseJson.listData[0].phone,
-                                        responseJson.listData[0].userName,
-                                        responseJson.listData[0].activeStatus,
-                                        responseJson.listData[0].serviceArea,
-                                        responseJson.listData[0].userType,
-                                        responseJson.listData[0].serviceType,
-                                        responseJson.listData[0].registerTime,
-                                    );
-                                    this.setState({})
-                                } else {
-                                    Toast.show(responseJson.errMsg + "，请重新登陆");
+                        if (App.phone && App.token) {
+                            this.setState({isLoading: true});
+                            Toast.show("second login");
+
+                            ApiService.login(App.phone, App.token)
+                                .then((responseJson) => {
+                                    this.setState({isLoading: false});
+                                    if (!responseJson.err) {
+                                        App.saveAccount(
+                                            App.token,
+                                            responseJson.listData[0].phone,
+                                            responseJson.listData[0].userName,
+                                            responseJson.listData[0].activeStatus,
+                                            responseJson.listData[0].serviceArea,
+                                            responseJson.listData[0].userType,
+                                            responseJson.listData[0].serviceType,
+                                            responseJson.listData[0].registerTime,
+                                        );
+                                        this.setState({})
+                                    } else {
+                                        Toast.show(responseJson.errMsg + "，请重新登陆");
+                                        this.resetLogin();
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                    Toast.show("请重新登陆");
+                                    this.setState({isLoading: false});
                                     this.resetLogin();
-                                }
-                            })
-                            .catch((error) => {
-                                Toast.show("请重新登陆");
-                                this.setState({isLoading: false});
-                                this.resetLogin();
-                            }).done();
-                    } else {
-                        this.resetLogin();
-                    }
-                });
+                                }).done();
+                        } else {
+                            this.resetLogin();
+                        }
+                    });
+                }else console.log("be login")
+
             }
         });
     }

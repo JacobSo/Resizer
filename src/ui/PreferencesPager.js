@@ -79,7 +79,7 @@ export default class PreferencesPager extends Component {
             .then((responseJson) => {
                 if (!responseJson.err) {
                     this.setState({});
-                    App.saveAccount(App.token,App.phone,App.userName,App.active,this.state.serviceArea,this.state.userType,this.state.serviceType,App.createTime);
+                    App.saveAccount(App.token, App.phone, App.userName, App.active, this.state.serviceArea, this.state.userType, this.state.serviceType, App.createTime);
                     Toast.show("修改成功");
                 } else {
                     Toast.show(responseJson.errMsg);
@@ -90,6 +90,15 @@ export default class PreferencesPager extends Component {
                 Toast.show("修改信息出错，请稍后再试");
             }).done();
     }
+
+    unbindPush() {
+        if (Platform.OS === "ios") {
+            IosModule.bindPushAccount(App.phone);
+        } else {
+            AndroidModule.bindPushAccount(App.phone);
+        }
+    }
+
 
     render() {
         return (
@@ -128,7 +137,10 @@ export default class PreferencesPager extends Component {
                                             },
                                             {
                                                 text: '确定', onPress: () => {
-                                                App.saveAccount('', '', '', '', '','','','');
+                                                this.unbindPush();
+                                                App.saveAccount('', '', '', '', '', '', '', '');
+
+
                                                 const resetAction = NavigationActions.reset({
                                                     index: 0,
                                                     actions: [
@@ -156,7 +168,7 @@ export default class PreferencesPager extends Component {
                                     this.props.nav.navigate('provider', {
                                         items: Utils.serviceType,
                                         finishFunc: (data) => {
-                                            this.state.serviceArea=this.getProviderStr(data)
+                                            this.state.serviceArea = this.getProviderStr(data)
                                             this.modifyInfo()
                                         }
                                     })

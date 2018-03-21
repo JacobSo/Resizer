@@ -223,7 +223,16 @@ export default class LoginPager extends Component<{}> {
         }).done();
     }
 
+    bindPush(phone) {
+        if (Platform.OS === "ios") {
+            IosModule.bindPushAccount(phone);
+        } else {
+            AndroidModule.bindPushAccount(phone);
+        }
+    }
+
     login() {
+        Toast.show("first login");
         ApiService.login(this.state.phone, this.state.ssoToken)
             .then((responseJson) => {
                 this.setState({isLoading: false,});
@@ -238,11 +247,12 @@ export default class LoginPager extends Component<{}> {
                         responseJson.listData[0].serviceType,
                         responseJson.listData[0].registerTime,
                     );
+                    this.bindPush(responseJson.listData[0].phone);
                     //   this.props.nav.navigate('launcher');
                     const resetAction = NavigationActions.reset({
                         index: 0,
                         actions: [
-                            NavigationActions.navigate({routeName: 'launcher'})
+                            NavigationActions.navigate({routeName: 'launcher', params: {isLogin: true}})
                         ]
                     });
                     this.props.nav.dispatch(resetAction)
