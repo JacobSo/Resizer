@@ -37,6 +37,13 @@
 		2DCD954D1E0B4F2C00145EB5 /* ResizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ResizerTests.m */; };
 		3A015806FC53412386667E81 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8FACEE4BB541E598A1F444 /* libz.tbd */; };
 		46FA5018887044018F0CD84F /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A0C36916324688A0EF90D2 /* libRNImagePicker.a */; };
+		4946B27D2062415A005C4EA8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4946B27C2062415A005C4EA8 /* libresolv.tbd */; };
+		4946B27F20624185005C4EA8 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4946B27E20624185005C4EA8 /* libsqlite3.tbd */; };
+		4946B2842062423A005C4EA8 /* UTDID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4946B28020624236005C4EA8 /* UTDID.framework */; };
+		4946B2852062423A005C4EA8 /* UTMini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4946B28120624237005C4EA8 /* UTMini.framework */; };
+		4946B2862062423A005C4EA8 /* AlicloudUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4946B28220624238005C4EA8 /* AlicloudUtils.framework */; };
+		4946B2872062423A005C4EA8 /* CloudPushSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4946B2832062423A005C4EA8 /* CloudPushSDK.framework */; };
+		4946B29920624439005C4EA8 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 499F335A2045932000C18371 /* libCodePush.a */; };
 		499DEF00204C372900518E86 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499DEED6204C372900518E86 /* MOBFoundation.framework */; };
 		499DEF01204C372900518E86 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499DEED8204C372900518E86 /* SMS_SDK.framework */; };
 		499DEF03204C37BD00518E86 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 499DEF02204C37BD00518E86 /* libicucore.tbd */; };
@@ -231,6 +238,13 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
+		4946B29E2062452C005C4EA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4946B29A2062452C005C4EA8 /* CodePush.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = CodePush;
+		};
 		499DEFD9204E89F400518E86 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EE6C2EBA1EF74328BDE51825 /* RCTCamera.xcodeproj */;
@@ -392,6 +406,14 @@
 		2D02E4901E0B4A5D006451C7 /* Resizer-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Resizer-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32A0C36916324688A0EF90D2 /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
 		3752B204E57F4581B8C971EC /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
+		4946B27C2062415A005C4EA8 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		4946B27E20624185005C4EA8 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		4946B28020624236005C4EA8 /* UTDID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UTDID.framework; sourceTree = "<group>"; };
+		4946B28120624237005C4EA8 /* UTMini.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UTMini.framework; sourceTree = "<group>"; };
+		4946B28220624238005C4EA8 /* AlicloudUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlicloudUtils.framework; sourceTree = "<group>"; };
+		4946B2832062423A005C4EA8 /* CloudPushSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CloudPushSDK.framework; sourceTree = "<group>"; };
+		4946B29A2062452C005C4EA8 /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
+		4946B2B120625A31005C4EA8 /* Resizer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Resizer.entitlements; path = Resizer/Resizer.entitlements; sourceTree = "<group>"; };
 		499DEED6204C372900518E86 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		499DEED8204C372900518E86 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
 		499DEF02204C37BD00518E86 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
@@ -443,6 +465,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4946B27F20624185005C4EA8 /* libsqlite3.tbd in Frameworks */,
+				49A4F4271FE3A97A00C442BE /* SystemConfiguration.framework in Frameworks */,
+				49A4F42F1FE3A9A100C442BE /* CoreTelephony.framework in Frameworks */,
+				4946B27D2062415A005C4EA8 /* libresolv.tbd in Frameworks */,
 				499DEF09204C37E000518E86 /* libstdc++.tbd in Frameworks */,
 				499DEF07204C37D500518E86 /* JavaScriptCore.framework in Frameworks */,
 				499DEF05204C37CB00518E86 /* MessageUI.framework in Frameworks */,
@@ -450,11 +476,9 @@
 				3A015806FC53412386667E81 /* libz.tbd in Frameworks */,
 				49A4F4531FE3C73600C442BE /* libRCTAnimation.a in Frameworks */,
 				49A4F4311FE3A9AB00C442BE /* libstdc++.6.0.9.tbd in Frameworks */,
-				49A4F42F1FE3A9A100C442BE /* CoreTelephony.framework in Frameworks */,
 				49A4F42D1FE3A99900C442BE /* libsqlite3.0.tbd in Frameworks */,
 				49A4F42B1FE3A98D00C442BE /* Security.framework in Frameworks */,
 				49A4F4291FE3A98500C442BE /* CoreGraphics.framework in Frameworks */,
-				49A4F4271FE3A97A00C442BE /* SystemConfiguration.framework in Frameworks */,
 				49A4F4251FE3A97400C442BE /* OpenGLES.framework in Frameworks */,
 				49A4F4231FE3A96800C442BE /* QuartzCore.framework in Frameworks */,
 				49A4F4211FE3A95800C442BE /* CoreLocation.framework in Frameworks */,
@@ -463,12 +487,15 @@
 				49A4F44C1FE3B19900C442BE /* BaiduMapAPI_Utils.framework in Frameworks */,
 				49A4F44D1FE3B19900C442BE /* BaiduMapAPI_Base.framework in Frameworks */,
 				49A4F44E1FE3B19900C442BE /* BaiduMapAPI_Map.framework in Frameworks */,
+				4946B2852062423A005C4EA8 /* UTMini.framework in Frameworks */,
 				49A4F44F1FE3B19900C442BE /* BaiduMapAPI_Location.framework in Frameworks */,
 				49A4F4501FE3B19900C442BE /* BaiduMapAPI_Cloud.framework in Frameworks */,
 				49A4F4511FE3B19900C442BE /* BaiduMapAPI_Search.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
+				4946B2872062423A005C4EA8 /* CloudPushSDK.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
+				4946B2862062423A005C4EA8 /* AlicloudUtils.framework in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
@@ -478,11 +505,13 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				F54757AF55744D68952F8D59 /* libRNGestureHandler.a in Frameworks */,
 				46FA5018887044018F0CD84F /* libRNImagePicker.a in Frameworks */,
+				4946B29920624439005C4EA8 /* libCodePush.a in Frameworks */,
 				E5021ED1519A49459BECD052 /* libRCTBaiduMap.a in Frameworks */,
 				5BA4E1C7150D4BB69C31680B /* libCodePush.a in Frameworks */,
 				499DEF01204C372900518E86 /* SMS_SDK.framework in Frameworks */,
 				499DEF00204C372900518E86 /* MOBFoundation.framework in Frameworks */,
 				0989C7F652E34DDEBF3B3B8F /* libRCTCamera.a in Frameworks */,
+				4946B2842062423A005C4EA8 /* UTDID.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +622,7 @@
 		13B07FAE1A68108700A75B9A /* Resizer */ = {
 			isa = PBXGroup;
 			children = (
+				4946B2B120625A31005C4EA8 /* Resizer.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -623,6 +653,14 @@
 				49A4F4131FE3A88400C442BE /* libdouble-conversion.a */,
 				49A4F4151FE3A88400C442BE /* libprivatedata.a */,
 				49A4F4171FE3A88400C442BE /* libprivatedata-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4946B29B2062452C005C4EA8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4946B29F2062452C005C4EA8 /* libCodePush.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -707,6 +745,12 @@
 		49A4F41F1FE3A95700C442BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4946B28220624238005C4EA8 /* AlicloudUtils.framework */,
+				4946B2832062423A005C4EA8 /* CloudPushSDK.framework */,
+				4946B28020624236005C4EA8 /* UTDID.framework */,
+				4946B28120624237005C4EA8 /* UTMini.framework */,
+				4946B27E20624185005C4EA8 /* libsqlite3.tbd */,
+				4946B27C2062415A005C4EA8 /* libresolv.tbd */,
 				499DEF08204C37E000518E86 /* libstdc++.tbd */,
 				499DEF06204C37D400518E86 /* JavaScriptCore.framework */,
 				499DEF04204C37CB00518E86 /* MessageUI.framework */,
@@ -753,6 +797,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4946B29A2062452C005C4EA8 /* CodePush.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -910,6 +955,11 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = Q4V56F4B3B;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -937,6 +987,10 @@
 				{
 					ProductGroup = 499F33562045931F00C18371 /* Products */;
 					ProjectRef = A3D55D1F98AE410C908489DB /* CodePush.xcodeproj */;
+				},
+				{
+					ProductGroup = 4946B29B2062452C005C4EA8 /* Products */;
+					ProjectRef = 4946B29A2062452C005C4EA8 /* CodePush.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
@@ -1159,6 +1213,13 @@
 			fileType = archive.ar;
 			path = libjschelpers.a;
 			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4946B29F2062452C005C4EA8 /* libCodePush.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCodePush.a;
+			remoteRef = 4946B29E2062452C005C4EA8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		499DEFDA204E89F400518E86 /* libRCTCamera.a */ = {
@@ -1503,14 +1564,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Resizer/Resizer.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = Q4V56F4B3B;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"/Users/ls/WebstormProjects/Resizer/node_modules/react-native-baidu-map/ios/**",
 					"$(PROJECT_DIR)/**",
 					"$(PROJECT_DIR)/SDK/Required",
 					"$(PROJECT_DIR)/SDK/SMSSDK",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1534,6 +1599,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.linsy.Resizer;
 				PRODUCT_NAME = Resizer;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1543,13 +1609,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Resizer/Resizer.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q4V56F4B3B;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"/Users/ls/WebstormProjects/Resizer/node_modules/react-native-baidu-map/ios/**",
 					"$(PROJECT_DIR)/**",
 					"$(PROJECT_DIR)/SDK/Required",
 					"$(PROJECT_DIR)/SDK/SMSSDK",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1573,6 +1643,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.linsy.Resizer;
 				PRODUCT_NAME = Resizer;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

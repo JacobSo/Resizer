@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 #import <UIKit/UIAlertController.h>
+#import <CloudPushSDK/CloudPushSDK.h>
 
 @implementation ReactCommonModule
 RCT_EXPORT_MODULE();
@@ -20,6 +21,28 @@ RCT_EXPORT_METHOD(getVersionName:(RCTResponseSenderBlock)callback)
   
   NSLog(@"当前应用软件版本:%@",appCurVersion);
   callback(@[appCurVersion]);
+}
+
+RCT_EXPORT_METHOD(bindPushAccount:(NSString *)account)
+{
+  //  RCTLogInfo(@"Pretending to create an event %@ at %@", name, location);
+  
+  [CloudPushSDK bindAccount:account
+               withCallback:^(CloudPushCallbackResult *res){
+                 NSLog(@"绑定成功%@",account);
+               }];
+}
+
+
+RCT_EXPORT_METHOD(unbindPushAccount:(NSString *)un)
+{
+  //  RCTLogInfo(@"Pretending to create an event %@ at %@", name, location);
+  
+  
+  [CloudPushSDK unbindAccount:^(CloudPushCallbackResult *res) {
+    NSLog(@"解绑成功");
+  }];
+  
 }
 
 RCT_EXPORT_METHOD(sendCode:(NSString *)phone:(RCTResponseSenderBlock)callback)
