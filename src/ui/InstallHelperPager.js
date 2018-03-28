@@ -33,7 +33,8 @@ export default class InstallHelperPager extends Component<{}> {
             searchResult: [],
             editText: "",
             selectItem: "",
-            modelLink: ""
+            modelLink: "",
+            isFullScreen: false,
         };
     }
 
@@ -84,7 +85,7 @@ export default class InstallHelperPager extends Component<{}> {
                     keyExtractor={(item) => item.id}
                     renderSectionHeader={(parent) => <TouchableOpacity
                         onPress={() => {
-                            this.setState({selectItem: parent.section.id});
+                            this.setState({selectItem: parent.section});
                             this.componentSelectAction(parent.section.id);
                             this._drawer.close()
                         }}>
@@ -98,7 +99,7 @@ export default class InstallHelperPager extends Component<{}> {
                     </TouchableOpacity>}
                     renderItem={(child) => <TouchableOpacity onPress={
                         () => {
-                            this.setState({selectItem: child.item.id});
+                            this.setState({selectItem: child.item});
                             this.componentSelectAction(child.item.id);
                             this._drawer.close()
                         }
@@ -107,6 +108,7 @@ export default class InstallHelperPager extends Component<{}> {
                             color: Color.content,
                             padding: 16
                         }}>{child.item.name}</Text>
+
                     </TouchableOpacity>}
                     sections={this.state.nodes}
                 />
@@ -135,7 +137,7 @@ export default class InstallHelperPager extends Component<{}> {
         //console.log("key:" + text)
         return this.state.nodes.filter((item) => {
             //console.log("result:" + item);
-            return item ? (item.name.toLowerCase().indexOf(text.toLowerCase()) > -1) : ("无");
+            return item ? (item.name.toLowerCase().indexOf(text.toLowerCase()) > -1) || (item.id.toLowerCase().indexOf(text.toLowerCase()) > -1) : ("无");
         });
     }
 
@@ -187,7 +189,7 @@ export default class InstallHelperPager extends Component<{}> {
                                             }}
                                             onPress={() => {
                                                 this.setState({
-                                                    selectItem: item.name,
+                                                    selectItem: item,
                                                     editText: item.name,
                                                     searchResult: []
                                                 });
@@ -202,92 +204,115 @@ export default class InstallHelperPager extends Component<{}> {
                         })()
                     }
 
-                    <View style={styles.searchContainer}>
-                        <TouchableOpacity onPress={() => this.props.nav.goBack(null)}>
-                            <Image style={styles.home}
-                                   source={ require('../drawable/back_black.png')}/>
-                        </TouchableOpacity>
-                        <TextInput style={styles.textInput}
-                                   placeholder="搜索组件"
-                                   returnKeyType={'done'}
-                                   maxLength={15}
-                                   value={this.state.editText}
-                                   blurOnSubmit={true}
-                                   selectionColor={Color.colorBlue}
-                                   underlineColorAndroid="transparent"
-                                   onChangeText={(text) => {
-                                       this.setState({editText: text});
-                                       this.search(text).then((array) => {
-                                           this.setState({searchResult: array.slice(0, 4)})
-                                       })
-                                   }}/>
-                        {
-                            (() => {
-                                if (this.state.editText) {
-                                    return <TouchableOpacity
-                                        style={{position: 'absolute', right: 55}}
-                                        onPress={() => {
-                                            this.setState({editText: ""});
-                                        }}>
-                                        <Image style={styles.menu}
-                                               source={ require('../drawable/close_gray.png')}/>
+                    {
+                        (()=>{
+                            if(!this.state.isFullScreen){
+                                return                   <View style={styles.searchContainer}>
+                                    <TouchableOpacity onPress={() => this.props.nav.goBack(null)}>
+                                        <Image style={styles.home}
+                                               source={ require('../drawable/back_black.png')}/>
                                     </TouchableOpacity>
-                                }
-                            })()
-                        }
+                                    <TextInput style={styles.textInput}
+                                               placeholder="搜索组件"
+                                               returnKeyType={'done'}
+                                               maxLength={15}
+                                               value={this.state.editText}
+                                               blurOnSubmit={true}
+                                               selectionColor={Color.colorBlue}
+                                               underlineColorAndroid="transparent"
+                                               onChangeText={(text) => {
+                                                   this.setState({editText: text});
+                                                   this.search(text).then((array) => {
+                                                       this.setState({searchResult: array.slice(0, 4)})
+                                                   })
+                                               }}/>
+                                    {
+                                        (() => {
+                                            if (this.state.editText) {
+                                                return <TouchableOpacity
+                                                    style={{position: 'absolute', right: 55}}
+                                                    onPress={() => {
+                                                        this.setState({editText: ""});
+                                                    }}>
+                                                    <Image style={styles.menu}
+                                                           source={ require('../drawable/close_gray.png')}/>
+                                                </TouchableOpacity>
+                                            }
+                                        })()
+                                    }
 
-                        <TouchableOpacity onPress={() => {
-                            this._drawer.open()
-                        }}>
-                            <Image style={styles.menu}
-                                   source={ require('../drawable/menu_black.png')}/>
-                        </TouchableOpacity>
-                    </View>
+                                    <TouchableOpacity onPress={() => {
+                                        this._drawer.open()
+                                    }}>
+                                        <Image style={styles.menu}
+                                               source={ require('../drawable/menu_black.png')}/>
+                                    </TouchableOpacity>
+                                </View>
+                            }
+                        })()
+                    }
 
+                    {
+                        (() => {
+                            if (!this.state.isFullScreen) {
+                                return <View style={styles.bottomContainer}>
+                                    <Text style={{
+                                        color: 'black',
+                                        fontSize: 18
+                                    }}>{this.state.selectItem ? this.state.selectItem.name : '组件名称'}</Text>
+                                    <Text>{this.state.selectItem ? this.state.selectItem.id : '详情'}</Text>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <TouchableOpacity onPress={() => {
+                                            let msg = {
+                                                component: this.state.selectItem.id,
+                                                command: [
+                                                    Utils.modelCommand.highlight,
+                                                ]
+                                            };
+                                            this.refs.webView.postMessage(JSON.stringify(msg));
+                                        }}><Text style={{
+                                            color: Color.colorBlue,
+                                            marginRight: 16,
+                                            marginBottom: 16,
+                                            marginTop: 16
+                                        }}>高亮</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => {
+                                            let msg = {
+                                                component: this.state.selectItem.id,
+                                                command: [
+                                                    Utils.modelCommand.transform,
+                                                ]
+                                            };
+                                            this.refs.webView.postMessage(JSON.stringify(msg));
+                                        }}><Text
+                                            style={{color: Color.colorBlue, margin: 16}}>移动</Text></TouchableOpacity>
+                                        <TouchableOpacity onPress={() => {
+                                            let msg = {
+                                                component: this.state.selectItem.id,
+                                                command: [
+                                                    Utils.modelCommand.hide,
+                                                ]
+                                            };
+                                            this.refs.webView.postMessage(JSON.stringify(msg));
 
-                    <View style={styles.bottomContainer}>
-                        <Text style={{
-                            color: 'black',
-                            fontSize: 18
-                        }}>{this.state.selectItem ? this.state.selectItem : '组件名称'}</Text>
-                        <View style={{flexDirection: 'row'}}>
-                            <TouchableOpacity onPress={() => {
-                                let msg = {
-                                    component: this.state.selectItem,
-                                    command: [
-                                        Utils.modelCommand.highlight,
-                                    ]
-                                };
-                                this.refs.webView.postMessage(JSON.stringify(msg));
-                            }}><Text style={{color: Color.colorBlue, marginRight: 16, marginBottom: 16, marginTop: 16}}>高亮</Text></TouchableOpacity>
-                            <TouchableOpacity onPress={() => {
-                                let msg = {
-                                    component: this.state.selectItem,
-                                    command: [
-                                        Utils.modelCommand.transform,
-                                    ]
-                                };
-                                this.refs.webView.postMessage(JSON.stringify(msg));
-                            }}><Text style={{color: Color.colorBlue, margin: 16}}>移动</Text></TouchableOpacity>
-                            <TouchableOpacity onPress={() => {
-                                let msg = {
-                                    component: this.state.selectItem,
-                                    command: [
-                                        Utils.modelCommand.hide,
-                                    ]
-                                };
-                                this.refs.webView.postMessage(JSON.stringify(msg));
+                                        }}><Text
+                                            style={{color: Color.colorBlue, margin: 16}}>隐藏</Text></TouchableOpacity>
+                                    </View>
+                                </View>
+                            }
+                        })()
+                    }
 
-                            }}><Text style={{color: Color.colorBlue, margin: 16}}>隐藏</Text></TouchableOpacity>
-                        </View>
-                    </View>
                     <TouchableOpacity
                         style={styles.btnTopContainer}
                         onPress={() => {
                             this.props.nav.navigate("qr", {
                                     finishFunc: (result) => {
                                         this.componentSelectAction(result)
-                                        this.setState({selectItem: result})
+                                        this.search(result).then((array) => {
+                                            this.setState({searchResult: array})
+                                        })
                                     }
                                 }
                             )
@@ -297,10 +322,11 @@ export default class InstallHelperPager extends Component<{}> {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btnContainer}
                                       onPress={() => {
-                                          this.props.nav.navigate("exceptionAdd")
+                                          //this.props.nav.navigate("exceptionAdd")
+                                          this.setState({isFullScreen:!this.state.isFullScreen})
                                       }}>
                         <Image style={styles.floatBtn}
-                               source={ require('../drawable/repair_icon.png')}/>
+                               source={ require('../drawable/full_screen_ico.png')}/>
                     </TouchableOpacity>
                     <Loading visible={this.state.isLoading}/>
 

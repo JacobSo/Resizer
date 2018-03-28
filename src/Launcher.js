@@ -146,7 +146,8 @@ export default class Launcher extends Component<{}> {
                 <View style={styles.iconRowContainer}>
                     <TouchableOpacity style={styles.iconContainer} onPress={
                         () => {
-                            this.props.nav.navigate("commonList", {listType: 2})
+                     //       this.props.nav.navigate("commonList", {listType: 2})
+                            this.props.nav.navigate("installHelper")
                         }}>
                         <Image style={styles.icon} resizeMode="contain"
                                source={require('./drawable/main_exception_icon.png')}/>
