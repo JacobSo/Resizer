@@ -53,7 +53,7 @@ export default class Launcher extends Component<{}> {
 
                         if (App.phone && App.token) {
                             this.setState({isLoading: true});
-                            Toast.show("second login");
+                            //Toast.show("second login");
 
                             ApiService.login(App.phone, App.token)
                                 .then((responseJson) => {

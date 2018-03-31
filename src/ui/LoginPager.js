@@ -232,7 +232,7 @@ export default class LoginPager extends Component<{}> {
     }
 
     login() {
-        Toast.show("first login");
+      //  Toast.show("first login");
         ApiService.login(this.state.phone, this.state.ssoToken)
             .then((responseJson) => {
                 this.setState({isLoading: false,});

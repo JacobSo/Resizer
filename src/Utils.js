@@ -16,6 +16,7 @@ export  default  class Utils extends Component {
     static modelCommand={
         select:"select",
         transform:"transform",
+        back:"back",
         hide:"hide",
         highlight:"highlight",
         recovery:"recovery",

@@ -116,13 +116,15 @@ export default class InstallHelperPager extends Component<{}> {
             </View>)
     }
 
+
+    //usage: search list--drawer list--drawer title--qr code callback
     componentSelectAction(itemName) {
+        console.log(itemName);
         let msg = {
             component: itemName,
             command: [
                 Utils.modelCommand.select,
                 Utils.modelCommand.highlight,
-                Utils.modelCommand.transform,
             ]
         };
         this.refs.webView.postMessage(JSON.stringify(msg));
@@ -130,7 +132,10 @@ export default class InstallHelperPager extends Component<{}> {
 
     //from web
     onMessage = (data) => {
-        //console.log(data);
+        console.log(data.nativeEvent.data);
+        this.setState({selectItem:JSON.parse(data.nativeEvent.data)})
+
+
     }
 
     async  search(text) {
@@ -259,15 +264,18 @@ export default class InstallHelperPager extends Component<{}> {
                                 return <View style={styles.bottomContainer}>
                                     <Text style={{
                                         color: 'black',
-                                        fontSize: 18
+                                        fontSize: 18,
                                     }}>{this.state.selectItem ? this.state.selectItem.name : '组件名称'}</Text>
-                                    <Text>{this.state.selectItem ? this.state.selectItem.id : '详情'}</Text>
+                                    <Text>{this.state.selectItem ? ("标识："+this.state.selectItem.id) : '详情'}</Text>
+                                    <View style={{height:1,width:width-32,backgroundColor:Color.line,marginTop:16}}/>
+
+
                                     <View style={{flexDirection: 'row'}}>
                                         <TouchableOpacity onPress={() => {
                                             let msg = {
                                                 component: this.state.selectItem.id,
                                                 command: [
-                                                    Utils.modelCommand.highlight,
+                                                    Utils.modelCommand.back,
                                                 ]
                                             };
                                             this.refs.webView.postMessage(JSON.stringify(msg));
@@ -276,7 +284,7 @@ export default class InstallHelperPager extends Component<{}> {
                                             marginRight: 16,
                                             marginBottom: 16,
                                             marginTop: 16
-                                        }}>高亮</Text>
+                                        }}>还原</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => {
                                             let msg = {
@@ -299,6 +307,17 @@ export default class InstallHelperPager extends Component<{}> {
 
                                         }}><Text
                                             style={{color: Color.colorBlue, margin: 16}}>隐藏</Text></TouchableOpacity>
+                                        <TouchableOpacity onPress={() => {
+                                            let msg = {
+                                                component:null,
+                                                command: [
+                                                    Utils.modelCommand.recovery,
+                                                ]
+                                            };
+                                            this.refs.webView.postMessage(JSON.stringify(msg));
+
+                                        }}><Text
+                                            style={{color: Color.colorBlue, margin: 16}}>全部还原</Text></TouchableOpacity>
                                     </View>
                                 </View>
                             }
