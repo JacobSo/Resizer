@@ -9,7 +9,7 @@ import {
     View,
     Dimensions,
     TouchableOpacity,
-    ListView, FlatList, ScrollView, WebView, SectionList
+    ListView, FlatList, ScrollView, WebView, SectionList, Platform
 } from 'react-native';
 import Drawer from 'react-native-drawer'
 import ApiService from "../api/ApiService";
@@ -133,7 +133,7 @@ export default class InstallHelperPager extends Component<{}> {
     //from web
     onMessage = (data) => {
         console.log(data.nativeEvent.data);
-        this.setState({selectItem:JSON.parse(data.nativeEvent.data)})
+        this.setState({selectItem: JSON.parse(data.nativeEvent.data)})
 
 
     }
@@ -161,7 +161,7 @@ export default class InstallHelperPager extends Component<{}> {
                     <WebView
                         ref='webView'
                         onMessage={this.onMessage.bind(this)}
-                      //  source={{uri: modelRenderUrl + testLink}}
+                        //  source={{uri: modelRenderUrl + testLink}}
                         source={{uri: "http://192.168.1.113:888/"}}
                         automaticallyAdjustContentInsets={true}
                         scalesPageToFit={true}
@@ -211,9 +211,9 @@ export default class InstallHelperPager extends Component<{}> {
                     }
 
                     {
-                        (()=>{
-                            if(!this.state.isFullScreen){
-                                return                   <View style={styles.searchContainer}>
+                        (() => {
+                            if (!this.state.isFullScreen) {
+                                return <View style={styles.searchContainer}>
                                     <TouchableOpacity onPress={() => this.props.nav.goBack(null)}>
                                         <Image style={styles.home}
                                                source={ require('../drawable/back_black.png')}/>
@@ -266,8 +266,13 @@ export default class InstallHelperPager extends Component<{}> {
                                         color: 'black',
                                         fontSize: 18,
                                     }}>{this.state.selectItem ? this.state.selectItem.name : '组件名称'}</Text>
-                                    <Text>{this.state.selectItem ? ("标识："+this.state.selectItem.id) : '详情'}</Text>
-                                    <View style={{height:1,width:width-32,backgroundColor:Color.line,marginTop:16}}/>
+                                    <Text>{this.state.selectItem ? ("标识：" + this.state.selectItem.id) : '详情'}</Text>
+                                    <View style={{
+                                        height: 1,
+                                        width: width - 32,
+                                        backgroundColor: Color.line,
+                                        marginTop: 16
+                                    }}/>
 
 
                                     <View style={{flexDirection: 'row'}}>
@@ -309,7 +314,7 @@ export default class InstallHelperPager extends Component<{}> {
                                             style={{color: Color.colorBlue, margin: 16}}>隐藏</Text></TouchableOpacity>
                                         <TouchableOpacity onPress={() => {
                                             let msg = {
-                                                component:null,
+                                                component: null,
                                                 command: [
                                                     Utils.modelCommand.recovery,
                                                 ]
@@ -325,7 +330,7 @@ export default class InstallHelperPager extends Component<{}> {
                     }
 
                     <TouchableOpacity
-                        style={styles.btnTopContainer}
+                        style={[styles.btnTopContainer, {bottom: this.state.isFullScreen?100:(Platform.OS === "ios" ? 160 : 185)}]}
                         onPress={() => {
                             this.props.nav.navigate("qr", {
                                     finishFunc: (result) => {
@@ -340,10 +345,12 @@ export default class InstallHelperPager extends Component<{}> {
                         <Image style={styles.floatBtn}
                                source={ require('../drawable/scan_white.png')}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnContainer}
+                    <TouchableOpacity style={[styles.btnContainer, {
+                        bottom: this.state.isFullScreen?25:(Platform.OS === "ios" ? 85 : 110)
+                    }]}
                                       onPress={() => {
                                           //this.props.nav.navigate("exceptionAdd")
-                                          this.setState({isFullScreen:!this.state.isFullScreen})
+                                          this.setState({isFullScreen: !this.state.isFullScreen})
                                       }}>
                         <Image style={styles.floatBtn}
                                source={ require('../drawable/full_screen_ico.png')}/>
@@ -373,7 +380,7 @@ const styles = StyleSheet.create({
         margin: 16
     },
     bottomContainer: {
-        height: 125,
+        height: Platform.OS === "ios" ? 125 : 150,
         width: width,
         position: 'absolute',
         backgroundColor: 'white',
@@ -400,7 +407,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         position: 'absolute',
         right: 0,
-        bottom: 85,
         borderRadius: 50,
         elevation: 5,
         margin: 10,
@@ -413,7 +419,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         position: 'absolute',
         right: 0,
-        bottom: 160,
+
         borderRadius: 50,
         elevation: 5,
         margin: 10,
