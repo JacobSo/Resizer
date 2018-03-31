@@ -156,7 +156,8 @@ export default class InstallHelperPager extends Component<{}> {
                     <WebView
                         ref='webView'
                         onMessage={this.onMessage.bind(this)}
-                        source={{uri: modelRenderUrl + testLink}}
+                      //  source={{uri: modelRenderUrl + testLink}}
+                        source={{uri: "http://192.168.1.113:888/"}}
                         automaticallyAdjustContentInsets={true}
                         scalesPageToFit={true}
                         javaScriptEnabled={true}
