@@ -20,7 +20,8 @@ export  default  class Utils extends Component {
         hide:"hide",
         highlight:"highlight",
         recovery:"recovery",
-        reload:"reload",
+        zoom:"zoom",
+        sorrow:"sorrow",
     };
     static formatDate(timeStr) {
         let now = new Date(timeStr);

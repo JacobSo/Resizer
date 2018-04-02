@@ -134,9 +134,7 @@ export default class InstallHelperPager extends Component<{}> {
     onMessage = (data) => {
         console.log(data.nativeEvent.data);
         this.setState({selectItem: JSON.parse(data.nativeEvent.data)})
-
-
-    }
+    };
 
     async  search(text) {
         //console.log("key:" + text)
@@ -162,7 +160,7 @@ export default class InstallHelperPager extends Component<{}> {
                         ref='webView'
                         onMessage={this.onMessage.bind(this)}
                         //  source={{uri: modelRenderUrl + testLink}}
-                        source={{uri: "http://192.168.1.113:888/"}}
+                        source={{uri: "http://kh.linshimuye.cn:8022/three/"}}
                         automaticallyAdjustContentInsets={true}
                         scalesPageToFit={true}
                         javaScriptEnabled={true}
@@ -199,7 +197,7 @@ export default class InstallHelperPager extends Component<{}> {
                                                     editText: item.name,
                                                     searchResult: []
                                                 });
-                                                this.componentSelectAction(item.name);
+                                                this.componentSelectAction(item.id);
                                             }}>
                                             <Text>{item.name}</Text>
                                         </TouchableOpacity>
@@ -258,6 +256,35 @@ export default class InstallHelperPager extends Component<{}> {
                         })()
                     }
 
+
+                    <View style={{backgroundColor: 'white', elevation: 5, flexDirection: 'row', position: 'absolute',bottom:this.state.isFullScreen?40:165,width:100,justifyContent:'space-around',height:35}}>
+                        <TouchableOpacity onPress={()=>{
+                            let msg = {
+                                component: null,
+                                command: [
+                                    Utils.modelCommand.zoom,
+                                ]
+                            };
+                            this.refs.webView.postMessage(JSON.stringify(msg));
+
+                        }}>
+                            <Text style={{height:35,width:50,fontSize:25,textAlign:'center'}}>+</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{
+                            let msg = {
+                                component: null,
+                                command: [
+                                    Utils.modelCommand.sorrow,
+                                ]
+                            };
+                            this.refs.webView.postMessage(JSON.stringify(msg));
+                        }}>
+                            <Text style={{height:35,width:50,fontSize:25,textAlign:'center'}}>-</Text>
+                        </TouchableOpacity>
+                    </View>
+
+
+
                     {
                         (() => {
                             if (!this.state.isFullScreen) {
@@ -275,7 +302,7 @@ export default class InstallHelperPager extends Component<{}> {
                                     }}/>
 
 
-                                    <View style={{flexDirection: 'row'}}>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
                                         <TouchableOpacity onPress={() => {
                                             let msg = {
                                                 component: this.state.selectItem.id,
@@ -330,11 +357,11 @@ export default class InstallHelperPager extends Component<{}> {
                     }
 
                     <TouchableOpacity
-                        style={[styles.btnTopContainer, {bottom: this.state.isFullScreen?100:(Platform.OS === "ios" ? 160 : 185)}]}
+                        style={[styles.btnTopContainer, {bottom: this.state.isFullScreen ? 100 : (Platform.OS === "ios" ? 160 : 185)}]}
                         onPress={() => {
                             this.props.nav.navigate("qr", {
                                     finishFunc: (result) => {
-                                        this.componentSelectAction(result)
+                                        this.componentSelectAction(result);
                                         this.search(result).then((array) => {
                                             this.setState({searchResult: array})
                                         })
@@ -346,7 +373,7 @@ export default class InstallHelperPager extends Component<{}> {
                                source={ require('../drawable/scan_white.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.btnContainer, {
-                        bottom: this.state.isFullScreen?25:(Platform.OS === "ios" ? 85 : 110)
+                        bottom: this.state.isFullScreen ? 25 : (Platform.OS === "ios" ? 85 : 110)
                     }]}
                                       onPress={() => {
                                           //this.props.nav.navigate("exceptionAdd")
