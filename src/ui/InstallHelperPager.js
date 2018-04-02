@@ -56,6 +56,8 @@ export default class InstallHelperPager extends Component<{}> {
                         modelLink: responseJson.listData.daeUrl,
                         nodes: responseJson.listData.node
                     });
+
+
                 } else {
                     Toast.show(responseJson.errMsg);
                     this.props.nav.goBack(null);
@@ -257,8 +259,17 @@ export default class InstallHelperPager extends Component<{}> {
                     }
 
 
-                    <View style={{backgroundColor: 'white', elevation: 5, flexDirection: 'row', position: 'absolute',bottom:this.state.isFullScreen?40:165,width:100,justifyContent:'space-around',height:35}}>
-                        <TouchableOpacity onPress={()=>{
+                    <View style={{
+                        backgroundColor: 'white',
+                        elevation: 5,
+                        flexDirection: 'row',
+                        position: 'absolute',
+                        bottom: this.state.isFullScreen ? 40 : 165,
+                        width: 100,
+                        justifyContent: 'space-around',
+                        height: 35
+                    }}>
+                        <TouchableOpacity onPress={() => {
                             let msg = {
                                 component: null,
                                 command: [
@@ -268,9 +279,9 @@ export default class InstallHelperPager extends Component<{}> {
                             this.refs.webView.postMessage(JSON.stringify(msg));
 
                         }}>
-                            <Text style={{height:35,width:50,fontSize:25,textAlign:'center'}}>+</Text>
+                            <Text style={{height: 35, width: 50, fontSize: 25, textAlign: 'center'}}>+</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>{
+                        <TouchableOpacity onPress={() => {
                             let msg = {
                                 component: null,
                                 command: [
@@ -279,10 +290,9 @@ export default class InstallHelperPager extends Component<{}> {
                             };
                             this.refs.webView.postMessage(JSON.stringify(msg));
                         }}>
-                            <Text style={{height:35,width:50,fontSize:25,textAlign:'center'}}>-</Text>
+                            <Text style={{height: 35, width: 50, fontSize: 25, textAlign: 'center'}}>-</Text>
                         </TouchableOpacity>
                     </View>
-
 
 
                     {
@@ -363,7 +373,7 @@ export default class InstallHelperPager extends Component<{}> {
                                     finishFunc: (result) => {
                                         this.componentSelectAction(result);
                                         this.search(result).then((array) => {
-                                            this.setState({searchResult: array})
+                                            this.setState({selectItem: array[0]})
                                         })
                                     }
                                 }
