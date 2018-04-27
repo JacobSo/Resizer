@@ -29,7 +29,7 @@ export default class InstallHelperPager extends Component<{}> {
         this.state = {
             isLoading: false,
             html: null,
-            nodes: [],
+            nodes: [{key:'a',data:[{title:'123'}]}],
             searchResult: [],
             editText: "",
             selectItem: "",
@@ -48,10 +48,15 @@ export default class InstallHelperPager extends Component<{}> {
 
     getModelNodes() {
         this.setState({isLoading: true});
-        ApiService.getModel("LS02LSBS0308CP1M01-00000001")
+      //  ApiService.getModel("LS02LSBS0308CP1M01-00000001")
+        ApiService.getModel("LSDZA685-00000002")
             .then((responseJson) => {
                 this.setState({isLoading: false});
                 if (!responseJson.err) {
+                    responseJson.listData.node.map((data,index)=>{
+                        data.key=index;
+                    })
+                    console.log(  responseJson.listData.node)
                     this.setState({
                         modelLink: responseJson.listData.daeUrl,
                         nodes: responseJson.listData.node
@@ -72,6 +77,7 @@ export default class InstallHelperPager extends Component<{}> {
     }
 
     drawerLayout() {
+
         return (
             <View style={{flex: 1, backgroundColor: 'white', elevation: 5}}>
                 <SectionList
@@ -162,7 +168,7 @@ export default class InstallHelperPager extends Component<{}> {
                         ref='webView'
                         onMessage={this.onMessage.bind(this)}
                         //  source={{uri: modelRenderUrl + testLink}}
-                        source={{uri: "http://192.168.1.113:888/"}}
+                        source={{uri: "http://kh.linshimuye.cn:8022/three/"}}
                         automaticallyAdjustContentInsets={true}
                         scalesPageToFit={true}
                         javaScriptEnabled={true}
