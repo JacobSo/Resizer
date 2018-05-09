@@ -14,7 +14,7 @@ import {
     DeviceEventEmitter,
     TouchableOpacity,
     KeyboardAvoidingView,
-    ScrollView, Switch, Alert, Linking
+    ScrollView, Switch, Alert,
 } from 'react-native';
 import {MenuProvider} from 'react-native-popup-menu';
 import Loading from 'react-native-loading-spinner-overlay';
@@ -43,7 +43,7 @@ export default class LoginPager extends Component<{}> {
         super(props);
         this.state = {
             isLoading: false,
-            phone: '18680006907',
+            phone: '',
             codeCheck: '',
             check: false,
             index: 0,
@@ -66,14 +66,14 @@ export default class LoginPager extends Component<{}> {
     componentDidMount() {
         this.ssoLogin();
         if (Platform.OS === 'android') {
-            console.log("DeviceEventEmitter:add")
+            console.log("DeviceEventEmitter:add");
             DeviceEventEmitter.addListener('codeResult', this.codeResult);
         }
     }
 
     componentWillUnmount() {
         if (Platform.OS === 'android') {
-            console.log("DeviceEventEmitter:remove")
+            console.log("DeviceEventEmitter:remove");
             DeviceEventEmitter.removeListener('codeResult', this.codeResult);
         }
     }
@@ -81,7 +81,7 @@ export default class LoginPager extends Component<{}> {
     codeResult = (e) => {
         console.log(e);
         if (e.type === 0)
-            Toast.show(e.result === -1 ? "发送成功" : ("发送验证码失败：" + e.result))
+            Toast.show(e.result === -1 ? "发送成功" : ("发送验证码失败：" + e.result));
         else {
             if (e.result === -1) {
                 this.login()
