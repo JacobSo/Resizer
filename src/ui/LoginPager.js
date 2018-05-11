@@ -129,6 +129,10 @@ export default class LoginPager extends Component<{}> {
             Toast.show("信息不完整");
             return
         }
+        if (!this.state.registerProvider||this.state.registerProvider.length===0) {
+            Toast.show("必须选择服务商");
+            return
+        }
 
         Alert.alert(
             '注册',
@@ -232,7 +236,7 @@ export default class LoginPager extends Component<{}> {
     }
 
     login() {
-      //  Toast.show("first login");
+        //  Toast.show("first login");
         ApiService.login(this.state.phone, this.state.ssoToken)
             .then((responseJson) => {
                 this.setState({isLoading: false,});
@@ -350,7 +354,10 @@ export default class LoginPager extends Component<{}> {
                     thumbTintColor={"white"}
                     value={this.state.registerUserType}/>
             </View>
-            <Menu onSelect={value => this.setState({registerServiceType: Utils.serviceType[value]})}>
+            <Menu onSelect={value => this.setState({
+                registerServiceType: Utils.serviceType[value],
+                registerServiceValue: value
+            })}>
                 <MenuTrigger>
                     <View style={styles.textStyle}>
                         <Text style={styles.textSubStyle}>{"服务类型"}</Text>
