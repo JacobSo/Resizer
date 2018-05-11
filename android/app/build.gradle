@@ -87,6 +87,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-code-push')
     compile project(':react-native-baidu-map')
     compile project(':react-native-image-picker')
     compile project(':react-native-gesture-handler')

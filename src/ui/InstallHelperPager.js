@@ -29,7 +29,7 @@ export default class InstallHelperPager extends Component<{}> {
         this.state = {
             isLoading: false,
             html: null,
-            nodes: [{key:'a',data:[{title:'123'}]}],
+            nodes: [],
             searchResult: [],
             editText: "",
             selectItem: "",
@@ -52,11 +52,13 @@ export default class InstallHelperPager extends Component<{}> {
         ApiService.getModel("LSDZA685-00000002")
             .then((responseJson) => {
                 this.setState({isLoading: false});
+                console.log(JSON.stringify( responseJson.listData.node))
+                responseJson.listData.node.map((data)=>{
+                    if(data.data===null)
+                        data.data=[]
+                });
                 if (!responseJson.err) {
-                    responseJson.listData.node.map((data,index)=>{
-                        data.key=index;
-                    })
-                    console.log(  responseJson.listData.node)
+                    console.log( typeof responseJson.listData.node)
                     this.setState({
                         modelLink: responseJson.listData.daeUrl,
                         nodes: responseJson.listData.node
@@ -71,7 +73,7 @@ export default class InstallHelperPager extends Component<{}> {
             .catch((error) => {
                 this.setState({isLoading: false});
                 Toast.show("出错了，请稍后再试");
-                console.log(error);
+               console.log(error);
                 this.props.nav.goBack(null)
             }).done();
     }
@@ -155,6 +157,7 @@ export default class InstallHelperPager extends Component<{}> {
     render() {
         return (
             <Drawer
+
                 ref={(ref) => this._drawer = ref}
                 content={this.drawerLayout()}
                 type="static"
@@ -309,7 +312,8 @@ export default class InstallHelperPager extends Component<{}> {
                                         color: 'black',
                                         fontSize: 18,
                                     }}>{this.state.selectItem ? this.state.selectItem.name : '组件名称'}</Text>
-                                    <Text>{this.state.selectItem ? ("标识：" + this.state.selectItem.id) : '详情'}</Text>
+                                    <Text>{this.state.selectItem ? ("模型节点：" + this.state.selectItem.id) : '详情'}</Text>
+                                    <Text>{this.state.selectItem ? ("板件编码：" + this.state.selectItem.extraValue) : ''}</Text>
                                     <View style={{
                                         height: 1,
                                         width: width - 32,
