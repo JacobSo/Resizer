@@ -43,7 +43,7 @@ export default class LoginPager extends Component<{}> {
         super(props);
         this.state = {
             isLoading: false,
-            phone: '',
+            phone: '18680006907',
             codeCheck: '',
             check: false,
             index: 0,
