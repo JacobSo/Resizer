@@ -37,6 +37,7 @@ import ScrollableTabView, {DefaultTabBar,} from 'react-native-scrollable-tab-vie
 import AndroidModule from '../module/AndoridCommontModule'
 import IosModule from '../module/IosCommontModule'
 const Dimensions = require('Dimensions');
+
 const {width, height} = Dimensions.get('window');
 export default class LoginPager extends Component<{}> {
     constructor(props) {

@@ -79,7 +79,6 @@ export default class InstallHelperPager extends Component<{}> {
     }
 
     drawerLayout() {
-
         return (
             <View style={{flex: 1, backgroundColor: 'white', elevation: 5}}>
                 <SectionList
@@ -157,7 +156,6 @@ export default class InstallHelperPager extends Component<{}> {
     render() {
         return (
             <Drawer
-
                 ref={(ref) => this._drawer = ref}
                 content={this.drawerLayout()}
                 type="static"
