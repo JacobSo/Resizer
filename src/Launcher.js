@@ -9,7 +9,7 @@ import {
     View,
     Dimensions,
     TouchableOpacity,
-    Linking
+    Linking,Alert
 
 } from 'react-native';
 import App from './Application';
@@ -142,9 +142,24 @@ export default class Launcher extends Component<{}> {
                                     finishFunc: (result) => {
                                         if(!this.state.isHelperOpen){
                                             this.state.isHelperOpen = true;
-                                            this.props.nav.navigate("installHelper",{
-                                                code:result
-                                            })
+                                            Alert.alert(
+                                                '进入安装辅助',
+                                                '当前产品规格编码是'+result,
+                                                [
+                                                    {
+                                                        text: '取消', onPress: () => {
+                                                    }
+                                                    },
+                                                    {
+                                                        text: '确定', onPress: () => {
+                                                        this.props.nav.navigate("installHelper",{
+                                                            code:result
+                                                        })
+                                                    }
+                                                    },
+                                                ]
+                                            )
+
                                         }
 
                                     }

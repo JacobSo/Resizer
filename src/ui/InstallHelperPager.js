@@ -166,7 +166,10 @@ export default class InstallHelperPager extends Component<{}> {
         //console.log("key:" + text)
         return this.state.nodes.filter((item) => {
             //console.log("result:" + item);
-            return item ? (item.name.toLowerCase().indexOf(text.toLowerCase()) > -1) || (item.id.toLowerCase().indexOf(text.toLowerCase()) > -1) : ("无");
+            return item ? (item.name.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                || (item.id.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                ||(item.extraValue.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                : ("无");
         });
     }
 
@@ -339,7 +342,7 @@ export default class InstallHelperPager extends Component<{}> {
                                         height: 1,
                                         width: width - 32,
                                         backgroundColor: Color.line,
-                                        marginTop: 16
+                                        marginTop: 10
                                     }}/>
 
 
@@ -398,7 +401,7 @@ export default class InstallHelperPager extends Component<{}> {
                     }
 
                     <TouchableOpacity
-                        style={[styles.btnTopContainer, {bottom: this.state.isFullScreen ? 100 : (Platform.OS === "ios" ? 160 : 185)}]}
+                        style={[styles.btnTopContainer, {bottom: this.state.isFullScreen ? 100 : (Platform.OS === "ios" ? 160 : 195)}]}
                         onPress={() => {
                             this.props.nav.navigate("qr", {
                                     finishFunc: (result) => {
@@ -414,7 +417,7 @@ export default class InstallHelperPager extends Component<{}> {
                                source={ require('../drawable/scan_white.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.btnContainer, {
-                        bottom: this.state.isFullScreen ? 25 : (Platform.OS === "ios" ? 85 : 110)
+                        bottom: this.state.isFullScreen ? 25 : (Platform.OS === "ios" ? 85 : 120)
                     }]}
                                       onPress={() => {
                                           //this.props.nav.navigate("exceptionAdd")
@@ -448,7 +451,7 @@ const styles = StyleSheet.create({
         margin: 16
     },
     bottomContainer: {
-        height: Platform.OS === "ios" ? 125 : 150,
+        height: Platform.OS === "ios" ? 125 : 160,
         width: width,
         position: 'absolute',
         backgroundColor: 'white',
