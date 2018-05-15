@@ -140,7 +140,7 @@ export default class Launcher extends Component<{}> {
                     }>
                         <Image style={styles.icon} resizeMode="contain"
                                source={require('./drawable/main_install_icon.png')}/>
-                        <Text>安装任务</Text>
+                        <Text>安装辅助</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.iconRowContainer}>

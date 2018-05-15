@@ -20,7 +20,8 @@ const {width, height} = Dimensions.get('window');
 //http://kh.linshimuye.cn:8022/materializes/
 
 let testLink = "http://designanddsc.oss-cn-shenzhen.aliyuncs.com/ModelFiles/model_1520819795252.dae";
-let modelRenderUrl = 'http://kh.linshimuye.cn:8022/3/#';
+//let modelRenderUrl = 'http://kh.linshimuye.cn:8022/3/#';
+let modelRenderUrl = 'http://192.168.1.113:889/#';
 
 export default class InstallHelperPager extends Component<{}> {
 
@@ -141,8 +142,24 @@ export default class InstallHelperPager extends Component<{}> {
 
     //from web
     onMessage = (data) => {
+
         console.log(data.nativeEvent.data);
-        this.setState({selectItem: JSON.parse(data.nativeEvent.data)})
+        let temp = JSON.parse(data.nativeEvent.data);
+        let result = null
+        this.state.nodes.map((data)=>{
+            if(data.data&&data.data.length!==0){
+                data.data.map((sub)=>{
+                    if(temp.id===sub.id){
+                        result = sub;
+                    }
+                })
+            }else{
+                if(data.id === temp.id){
+                    result=data;
+                }
+            }
+        })
+        this.setState({selectItem: result})
     };
 
     async  search(text) {
@@ -165,18 +182,24 @@ export default class InstallHelperPager extends Component<{}> {
                 panCloseMask={0.2}>
 
                 <View style={{flex: 1, backgroundColor: Color.colorBlueGrey}}>
-                    <WebView
-                        ref='webView'
-                        onMessage={this.onMessage.bind(this)}
-                        //  source={{uri: modelRenderUrl + testLink}}
-                        source={{uri: "http://kh.linshimuye.cn:8022/three/"}}
-                        automaticallyAdjustContentInsets={true}
-                        scalesPageToFit={true}
-                        javaScriptEnabled={true}
-                        domStorageEnabled={true}
-                        style={{width: width, height: height, backgroundColor: Color.content}}
-                        scrollEnabled={false}
-                    />
+                    {
+                        (()=>{
+                            if(this.state.modelLink){
+                                return  <WebView
+                                    ref='webView'
+                                    onMessage={this.onMessage.bind(this)}
+                                    source={{uri: modelRenderUrl+this.state.modelLink}}
+                                    automaticallyAdjustContentInsets={true}
+                                    scalesPageToFit={true}
+                                    javaScriptEnabled={true}
+                                    domStorageEnabled={true}
+                                    style={{width: width, height: height, backgroundColor: Color.content}}
+                                    scrollEnabled={false}
+                                />
+                            }else return null;
+                        })()
+                    }
+
                     {
                         (() => {
                             if (this.state.searchResult.length !== 0) {
