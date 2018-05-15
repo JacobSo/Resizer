@@ -25,7 +25,8 @@ export default class Launcher extends Component<{}> {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false
+            isLoading: false,
+            isHelperOpen:false
         };
     }
 
@@ -135,7 +136,20 @@ export default class Launcher extends Component<{}> {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconContainer} onPress={
                         () => {
-                            this.props.nav.navigate("commonList", {listType: 1})
+                            this.state.isHelperOpen = false
+                            //this.props.nav.navigate("commonList", {listType: 1})
+                            this.props.nav.navigate("qr", {
+                                    finishFunc: (result) => {
+                                        if(!this.state.isHelperOpen){
+                                            this.state.isHelperOpen = true;
+                                            this.props.nav.navigate("installHelper",{
+                                                code:result
+                                            })
+                                        }
+
+                                    }
+                                }
+                            )
                         }
                     }>
                         <Image style={styles.icon} resizeMode="contain"

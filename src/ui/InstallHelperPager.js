@@ -50,7 +50,7 @@ export default class InstallHelperPager extends Component<{}> {
     getModelNodes() {
         this.setState({isLoading: true});
       //  ApiService.getModel("LS02LSBS0308CP1M01-00000001")
-        ApiService.getModel("LSDZA685-00000002")
+        ApiService.getModel(this.props.code)
             .then((responseJson) => {
                 this.setState({isLoading: false});
                 console.log(JSON.stringify( responseJson.listData.node))
@@ -68,14 +68,14 @@ export default class InstallHelperPager extends Component<{}> {
 
                 } else {
                     Toast.show(responseJson.errMsg);
-                    this.props.nav.goBack(null);
+                   // this.props.nav.goBack(null);
                 }
             })
             .catch((error) => {
                 this.setState({isLoading: false});
                 Toast.show("出错了，请稍后再试");
                console.log(error);
-                this.props.nav.goBack(null)
+               // this.props.nav.goBack(null)
             }).done();
     }
 
@@ -244,7 +244,7 @@ export default class InstallHelperPager extends Component<{}> {
                         (() => {
                             if (!this.state.isFullScreen) {
                                 return <View style={styles.searchContainer}>
-                                    <TouchableOpacity onPress={() => this.props.nav.goBack(null)}>
+                                    <TouchableOpacity onPress={() => {this.props.nav.goBack(null)}}>
                                         <Image style={styles.home}
                                                source={ require('../drawable/back_black.png')}/>
                                     </TouchableOpacity>

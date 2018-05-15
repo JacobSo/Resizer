@@ -20,45 +20,41 @@ const {width, height} = Dimensions.get('window');
 export default class QrCodePager extends Component {
     render() {
         return (
-
+            <View style={{flex:1}}>
+        <Toolbar
+            elevation={2}
+            title={["扫描组件"]}
+            color={'white'}
+            isHomeUp={true}
+            isAction={true}
+            isActionByText={true}
+            actionArray={[]}
+            functionArray={[
+                () => {
+                    this.props.nav.goBack(null)
+                },
+            ]}/>
             <QRScannerView
                 onScanResultReceived={this.barcodeReceived.bind(this)}
                 renderTopBarView={() => this._renderTitleBar()}
-                renderBottomMenuView={() => this._renderMenu()}
-                hintText={"扫描家具组件以获取家具信息，辅助安装和上报异常"}
+               renderBottomMenuView={() => this._renderMenu()}
             />
+            </View>
         )
     }
 
     _renderTitleBar(){
-        return(
-            <Toolbar
-                elevation={2}
-                title={["扫描组件"]}
-                color={'white'}
-                isHomeUp={true}
-                isAction={true}
-                isActionByText={true}
-                actionArray={[]}
-                functionArray={[
-                    () => {
-                        this.props.nav.goBack(null)
-                    },
-                ]}/>
-        );
+        return<View/>
     }
 
     _renderMenu() {
         return (
-            <Text
-                style={{color:'white',textAlignVertical:'center', textAlign:'center',font:20,padding:12}}
-            >-</Text>
-        )
+            <View/>)
     }
 
     barcodeReceived(e) {
         if(e.data){
-            Toast.show('Type: ' + e.type + '\nData: ' + e.data);
+         //   Toast.show('Type: ' + e.type + '\nData: ' + e.data);
             this.props.finishFunc(e.data)
             this.props.nav.goBack();
         }
