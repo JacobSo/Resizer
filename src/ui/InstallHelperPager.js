@@ -21,7 +21,7 @@ const {width, height} = Dimensions.get('window');
 
 let testLink = "http://designanddsc.oss-cn-shenzhen.aliyuncs.com/ModelFiles/model_1520819795252.dae";
 //let modelRenderUrl = 'http://kh.linshimuye.cn:8022/3/#';
-let modelRenderUrl = 'http://192.168.1.113:889/#';
+let modelRenderUrl = 'http://192.168.1.113:8000/#';
 
 export default class InstallHelperPager extends Component<{}> {
 
