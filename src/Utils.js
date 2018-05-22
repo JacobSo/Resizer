@@ -14,6 +14,7 @@ export  default  class Utils extends Component {
     static taskStatus = ["待测量","待安装","-","待维修"];
     static blankUri = "http://127.0.0.1";
     static modelCommand={
+        all:"all",
         select:"select",
         transform:"transform",
         back:"back",

@@ -95,8 +95,24 @@ export default class InstallHelperPager extends Component<{}> {
                     keyExtractor={(item) => item.id}
                     renderSectionHeader={(parent) => <TouchableOpacity
                         onPress={() => {
+                            console.log(parent)
                             this.setState({selectItem: parent.section});
-                            this.componentSelectAction(parent.section.id);
+
+                            let temp = '';
+                            temp+=(parent.section.id+',');
+                            parent.section.data.map((ch)=>{
+                                temp+=(ch.id+',');
+                            });
+                            let msg = {
+                                component: temp.substring(0,temp.length-1),
+                                command: [
+                                    Utils.modelCommand.all,
+                                   // Utils.modelCommand.highlight,
+                                ]
+                            };
+                            this.refs.webView.postMessage(JSON.stringify(msg));
+
+
                             this._drawer.close()
                         }}>
                         <Text style={{
@@ -337,7 +353,7 @@ export default class InstallHelperPager extends Component<{}> {
                                         fontSize: 18,
                                     }}>{this.state.selectItem ? this.state.selectItem.name : '组件名称'}</Text>
                                     <Text>{this.state.selectItem ? ("模型节点：" + this.state.selectItem.id) : '详情'}</Text>
-                                    <Text>{this.state.selectItem ? ("板件编码：" + this.state.selectItem.extraValue) : ''}</Text>
+                                    <Text>{this.state.selectItem&&this.state.selectItem.extraValue ? ("板件编码：" + this.state.selectItem.extraValue) : ''}</Text>
                                     <View style={{
                                         height: 1,
                                         width: width - 32,
