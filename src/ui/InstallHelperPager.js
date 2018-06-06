@@ -20,8 +20,8 @@ const {width, height} = Dimensions.get('window');
 //http://kh.linshimuye.cn:8022/materializes/
 
 let testLink = "http://designanddsc.oss-cn-shenzhen.aliyuncs.com/ModelFiles/model_1520819795252.dae";
-//let modelRenderUrl = 'http://kh.linshimuye.cn:8022/3/#';
-let modelRenderUrl = 'http://192.168.1.113:8000/#';
+let modelRenderUrl = 'http://kh.linshimuye.cn:8022/3/#';
+//let modelRenderUrl = 'http://192.168.1.113:8000/#';
 
 export default class InstallHelperPager extends Component<{}> {
 
@@ -40,7 +40,7 @@ export default class InstallHelperPager extends Component<{}> {
     }
 
     componentDidMount() {
-        console.log(this.props.param);
+        console.log(this.props.code);
 
         //       Toast.show("参数："+this.props.param);
         //getModel
@@ -53,12 +53,13 @@ export default class InstallHelperPager extends Component<{}> {
         ApiService.getModel(this.props.code)
             .then((responseJson) => {
                 this.setState({isLoading: false});
-                console.log(JSON.stringify( responseJson.listData.node))
-                responseJson.listData.node.map((data)=>{
-                    if(data.data===null)
-                        data.data=[]
-                });
+
                 if (!responseJson.err) {
+                    console.log(JSON.stringify( responseJson.listData.node))
+                    responseJson.listData.node.map((data)=>{
+                        if(data.data===null)
+                            data.data=[]
+                    });
                     console.log( typeof responseJson.listData.node)
                     this.setState({
                         modelLink: responseJson.listData.daeUrl,
@@ -111,8 +112,6 @@ export default class InstallHelperPager extends Component<{}> {
                                 ]
                             };
                             this.refs.webView.postMessage(JSON.stringify(msg));
-
-
                             this._drawer.close()
                         }}>
                         <Text style={{
@@ -138,7 +137,6 @@ export default class InstallHelperPager extends Component<{}> {
                     </TouchableOpacity>}
                     sections={this.state.nodes}
                 />
-
             </View>)
     }
 

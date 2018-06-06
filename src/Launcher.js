@@ -9,7 +9,7 @@ import {
     View,
     Dimensions,
     TouchableOpacity,
-    Linking,Alert
+    Linking, Alert
 
 } from 'react-native';
 import App from './Application';
@@ -26,11 +26,11 @@ export default class Launcher extends Component<{}> {
         super(props);
         this.state = {
             isLoading: false,
-            isHelperOpen:false
+            isHelperOpen: false
         };
     }
 
-
+//url 成立，直接进入安装辅助，否则走app自身登陆流程
     componentDidMount() {
         Linking.getInitialURL().then(url => {
             console.log("login:" + url);
@@ -41,21 +41,18 @@ export default class Launcher extends Component<{}> {
                         actions: [
                             NavigationActions.navigate({
                                 routeName: 'installHelper',
-                                params: {param: url.substring(url.lastIndexOf("/") + 1, url.length)}
+                                params: {code: url.substring(url.lastIndexOf("/") + 1, url.length)}
                             },),
                         ]
                     });
                 this.props.nav.dispatch(resetAction)
-
             } else {
-                if(!this.props.isLogin){
-                    console.log("init:"+App.phone);
+                if (!this.props.isLogin) {
+                    console.log("init:" + App.phone);
                     App.initAccount(() => {
-
-                        if (App.phone && App.token) {
+                        if (App.phone && App.phone !== '' && App.token) {
                             this.setState({isLoading: true});
                             //Toast.show("second login");
-
                             ApiService.login(App.phone, App.token)
                                 .then((responseJson) => {
                                     this.setState({isLoading: false});
@@ -86,7 +83,7 @@ export default class Launcher extends Component<{}> {
                             this.resetLogin();
                         }
                     });
-                }else console.log("be login")
+                } else console.log("be login")
 
             }
         });
@@ -140,11 +137,11 @@ export default class Launcher extends Component<{}> {
                             //this.props.nav.navigate("commonList", {listType: 1})
                             this.props.nav.navigate("qr", {
                                     finishFunc: (result) => {
-                                        if(!this.state.isHelperOpen){
+                                        if (!this.state.isHelperOpen) {
                                             this.state.isHelperOpen = true;
                                             Alert.alert(
                                                 '进入安装辅助',
-                                                '当前产品规格编码是'+result,
+                                                '当前产品规格编码是' + result,
                                                 [
                                                     {
                                                         text: '取消', onPress: () => {
@@ -152,8 +149,8 @@ export default class Launcher extends Component<{}> {
                                                     },
                                                     {
                                                         text: '确定', onPress: () => {
-                                                        this.props.nav.navigate("installHelper",{
-                                                            code:result
+                                                        this.props.nav.navigate("installHelper", {
+                                                            code: result
                                                         })
                                                     }
                                                     },
@@ -175,8 +172,8 @@ export default class Launcher extends Component<{}> {
                 <View style={styles.iconRowContainer}>
                     <TouchableOpacity style={styles.iconContainer} onPress={
                         () => {
-                            this.props.nav.navigate("installHelper",{
-                                code:'LSDZA685-00000002'
+                            this.props.nav.navigate("installHelper", {
+                                code: 'LSDZA685-00000002'
                             })
                         }}>
                         <Image style={styles.icon} resizeMode="contain"
