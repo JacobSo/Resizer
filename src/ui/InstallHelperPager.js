@@ -23,7 +23,7 @@ let testLink = "http://designanddsc.oss-cn-shenzhen.aliyuncs.com/ModelFiles/mode
 let modelRenderUrl = 'http://kh.linshimuye.cn:8022/3/#';
 //let modelRenderUrl = 'http://192.168.1.113:8000/#';
 
-export default class InstallHelperPager extends Component<{}> {
+export default class InstallHelperPager extends Component {
 
     constructor(props) {
         super(props);
@@ -49,18 +49,18 @@ export default class InstallHelperPager extends Component<{}> {
 
     getModelNodes() {
         this.setState({isLoading: true});
-      //  ApiService.getModel("LS02LSBS0308CP1M01-00000001")
+        //  ApiService.getModel("LS02LSBS0308CP1M01-00000001")
         ApiService.getModel(this.props.code)
             .then((responseJson) => {
                 this.setState({isLoading: false});
 
                 if (!responseJson.err) {
-                    console.log(JSON.stringify( responseJson.listData.node))
-                    responseJson.listData.node.map((data)=>{
-                        if(data.data===null)
-                            data.data=[]
+                    console.log(JSON.stringify(responseJson.listData.node))
+                    responseJson.listData.node.map((data) => {
+                        if (data.data === null)
+                            data.data = []
                     });
-                    console.log( typeof responseJson.listData.node)
+                    console.log(typeof responseJson.listData.node)
                     this.setState({
                         modelLink: responseJson.listData.daeUrl,
                         nodes: responseJson.listData.node
@@ -69,14 +69,14 @@ export default class InstallHelperPager extends Component<{}> {
 
                 } else {
                     Toast.show(responseJson.errMsg);
-                   // this.props.nav.goBack(null);
+                    // this.props.nav.goBack(null);
                 }
             })
             .catch((error) => {
                 this.setState({isLoading: false});
                 Toast.show("出错了，请稍后再试");
-               console.log(error);
-               // this.props.nav.goBack(null)
+                console.log(error);
+                // this.props.nav.goBack(null)
             }).done();
     }
 
@@ -100,15 +100,15 @@ export default class InstallHelperPager extends Component<{}> {
                             this.setState({selectItem: parent.section});
 
                             let temp = '';
-                            temp+=(parent.section.id+',');
-                            parent.section.data.map((ch)=>{
-                                temp+=(ch.id+',');
+                            temp += (parent.section.id + ',');
+                            parent.section.data.map((ch) => {
+                                temp += (ch.id + ',');
                             });
                             let msg = {
-                                component: temp.substring(0,temp.length-1),
+                                component: temp.substring(0, temp.length - 1),
                                 command: [
                                     Utils.modelCommand.all,
-                                   // Utils.modelCommand.highlight,
+                                    // Utils.modelCommand.highlight,
                                 ]
                             };
                             this.refs.webView.postMessage(JSON.stringify(msg));
@@ -160,16 +160,16 @@ export default class InstallHelperPager extends Component<{}> {
         console.log(data.nativeEvent.data);
         let temp = JSON.parse(data.nativeEvent.data);
         let result = null
-        this.state.nodes.map((data)=>{
-            if(data.data&&data.data.length!==0){
-                data.data.map((sub)=>{
-                    if(temp.id===sub.id){
+        this.state.nodes.map((data) => {
+            if (data.data && data.data.length !== 0) {
+                data.data.map((sub) => {
+                    if (temp.id === sub.id) {
                         result = sub;
                     }
                 })
-            }else{
-                if(data.id === temp.id){
-                    result=data;
+            } else {
+                if (data.id === temp.id) {
+                    result = data;
                 }
             }
         })
@@ -177,13 +177,27 @@ export default class InstallHelperPager extends Component<{}> {
     };
 
     async  search(text) {
-        //console.log("key:" + text)
+        console.log("key:" + text)
         return this.state.nodes.filter((item) => {
-            //console.log("result:" + item);
+            //console.log("result:" + JSON.stringify(item));
+            if (item.data && item.data.length !== 0) {
+                item.data.filter((itemSub) => {
+                    console.log((itemSub.name.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                        || (itemSub.id.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                        || (itemSub.extraValue && (itemSub.extraValue.toLowerCase().indexOf(text.toLowerCase()) > -1))
+                    );
+                    return itemSub ? (itemSub.name.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                        || (itemSub.id.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                        || (itemSub.extraValue && (itemSub.extraValue.toLowerCase().indexOf(text.toLowerCase()) > -1))
+                        : ("无");
+                })
+            }
             return item ? (item.name.toLowerCase().indexOf(text.toLowerCase()) > -1)
                 || (item.id.toLowerCase().indexOf(text.toLowerCase()) > -1)
-                ||(item.extraValue.toLowerCase().indexOf(text.toLowerCase()) > -1)
+                || (item.extraValue && (item.extraValue.toLowerCase().indexOf(text.toLowerCase()) > -1))
                 : ("无");
+
+
         });
     }
 
@@ -200,12 +214,12 @@ export default class InstallHelperPager extends Component<{}> {
 
                 <View style={{flex: 1, backgroundColor: Color.colorBlueGrey}}>
                     {
-                        (()=>{
-                            if(this.state.modelLink){
-                                return  <WebView
+                        (() => {
+                            if (this.state.modelLink) {
+                                return <WebView
                                     ref='webView'
                                     onMessage={this.onMessage.bind(this)}
-                                    source={{uri: modelRenderUrl+this.state.modelLink}}
+                                    source={{uri: modelRenderUrl + this.state.modelLink}}
                                     automaticallyAdjustContentInsets={true}
                                     scalesPageToFit={true}
                                     javaScriptEnabled={true}
@@ -213,7 +227,7 @@ export default class InstallHelperPager extends Component<{}> {
                                     style={{width: width, height: height, backgroundColor: Color.content}}
                                     scrollEnabled={false}
                                 />
-                            }else return null;
+                            } else return null;
                         })()
                     }
 
@@ -261,7 +275,9 @@ export default class InstallHelperPager extends Component<{}> {
                         (() => {
                             if (!this.state.isFullScreen) {
                                 return <View style={styles.searchContainer}>
-                                    <TouchableOpacity onPress={() => {this.props.nav.goBack(null)}}>
+                                    <TouchableOpacity onPress={() => {
+                                        this.props.nav.goBack(null)
+                                    }}>
                                         <Image style={styles.home}
                                                source={ require('../drawable/back_black.png')}/>
                                     </TouchableOpacity>
@@ -351,7 +367,7 @@ export default class InstallHelperPager extends Component<{}> {
                                         fontSize: 18,
                                     }}>{this.state.selectItem ? this.state.selectItem.name : '组件名称'}</Text>
                                     <Text>{this.state.selectItem ? ("模型节点：" + this.state.selectItem.id) : '详情'}</Text>
-                                    <Text>{this.state.selectItem&&this.state.selectItem.extraValue ? ("板件编码：" + this.state.selectItem.extraValue) : ''}</Text>
+                                    <Text>{this.state.selectItem && this.state.selectItem.extraValue ? ("板件编码：" + this.state.selectItem.extraValue) : ''}</Text>
                                     <View style={{
                                         height: 1,
                                         width: width - 32,
@@ -417,12 +433,35 @@ export default class InstallHelperPager extends Component<{}> {
                     <TouchableOpacity
                         style={[styles.btnTopContainer, {bottom: this.state.isFullScreen ? 100 : (Platform.OS === "ios" ? 160 : 195)}]}
                         onPress={() => {
+
                             this.props.nav.navigate("qr", {
                                     finishFunc: (result) => {
-                                        this.componentSelectAction(result);
-                                        this.search(result).then((array) => {
-                                            this.setState({selectItem: array[0]})
-                                        })
+                                        // Toast.show(result);
+                                        let tempId = null;
+                                        this.state.nodes.map((data) => {
+                                            if (tempId === null) {
+                                                if (data.extraValue === result) {
+                                                    tempId = data.id;
+                                                    this.setState({selectItem: data})
+                                                } else {
+                                                    if (data.data && data.data.length !== 0) {
+                                                        data.data.map((sub) => {
+                                                            if (sub.extraValue === result) {
+                                                                tempId = sub.id;
+                                                                this.setState({selectItem: sub})
+                                                            }
+                                                        })
+                                                    }
+                                                }
+                                            }
+
+                                        });
+                                        if (tempId !== null) {
+                                            this.componentSelectAction(tempId);
+                                        } else {
+                                            Toast.show('没找到对应板件')
+                                        }
+
                                     }
                                 }
                             )

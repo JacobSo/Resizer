@@ -39,12 +39,13 @@ import IosModule from '../module/IosCommontModule'
 const Dimensions = require('Dimensions');
 
 const {width, height} = Dimensions.get('window');
-export default class LoginPager extends Component<{}> {
+export default class LoginPager extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isDebug: true,
             isLoading: false,
-            phone: '',
+            phone: '18680006907',
             codeCheck: '',
             check: false,
             index: 0,
@@ -130,7 +131,7 @@ export default class LoginPager extends Component<{}> {
             Toast.show("信息不完整");
             return
         }
-        if (!this.state.registerProvider||this.state.registerProvider.length===0) {
+        if (!this.state.registerProvider || this.state.registerProvider.length === 0) {
             Toast.show("必须选择服务商");
             return
         }
@@ -191,24 +192,27 @@ export default class LoginPager extends Component<{}> {
     }
 
     smsLogin() {
-        if (!this.state.phone || !this.state.codeCheck) {
-            Toast.show("信息不完整");
-            return
-        }
-        this.setState({isLoading: true});
-        if (Platform.OS === 'android') {
-            AndroidModule.submitCode("86", this.state.phone, this.state.codeCheck)
+        if (this.state.isDebug) {
+            this.login()
         } else {
-            IosModule.submitCode(this.state.phone, this.state.codeCheck, (result) => {
-                if (result === "-1") {
-                    this.login()
-                } else {
-                    this.setState({isLoading: false});
-                    Toast.show("验证失败：" + result)
-                }
-            })
+            if (!this.state.phone || !this.state.codeCheck) {
+                Toast.show("信息不完整");
+                return
+            }
+            this.setState({isLoading: true});
+            if (Platform.OS === 'android') {
+                AndroidModule.submitCode("86", this.state.phone, this.state.codeCheck)
+            } else {
+                IosModule.submitCode(this.state.phone, this.state.codeCheck, (result) => {
+                    if (result === "-1") {
+                        this.login()
+                    } else {
+                        this.setState({isLoading: false});
+                        Toast.show("验证失败：" + result)
+                    }
+                })
+            }
         }
-
     }
 
     ssoLogin() {

@@ -25,6 +25,7 @@ import Toast from 'react-native-root-toast';
 
 import App from '../Application';
 import Utils from '../Utils';
+import UpdateService from "../api/UpdateService";
 
 const {width, height} = Dimensions.get('window');
 
@@ -204,6 +205,7 @@ export default class PreferencesPager extends Component {
                                 () => {
                                 },
                                 () => {
+                                UpdateService.update(true);
                                 },
                                 () => {
                                 }]}/>

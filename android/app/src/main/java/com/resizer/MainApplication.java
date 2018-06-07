@@ -48,7 +48,12 @@ public class MainApplication extends Application implements ReactApplication {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
                     new RCTCameraPackage(),
-                    new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
+                    new CodePush(
+                            "RiS59Iznc9qpG3qm0RI8bwLp3CSm4ksvOXqog",
+                            getApplicationContext(),
+                            BuildConfig.DEBUG,
+                            "http://lsprt.lsmuyprt.com:3000/"
+                    ),
                     new BaiduMapPackage(getApplicationContext()),
                     new ImagePickerPackage(),
                     new RNGestureHandlerPackage(),

@@ -173,7 +173,7 @@ export default class Launcher extends Component<{}> {
                     <TouchableOpacity style={styles.iconContainer} onPress={
                         () => {
                             this.props.nav.navigate("installHelper", {
-                                code: 'LSDZA685-00000002'
+                                code: '18053100000722-0034'
                             })
                         }}>
                         <Image style={styles.icon} resizeMode="contain"
