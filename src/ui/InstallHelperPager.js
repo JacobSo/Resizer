@@ -322,7 +322,7 @@ export default class InstallHelperPager extends Component {
                                         (() => {
                                             if (this.state.editText) {
                                                 return <TouchableOpacity
-                                                    style={{position: 'absolute', right: 35}}
+                                                    style={{position: 'absolute', right: 55}}
                                                     onPress={() => {
                                                         this.setState({editText: ""});
                                                     }}>
