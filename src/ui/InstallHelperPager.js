@@ -21,7 +21,7 @@ const {width, height} = Dimensions.get('window');
 
 let testLink = "http://designanddsc.oss-cn-shenzhen.aliyuncs.com/ModelFiles/model_1520819795252.dae";
 let modelRenderUrl = 'http://kh.linshimuye.cn:8022/3/#';
-//let modelRenderUrl = 'http://192.168.1.113:8000/#';
+//let modelRenderUrl = 'http://192.168.1.113:889/#';
 
 export default class InstallHelperPager extends Component {
 
@@ -316,15 +316,13 @@ export default class InstallHelperPager extends Component {
                                         underlineColorAndroid="transparent"
                                         onChangeText={(text) => {
                                             this.setState({editText: text});
-                                            this.search(text).then((array) => {
-                                                this.setState({searchResult: array.slice(0, 4)})
-                                            })
+
                                         }}/>
                                     {
                                         (() => {
                                             if (this.state.editText) {
                                                 return <TouchableOpacity
-                                                    style={{position: 'absolute', right: 100}}
+                                                    style={{position: 'absolute', right: 35}}
                                                     onPress={() => {
                                                         this.setState({editText: ""});
                                                     }}>
@@ -344,7 +342,9 @@ export default class InstallHelperPager extends Component {
                                             width: 65,
                                             height: 55,
                                             justifyContent: 'center',
-                                            alignItems: 'center'
+                                            alignItems: 'center',
+                                            position:'absolute',
+                                            right:0
                                         }}>
                                         <Image style={styles.menu}
                                                source={ require('../drawable/menu_black.png')}/>
@@ -362,7 +362,7 @@ export default class InstallHelperPager extends Component {
                         elevation: 5,
                         flexDirection: 'row',
                         position: 'absolute',
-                        bottom: this.state.isFullScreen ? 40 + 45 : 165 + 45,
+                        bottom: this.state.isFullScreen ? 40 + 45 : 165 + 40,
                         width: 100,
                         justifyContent: 'center',
                         alignItems: 'center',
