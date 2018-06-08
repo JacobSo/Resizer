@@ -8,7 +8,7 @@ import {
     ScrollView,
     Alert, Dimensions,
     Platform,
-    StyleSheet,
+    StyleSheet, Text, TouchableOpacity,
 } from 'react-native';
 import Color from '../const/Color';
 import Toolbar from '../component/Toolbar'
@@ -22,6 +22,8 @@ import Toast from 'react-native-root-toast';
 import App from '../Application';
 import Utils from '../Utils';
 import UpdateService from "../api/UpdateService";
+import PopupDialog, {DialogTitle, SlideAnimation}from 'react-native-popup-dialog';
+const {width, height} = Dimensions.get('window');
 
 export default class PreferencesPager extends Component {
 
@@ -191,23 +193,57 @@ export default class PreferencesPager extends Component {
                         <PreferencesTextItem
                             group="应用"
                             items={[
-                                ['清理图片缓存', '所有图片将重新下载'],
                                 ['检查更新', '当前版本：' + this.state.version],
                                 ['此版本更新记录', 'v1'],
                             ]}
                             functions={[
                                 () => {
-                                },
-                                () => {
                                 UpdateService.update(true);
                                 },
                                 () => {
+                                this.popupDialog.show();
                                 }]}/>
                     </View>
                 </ScrollView>
+                <PopupDialog
+                    ref={(popupDialog) => {
+                        this.popupDialog = popupDialog;
+                    }}
+                    width={width - 32}
+                    height={height - 200}>
+                    <View style={styles.layoutContainer}>
+                        <Text style={styles.titleStyle}>{"版本" + this.state.version + "更新记录"}</Text>
+                        <ScrollView>
+                            <Text style={{margin: 16}}>
+                                v1:{'\n'}
+                                1.Version 1.0 发布{'\n'}
+                            </Text>
 
+                        </ScrollView>
+                        <View style={{width: width - 64, flexDirection: "row-reverse", marginBottom: 16,marginTop:16}}>
+                            <TouchableOpacity onPress={() => this.popupDialog.dismiss()}>
+                                <Text style={{color: Color.colorPrimary}}>确定</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </PopupDialog>
             </View>
         )
     }
 }
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    layoutContainer: {
+        width: width - 32,
+        flexDirection: 'column',
+        height: height - 200,
+        backgroundColor: 'white'
+    },
+
+    titleStyle: {
+        fontSize: 18,
+        marginLeft: 16,
+        marginTop: 16,
+        marginBottom: 16,
+        color: Color.black_semi_transparent
+    },
+});

@@ -10,8 +10,8 @@ export  default  class UpdateService {
     static update(isNotice) {
         let iosKey = "1470e07914005a27f6cb92bdeecae405";
         let androidKey = "aa68c5264f914d6e9c9686adeeeb9457";
-        let iosCode = 2;//20171021
-        let androidCode = 8;//20171023
+        let iosCode = 3;//
+        let androidCode = 9;//
         if(isNotice)
             Toast.show("检查中...");
         UpdateService.pgyerApiCheck(Platform.OS === 'ios' ? iosKey : androidKey)
