@@ -9,7 +9,7 @@ import {
     View,
     Dimensions,
     TouchableOpacity,
-    ListView, FlatList, ScrollView, WebView, SectionList, Platform
+    FlatList, WebView, SectionList, Platform
 } from 'react-native';
 import Drawer from 'react-native-drawer'
 import ApiService from "../api/ApiService";
@@ -47,11 +47,11 @@ export default class InstallHelperPager extends Component {
         this.getModelNodes();
     }
 
-    hideDoor(){
+    hideDoor() {
         let temp = '';
 
-        this.state.nodes.map((section)=>{
-            if(section.name.indexOf('A1框')>-1){
+        this.state.nodes.map((section) => {
+            if (section.name.indexOf('A1框') > -1) {
                 temp += (section.id + ',');
                 section.data.map((ch) => {
                     temp += (ch.id + ',');
@@ -298,32 +298,33 @@ export default class InstallHelperPager extends Component {
                             if (!this.state.isFullScreen) {
                                 return <View style={styles.searchContainer}>
                                     <TouchableOpacity
-                                        style={{height:55,justifyContent:'center',alignItems:'center'}}
+                                        style={{height: 55, justifyContent: 'center', alignItems: 'center'}}
                                         onPress={() => {
-                                        this.props.nav.goBack(null)
-                                    }}>
+                                            this.props.nav.goBack(null)
+                                        }}>
                                         <Image style={styles.home}
                                                source={ require('../drawable/back_black.png')}/>
                                     </TouchableOpacity>
-                                    <TextInput style={styles.textInput}
-                                               placeholder="搜索组件"
-                                               returnKeyType={'done'}
-                                               maxLength={15}
-                                               value={this.state.editText}
-                                               blurOnSubmit={true}
-                                               selectionColor={Color.colorBlue}
-                                               underlineColorAndroid="transparent"
-                                               onChangeText={(text) => {
-                                                   this.setState({editText: text});
-                                                   this.search(text).then((array) => {
-                                                       this.setState({searchResult: array.slice(0, 4)})
-                                                   })
-                                               }}/>
+                                    <TextInput
+                                        style={styles.textInput}
+                                        placeholder="搜索组件"
+                                        returnKeyType={'done'}
+                                        maxLength={15}
+                                        value={this.state.editText}
+                                        blurOnSubmit={true}
+                                        selectionColor={Color.colorBlue}
+                                        underlineColorAndroid="transparent"
+                                        onChangeText={(text) => {
+                                            this.setState({editText: text});
+                                            this.search(text).then((array) => {
+                                                this.setState({searchResult: array.slice(0, 4)})
+                                            })
+                                        }}/>
                                     {
                                         (() => {
                                             if (this.state.editText) {
                                                 return <TouchableOpacity
-                                                    style={{position: 'absolute', right: 35}}
+                                                    style={{position: 'absolute', right: 100}}
                                                     onPress={() => {
                                                         this.setState({editText: ""});
                                                     }}>
@@ -334,10 +335,17 @@ export default class InstallHelperPager extends Component {
                                         })()
                                     }
 
-                                    <TouchableOpacity onPress={() => {
-                                        this._drawer.open()
-                                    }}
-                                    style={{padding:16,width:65,height:55,justifyContent:'center',alignItems:'center'}}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            this._drawer.open()
+                                        }}
+                                        style={{
+                                            padding: 16,
+                                            width: 65,
+                                            height: 55,
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}>
                                         <Image style={styles.menu}
                                                source={ require('../drawable/menu_black.png')}/>
                                     </TouchableOpacity>
@@ -354,15 +362,15 @@ export default class InstallHelperPager extends Component {
                         elevation: 5,
                         flexDirection: 'row',
                         position: 'absolute',
-                        bottom: this.state.isFullScreen ? 40+45 : 165+45,
+                        bottom: this.state.isFullScreen ? 40 + 45 : 165 + 45,
                         width: 100,
                         justifyContent: 'center',
-                        alignItems:'center',
+                        alignItems: 'center',
                         height: 35
                     }}
-                    onPress={()=>{
-                        this.hideDoor();
-                    }}>
+                                      onPress={() => {
+                                          this.hideDoor();
+                                      }}>
                         <Text>隐藏A1框</Text>
 
                     </TouchableOpacity>
@@ -609,7 +617,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     textInput: {
-        width: width/2,
+        width: width / 2,
         height: 45,
         marginLeft: 16,
         marginRight: 16,
