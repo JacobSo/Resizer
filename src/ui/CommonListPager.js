@@ -3,13 +3,13 @@ import React, {Component} from 'react';
 import Color from '../const/Color';
 import {
     Image,
-    Platform,
     StyleSheet,
     Text,
     View,
     Dimensions,
     TouchableOpacity,
-    ListView, FlatList, SectionList, RefreshControl
+    FlatList,
+    RefreshControl
 } from 'react-native';
 import Toolbar from "../component/Toolbar";
 import Toast from 'react-native-root-toast';
@@ -20,7 +20,7 @@ import RefreshEmptyView from "../component/RefreshEmptyView";
 const {width, height} = Dimensions.get('window');
 
 
-export default class CommonListPager extends Component<{}> {
+export default class CommonListPager extends Component {
 
     constructor(props) {
         super(props);
@@ -57,14 +57,14 @@ export default class CommonListPager extends Component<{}> {
             }).done();
     }
 
-    getStatus(item){
-        if(this.props.listType===0){
-            return  item.measureStatus;
-        }else if(this.props.listType===1){
+    getStatus(item) {
+        if (this.props.listType === 0) {
+            return item.measureStatus;
+        } else if (this.props.listType === 1) {
             return item.installStatus;
-        }else if(this.props.listType===3){
+        } else if (this.props.listType === 3) {
             return item.FixStatus;
-        }else{
+        } else {
             return null//exception
         }
     }
@@ -109,30 +109,30 @@ export default class CommonListPager extends Component<{}> {
                                         colors={[Color.colorBlue]}
                                         progressBackgroundColor="white"
                                     />}
-                                renderItem={({item,index}) =>
+                                renderItem={({item, index}) =>
                                     <TouchableOpacity
                                         style={styles.iconContainer}
                                         onPress={() => {
-                                            if(this.props.listType===0||this.props.listType===1){
+                                            if (this.props.listType === 0 || this.props.listType === 1) {
 
-                                                this.props.nav.navigate("measureDetail",{
-                                                    data:item,
-                                                    listType:this.props.listType,
-                                                    confirmFunc:(value)=>{
+                                                this.props.nav.navigate("measureDetail", {
+                                                    data: item,
+                                                    listType: this.props.listType,
+                                                    confirmFunc: (value) => {
                                                         item.measureStatus = value;
                                                         item.installStatus = value;
-                                                        if(value===0){
-                                                            this.state.items.splice(index,1)
+                                                        if (value === 0) {
+                                                            this.state.items.splice(index, 1)
                                                         }
                                                         this.setState({})
                                                     }
                                                 })
-                                            }else if(this.props.listType===2){
-                                                this.props.nav.navigate("exceptionDetail",{
-                                                    data:item,
-                                                    listType:this.props.listType
+                                            } else if (this.props.listType === 2) {
+                                                this.props.nav.navigate("exceptionDetail", {
+                                                    data: item,
+                                                    listType: this.props.listType
                                                 })
-                                            }else{
+                                            } else {
 
                                             }
                                         }}>
@@ -147,11 +147,11 @@ export default class CommonListPager extends Component<{}> {
                                                 padding: 5,
                                                 borderRadius: 10,
                                                 height: 31,
-                                                justifyContent:'center'
+                                                justifyContent: 'center'
                                             }}>
-                                            <Text style={{
-                                                color: 'white',
-                                            }}>{this.getStatus(item) === 0 ? '待接收' : Utils.taskStatus[this.props.listType]}</Text>
+                                                <Text style={{
+                                                    color: 'white',
+                                                }}>{this.getStatus(item) === 0 ? '待接收' : Utils.taskStatus[this.props.listType]}</Text>
                                             </View>
                                         </View>
                                         <View style={{
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
         margin: 16,
         elevation: 2,
     },
-    floatBtn:{
+    floatBtn: {
         position: 'absolute',
         bottom: 25,
         right: 0,

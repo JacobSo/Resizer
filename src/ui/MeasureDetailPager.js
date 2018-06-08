@@ -12,7 +12,7 @@ import {
     Linking, FlatList, ScrollView, Platform, Clipboard
 } from 'react-native';
 import Toolbar from "../component/Toolbar";
-import {MapView, MapTypes, MapModule, Geolocation} from 'react-native-baidu-map';
+import {MapView, MapTypes,  Geolocation} from 'react-native-baidu-map';
 import Utils from "../Utils";
 import ApiService from '../api/ApiService';
 import Toast from 'react-native-root-toast';
@@ -23,7 +23,7 @@ import IosModule from '../module/IosCommontModule'
 const {width, height} = Dimensions.get('window');
 
 
-export default class MeasureDetailPager extends Component<{}> {
+export default class MeasureDetailPager extends Component {
 
     constructor(props) {
         super(props);

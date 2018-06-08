@@ -12,7 +12,6 @@ import Toolbar from '../component/Toolbar';
 import ApiService from '../api/ApiService';
 import Color from '../const/Color';
 import RefreshEmptyView from "../component/RefreshEmptyView";
-import * as ColorGroup from "../const/ColorGroup";
 import Toast from 'react-native-root-toast';
 
 const {width, height} = Dimensions.get('window');

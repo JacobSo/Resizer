@@ -2,22 +2,19 @@
 import React, {Component} from 'react';
 import Color from '../const/Color';
 import {
-    Image,
-    Platform,
     StyleSheet,
     Text,
     View,
     Dimensions,
     TouchableOpacity,
-    ListView, FlatList, SectionList, TextInput, ScrollView
+    TextInput, ScrollView
 } from 'react-native';
 import Toolbar from "../component/Toolbar";
-import Sae from "react-native-textinput-effects/lib/Sae";
-import {Akira, Hoshi, Jiro, Kaede, Madoka} from "react-native-textinput-effects";
+import { Madoka} from "react-native-textinput-effects";
 const {width, height} = Dimensions.get('window');
 
 
-export default class ExceptionAddPager extends Component<{}> {
+export default class ExceptionAddPager extends Component {
 
     constructor(props) {
         super(props);

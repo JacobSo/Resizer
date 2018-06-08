@@ -8,7 +8,6 @@
 import React from 'react';
 import {StackNavigator,} from 'react-navigation';
 import {Platform, Dimensions, View, StatusBar,Linking} from 'react-native';
-import App from "react-native/local-cli/templates/HelloWorld/App";
 import Launcher from "./Launcher";
 import Color from './const/Color';
 import CommonListPager from "./ui/CommonListPager";

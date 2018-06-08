@@ -12,7 +12,6 @@ import {
     ListView, Alert, ScrollView
 } from 'react-native';
 import Toolbar from "../component/Toolbar";
-import {MapView, MapTypes, MapModule, Geolocation} from 'react-native-baidu-map';
 import Utils from "../Utils";
 import AndroidModule from '../module/AndoridCommontModule'
 import IosModule from '../module/IosCommontModule'
@@ -28,7 +27,7 @@ const ImagePicker = require('react-native-image-picker');
 const {width, height} = Dimensions.get('window');
 
 
-export default class ProductDetailPager extends Component<{}> {
+export default class ProductDetailPager extends Component {
 
     constructor(props) {
         super(props);

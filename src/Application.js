@@ -50,7 +50,7 @@ export  default  class Application extends Component {
                 });
             }).then(callback).catch((err) => {
                 console.log(err);
-            }).done();
+            });
         });
     }
 
@@ -76,11 +76,12 @@ export  default  class Application extends Component {
                 ['serviceType', serviceType + ""],
                 ['createTime', createTime + ""],
             ])
-            .then((err) => {
-            console.log(err);
+            .then((result) => {
+            console.log(result);
                     console.log("save success!");
                 },
-            ).catch(() => {
+            ).catch((err) => {
+            console.log(err);
             console.log("save failed!");
         });
     }

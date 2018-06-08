@@ -30,10 +30,9 @@ import {
 import Toast from 'react-native-root-toast';
 import Color from '../const/Color';
 import Hoshi from "react-native-textinput-effects/lib/Hoshi";
-import {SceneMap, TabBar, TabViewAnimated} from "react-native-tab-view";
 import ApiService from '../api/ApiService';
 import Utils from '../Utils';
-import ScrollableTabView, {DefaultTabBar,} from 'react-native-scrollable-tab-view';
+import ScrollableTabView  from 'react-native-scrollable-tab-view';
 import AndroidModule from '../module/AndoridCommontModule'
 import IosModule from '../module/IosCommontModule'
 const Dimensions = require('Dimensions');
@@ -57,9 +56,7 @@ export default class LoginPager extends Component {
             registerServiceValue: 0,
             registerUserType: true,
             registerProvider: [],
-
             //  providerCount:0
-
             smsSpeed: 60,
             ssoToken: "",
         };
@@ -232,14 +229,6 @@ export default class LoginPager extends Component {
         }).done();
     }
 
-    bindPush(phone) {
-        if (Platform.OS === "ios") {
-            IosModule.bindPushAccount(phone);
-        } else {
-            AndroidModule.bindPushAccount(phone);
-        }
-    }
-
     login() {
         //  Toast.show("first login");
         ApiService.login(this.state.phone, this.state.ssoToken)
@@ -256,7 +245,6 @@ export default class LoginPager extends Component {
                         responseJson.listData[0].serviceType,
                         responseJson.listData[0].registerTime,
                     );
-                    this.bindPush(responseJson.listData[0].phone);
                     //   this.props.nav.navigate('launcher');
                     const resetAction = NavigationActions.reset({
                         index: 0,

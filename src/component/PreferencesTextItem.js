@@ -4,7 +4,7 @@
 'use strict';
 import React, {Component, } from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import Color from '../const/Color'
 const Dimensions = require('Dimensions');
 const {width, height} = Dimensions.get('window');

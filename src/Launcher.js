@@ -1,4 +1,24 @@
 "use strict";
+/**
+ * android
+ ┌────────────┬───────────────────────────────────────┬─────────────────────┬──────────────────────┐
+ │ Name       │ Deployment Key                        │ Update Metadata     │ Install Metrics      │
+ ├────────────┼───────────────────────────────────────┼─────────────────────┼──────────────────────┤
+ │ Production │ RiS59Iznc9qpG3qm0RI8bwLp3CSm4ksvOXqog │ No updates released │ No installs recorded │
+ ├────────────┼───────────────────────────────────────┼─────────────────────┼──────────────────────┤
+ │ Staging    │ EIWkMAoHf6eiXQ42QnvAp4vq8Yrq4ksvOXqog │ No updates released │ No installs recorded │
+ └────────────┴───────────────────────────────────────┴─────────────────────┴──────────────────────┘
+
+ ┌────────────┬───────────────────────────────────────┬─────────────────────┬──────────────────────┐
+ │ Name       │ Deployment Key                        │ Update Metadata     │ Install Metrics      │
+ ├────────────┼───────────────────────────────────────┼─────────────────────┼──────────────────────┤
+ │ Production │ 8AefURg2136tbvgOxYWBgqNZTkdS4ksvOXqog │ No updates released │ No installs recorded │
+ ├────────────┼───────────────────────────────────────┼─────────────────────┼──────────────────────┤
+ │ Staging    │ xOUhXlS9lHs2UDTabv5TCCMWnmB94ksvOXqog │ No updates released │ No installs recorded │
+ └────────────┴───────────────────────────────────────┴─────────────────────┴──────────────────────┘
+
+
+ */
 import React, {Component} from 'react';
 import Color from './const/Color';
 import {
@@ -17,17 +37,43 @@ import Toolbar from "./component/Toolbar";
 import ApiService from "./api/ApiService";
 import Toast from 'react-native-root-toast';
 import {NavigationActions,} from 'react-navigation';
-
+import AndroidModule from './module/AndoridCommontModule'
+import IosModule from './module/IosCommontModule'
+import codePush from 'react-native-code-push'
+import UpdateService from "./api/UpdateService";
 const {width, height} = Dimensions.get('window');
+const code_push_production_key_android = "RiS59Iznc9qpG3qm0RI8bwLp3CSm4ksvOXqog";
+const code_push_production_key_ios = "8AefURg2136tbvgOxYWBgqNZTkdS4ksvOXqog";
 
-
-export default class Launcher extends Component<{}> {
+export default class Launcher extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: false,
             isHelperOpen: false
         };
+    }
+
+    initApp() {
+        codePush.sync({
+            updateDialog: {
+                appendReleaseDescription: true,
+                descriptionPrefix: '\n\n更新内容：\n',
+                title: '更新',
+                mandatoryUpdateMessage: '',
+                mandatoryContinueButtonLabel: '执行更新',
+            },
+            mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
+            deploymentKey: Platform.OS === 'ios' ? code_push_production_key_ios : code_push_production_key_android,
+        });
+        UpdateService.update(false);
+        if (Platform.OS === "ios") {
+            IosModule.bindPushAccount(App.phone);
+        } else {
+            AndroidModule.bindPushAccount(App.phone);
+        }
+
+
     }
 
 //url 成立，直接进入安装辅助，否则走app自身登陆流程
@@ -51,8 +97,9 @@ export default class Launcher extends Component<{}> {
                     console.log("init:" + App.phone);
                     App.initAccount(() => {
                         if (App.phone && App.phone !== '' && App.token) {
+                            console.log('init login')
                             this.setState({isLoading: true});
-                            //Toast.show("second login");
+                           // Toast.show("second login");
                             ApiService.login(App.phone, App.token)
                                 .then((responseJson) => {
                                     this.setState({isLoading: false});
@@ -68,6 +115,7 @@ export default class Launcher extends Component<{}> {
                                             responseJson.listData[0].registerTime,
                                         );
                                         this.setState({})
+                                        this.initApp()
                                     } else {
                                         Toast.show(responseJson.errMsg + "，请重新登陆");
                                         this.resetLogin();
@@ -80,6 +128,7 @@ export default class Launcher extends Component<{}> {
                                     this.resetLogin();
                                 }).done();
                         } else {
+                            console.log('reset login')
                             this.resetLogin();
                         }
                     });

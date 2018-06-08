@@ -8,11 +8,7 @@ import {
     ScrollView,
     Alert, Dimensions,
     Platform,
-    Text,
     StyleSheet,
-    Linking,
-    TouchableOpacity
-
 } from 'react-native';
 import Color from '../const/Color';
 import Toolbar from '../component/Toolbar'
@@ -26,8 +22,6 @@ import Toast from 'react-native-root-toast';
 import App from '../Application';
 import Utils from '../Utils';
 import UpdateService from "../api/UpdateService";
-
-const {width, height} = Dimensions.get('window');
 
 export default class PreferencesPager extends Component {
 

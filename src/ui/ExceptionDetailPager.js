@@ -3,13 +3,12 @@ import React, {Component} from 'react';
 import Color from '../const/Color';
 import {
     Image,
-    Platform,
     StyleSheet,
     Text,
     View,
     Dimensions,
     TouchableOpacity,
-    ListView, FlatList, ScrollView
+    ScrollView
 } from 'react-native';
 import Toolbar from "../component/Toolbar";
 import {SceneMap, TabBar, TabViewAnimated} from "react-native-tab-view";
@@ -74,7 +73,7 @@ const SecondRoute = () => <View>
     </View>
 
 </View>;
-export default class ExceptionDetailPager extends Component<{}> {
+export default class ExceptionDetailPager extends Component{
 
     constructor(props) {
         super(props);
