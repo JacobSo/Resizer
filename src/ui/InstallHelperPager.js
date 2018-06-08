@@ -47,6 +47,28 @@ export default class InstallHelperPager extends Component {
         this.getModelNodes();
     }
 
+    hideDoor(){
+        let temp = '';
+
+        this.state.nodes.map((section)=>{
+            if(section.name.indexOf('A1框')>-1){
+                temp += (section.id + ',');
+                section.data.map((ch) => {
+                    temp += (ch.id + ',');
+                });
+            }
+        })
+        console.log(temp);
+        let msg = {
+            component: temp.substring(0, temp.length - 1),
+            command: [
+                Utils.modelCommand.all,
+                Utils.modelCommand.hide,
+            ]
+        };
+        this.refs.webView.postMessage(JSON.stringify(msg));
+    }
+
     getModelNodes() {
         this.setState({isLoading: true});
         //  ApiService.getModel("LS02LSBS0308CP1M01-00000001")
@@ -275,7 +297,9 @@ export default class InstallHelperPager extends Component {
                         (() => {
                             if (!this.state.isFullScreen) {
                                 return <View style={styles.searchContainer}>
-                                    <TouchableOpacity onPress={() => {
+                                    <TouchableOpacity
+                                        style={{height:55,justifyContent:'center',alignItems:'center'}}
+                                        onPress={() => {
                                         this.props.nav.goBack(null)
                                     }}>
                                         <Image style={styles.home}
@@ -299,7 +323,7 @@ export default class InstallHelperPager extends Component {
                                         (() => {
                                             if (this.state.editText) {
                                                 return <TouchableOpacity
-                                                    style={{position: 'absolute', right: 55}}
+                                                    style={{position: 'absolute', right: 35}}
                                                     onPress={() => {
                                                         this.setState({editText: ""});
                                                     }}>
@@ -312,16 +336,36 @@ export default class InstallHelperPager extends Component {
 
                                     <TouchableOpacity onPress={() => {
                                         this._drawer.open()
-                                    }}>
+                                    }}
+                                    style={{padding:16,width:65,height:55,justifyContent:'center',alignItems:'center'}}>
                                         <Image style={styles.menu}
                                                source={ require('../drawable/menu_black.png')}/>
                                     </TouchableOpacity>
+
+
                                 </View>
                             }
                         })()
                     }
 
 
+                    <TouchableOpacity style={{
+                        backgroundColor: 'white',
+                        elevation: 5,
+                        flexDirection: 'row',
+                        position: 'absolute',
+                        bottom: this.state.isFullScreen ? 40+45 : 165+45,
+                        width: 100,
+                        justifyContent: 'center',
+                        alignItems:'center',
+                        height: 35
+                    }}
+                    onPress={()=>{
+                        this.hideDoor();
+                    }}>
+                        <Text>隐藏A1框</Text>
+
+                    </TouchableOpacity>
                     <View style={{
                         backgroundColor: 'white',
                         elevation: 5,
@@ -332,6 +376,7 @@ export default class InstallHelperPager extends Component {
                         justifyContent: 'space-around',
                         height: 35
                     }}>
+
                         <TouchableOpacity onPress={() => {
                             let msg = {
                                 component: null,
@@ -564,7 +609,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     textInput: {
-        width: width - 20 - 32 - 32 - 55 - 16,
+        width: width/2,
         height: 45,
         marginLeft: 16,
         marginRight: 16,
