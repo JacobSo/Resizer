@@ -216,7 +216,7 @@ export default class PreferencesPager extends Component {
                         <ScrollView>
                             <Text style={{margin: 16}}>
                                 v1:{'\n'}
-                                1.Version 1.0 发布{'\n'}
+                                1.Version 1.0 v1发布{'\n'}
                             </Text>
 
                         </ScrollView>
