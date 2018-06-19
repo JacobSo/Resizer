@@ -99,7 +99,7 @@ export default class Launcher extends Component {
                         if (App.phone && App.phone !== '' && App.token) {
                             console.log('init login')
                             this.setState({isLoading: true});
-                           // Toast.show("second login");
+                            // Toast.show("second login");
                             ApiService.login(App.phone, App.token)
                                 .then((responseJson) => {
                                     this.setState({isLoading: false});
@@ -221,9 +221,7 @@ export default class Launcher extends Component {
                 <View style={styles.iconRowContainer}>
                     <TouchableOpacity style={styles.iconContainer} onPress={
                         () => {
-                            this.props.nav.navigate("installHelper", {
-                                code: '18053100000722-0034'
-                            })
+                            this.props.nav.navigate("commonList", {listType: 2})
                         }}>
                         <Image style={styles.icon} resizeMode="contain"
                                source={require('./drawable/main_exception_icon.png')}/>

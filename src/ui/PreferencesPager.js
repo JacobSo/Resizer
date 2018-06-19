@@ -194,14 +194,20 @@ export default class PreferencesPager extends Component {
                             group="应用"
                             items={[
                                 ['检查更新', '当前版本：' + this.state.version],
-                                ['此版本更新记录', 'v1'],
+                                ['此版本更新记录', 'v2'],
+                                ['模型加载测试','模型demo:18053100000722-0034']
                             ]}
                             functions={[
                                 () => {
-                                UpdateService.update(true);
+                                    UpdateService.update(true);
                                 },
                                 () => {
-                                this.popupDialog.show();
+                                    this.popupDialog.show();
+                                },
+                                () => {
+                                    this.props.nav.navigate("installHelper", {
+                                        code: '18053100000722-0034'
+                                    })
                                 }]}/>
                     </View>
                 </ScrollView>
@@ -215,12 +221,15 @@ export default class PreferencesPager extends Component {
                         <Text style={styles.titleStyle}>{"版本" + this.state.version + "更新记录"}</Text>
                         <ScrollView>
                             <Text style={{margin: 16}}>
+                                v2:{'\n'}
+                                1.v2版本发布{'\n'}{'\n'}
                                 v1:{'\n'}
                                 1.Version 1.0 v1发布{'\n'}
                             </Text>
 
                         </ScrollView>
-                        <View style={{width: width - 64, flexDirection: "row-reverse", marginBottom: 16,marginTop:16}}>
+                        <View
+                            style={{width: width - 64, flexDirection: "row-reverse", marginBottom: 16, marginTop: 16}}>
                             <TouchableOpacity onPress={() => this.popupDialog.dismiss()}>
                                 <Text style={{color: Color.colorPrimary}}>确定</Text>
                             </TouchableOpacity>
